@@ -6,6 +6,7 @@ Create an app that allows users to see small businesses within a certain radius 
 Small businesses can create a profile to be seen on the app and edit their location, tags, logo, and short description/products offered.
 
 People: 
+
 	Backend: Rohan Rao, Blake Budd
 	
 	Frontend: Wavid Bowman, Ivan Saldarriaga
