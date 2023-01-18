@@ -7,6 +7,7 @@ Small businesses can create a profile to be seen on the app and edit their locat
 
 People: 
 	Backend: Rohan Rao, Blake Budd
+	
 	Frontend: Wavid Bowman, Ivan Saldarriaga
 
 How: Use Leaflet for map services. Go Library  - database.sql 
