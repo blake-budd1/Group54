@@ -1,5 +1,4 @@
-# Group54
-Small Business Search (W.I.P) - Small Business Finder
+# Group54 - Small Business Search
 
 Description:
 Create an app that allows users to see small businesses within a certain radius that meet the tags they are looking for. Allows people to see what small businesses exist near them given certain parameters. 
