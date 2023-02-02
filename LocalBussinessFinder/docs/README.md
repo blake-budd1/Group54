@@ -31,7 +31,7 @@ The following list is of the following format:
 - ('/{id}', PUT): Updates the database entry with provided id with the information provided in the request header
 - ('/{id}' DELETE): Removes database entry with provided ID. 
 
-##Instructions to Run: 
+## Instructions to Run: 
 The main.go file can be run by using the following commands: 
 - go build main.go 
 - ./main
