@@ -1,6 +1,6 @@
-#Backend Documentation: 
+# Backend Documentation: 
 
-##The "Buisness" Model: 
+## The "Buisness" Model: 
 The Buisness model contains the data that will each buisness account will.
 The Buisness struct is converted into a model that will outline the schema 
 for the database (currently in sqlite) that contains the buisness accounts. 
@@ -17,7 +17,7 @@ Currently, the information stored in the buisness model is:
 
 More will be added in future iterations of the project (including image etc). 
 
-##REST API: 
+## REST API: 
 A rudimentary Rest API has been implimented for the buisness. So far, the following 
 routes and http methods have been implemented: 
 
