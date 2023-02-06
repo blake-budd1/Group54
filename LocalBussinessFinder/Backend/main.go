@@ -14,9 +14,10 @@ import (
 )
 
 // Make buisness Struct, initialize Gorm DB and error
-var Bs []Buisness
+var Bs []Buisness //not used
 var db *gorm.DB
 var err error
+var login bool
 
 // Buisness struct made into to a gorm model for DB schema
 type Buisness struct {
@@ -36,7 +37,6 @@ func getAllBuisnesses(w http.ResponseWriter, r *http.Request) {
 	var BuisList []Buisness
 	db.Find(&BuisList)
 	json.NewEncoder(w).Encode(BuisList)
-
 }
 
 func getBuisness(w http.ResponseWriter, r *http.Request) {
@@ -94,36 +94,104 @@ func userQuery(w http.ResponseWriter, r *http.Request) {
 			fmt.Printf("Die")
 			return
 		}
+		//store the username and password entered in the login form
 		name := r.PostFormValue("userNameI")
 		password := r.PostFormValue("pWord")
 
+		//if found, store in sample business
 		var sampleBuisness Buisness
 		db.Where("User = ?", name).First(&sampleBuisness)
 
 		if password == sampleBuisness.Pass {
 			print("success!")
+			login = true
 			http.Redirect(w, r, "/"+strconv.Itoa(int(sampleBuisness.ID)), http.StatusFound)
 			return
 		} else {
 			print("Incorrect Password!")
+			http.Redirect(w, r, "/login", http.StatusFound)
 		}
+	}
+	tmpl.Execute(w, nil)
+}
+
+// allows the user to use a sign-up page to enter their information into the database
+// can be changed if we want to just have a sign-up page with username and password
+// then redirect to a page where they can set up their profile, would just have to do the
+// username and password first then redirect to the new page and load the data in from there
+// but it can be done with the same function just get confirmation they created user and pword.
+
+func userSignUp(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("signup.html"))
+
+	if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			fmt.Printf("Die")
+			return
+		}
+		//get all info from signup page
+		name := r.PostFormValue("userNameI")
+		password := r.PostFormValue("pWord")
+		// used to double check password, if password and passwordTest
+		// do not match, must redo login
+		passwordTest := r.PostFormValue("pWordTest")
+		busName := r.PostFormValue("busName")
+		address := r.PostFormValue("address")
+		busCat := r.PostFormValue("busCat")
+		desc := r.PostFormValue("busDesc")
+
+		//make sure passwords match (otherwise have to redo)
+		if password == passwordTest {
+			print("passwords match")
+		} else {
+			print("password does not match")
+			http.Redirect(w, r, "/login", http.StatusFound)
+			return
+		}
+		//create new business struct with given information
+		newBus := Buisness{
+			User:        name,
+			Pass:        password,
+			Ident:       00, // unsure if we need this since GORM includes their own ID that we can find using busName
+			Name:        busName,
+			Address:     address,
+			Category:    busCat,
+			Description: desc,
+		}
+		//add the new business created in sign in to the database
+		_ = json.NewDecoder(r.Body).Decode(&newBus)
+		//Add to database
+		db.Create(&newBus)
+		// "returns" the encoded n_b
+		json.NewEncoder(w).Encode(newBus)
+		//redirect to business page:
+		login = true
+		db.Where("User = ?", name).First(&newBus)
+		http.Redirect(w, r, "/"+strconv.Itoa(int(newBus.ID)), http.StatusFound)
+		//http.Redirect(w, r, "/login", http.StatusFound)
 	}
 	tmpl.Execute(w, nil)
 }
 
 // Shows the buisness page when entering a certain buisness
 func showBuisnessPage(w http.ResponseWriter, r *http.Request) {
-
 	w.Header().Set("Content-Type", "application/json")
-	tmpl := template.Must(template.ParseFiles("secretPage.html"))
+	if login == true {
+		tmpl := template.Must(template.ParseFiles("secretPage.html"))
 
-	param := mux.Vars(r)
-	//Filter by ID
-	var targetBuis Buisness
-	req, _ := param["uname"]
-	db.Where("User = ?", req).First(&targetBuis)
-	w.Header().Set("content-type", "text/html")
-	tmpl.Execute(w, targetBuis)
+		param := mux.Vars(r)
+		//Filter by ID
+		var targetBuis Buisness
+		req, _ := param["uname"]
+		db.Where("User = ?", req).First(&targetBuis)
+		w.Header().Set("content-type", "text/html")
+		tmpl.Execute(w, targetBuis)
+		login = false //return to false so they cannot access other pages
+	}
+	if login != true {
+		print("not logged in")
+	}
 }
 
 func main() {
@@ -134,6 +202,8 @@ func main() {
 	if err != nil {
 		panic("Connection to database failed!")
 	}
+	fmt.Println("Database started....")
+	fmt.Println("Running ....")
 	//Create the Buisness dataBase Schema
 	db.AutoMigrate(&Buisness{})
 
@@ -142,6 +212,7 @@ func main() {
 	//Build the routes
 
 	r.HandleFunc("/login", userQuery)
+	r.HandleFunc("/signup", userSignUp) //might need to change from /signup to a different directory later on, just used for testing now
 	r.HandleFunc("/", getAllBuisnesses).Methods("GET")
 	r.HandleFunc("/{uname}", showBuisnessPage).Methods("GET")
 	r.HandleFunc("/{id}", getBuisness).Methods("GET")
