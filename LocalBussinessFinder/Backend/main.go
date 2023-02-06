@@ -276,7 +276,7 @@ func main() {
 	r.HandleFunc("/login", userQuery)
 	r.HandleFunc("/signup", signUpPage) //might need to change from /signup to a different directory later on, just used for testing now
 	r.HandleFunc("/", getAllBuisnesses).Methods("GET")
-	r.HandleFunc("/{uname}", showBuisnessPage).Methods("GET")
+	r.HandleFunc("/user/{uname}", showBuisnessPage).Methods("GET")
 	r.HandleFunc("/{id}", getBuisness).Methods("GET")
 	r.HandleFunc("/", createBuisness).Methods("POST")
 	r.HandleFunc("/{id}", updateBuisness).Methods("PUT")
