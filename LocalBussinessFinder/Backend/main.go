@@ -122,64 +122,6 @@ func userQuery(w http.ResponseWriter, r *http.Request) {
 // username and password first then redirect to the new page and load the data in from there
 // but it can be done with the same function just get confirmation they created user and pword.
 
-func userSignUp(w http.ResponseWriter, r *http.Request) {
-	/*
-		tmpl := template.Must(template.ParseFiles("signup.html"))
-
-		if r.Method == "POST" {
-			err := r.ParseForm()
-			if err != nil {
-				fmt.Printf("Die")
-				return
-			}
-			//get all info from signup page
-			name := r.PostFormValue("userNameI")
-			password := r.PostFormValue("pWord")
-			// used to double check password, if password and passwordTest
-			// do not match, must redo login
-			passwordTest := r.PostFormValue("pWordTest")
-			busName := r.PostFormValue("busName")
-			address := r.PostFormValue("address")
-			busCat := r.PostFormValue("busCat")
-			desc := r.PostFormValue("busDesc")
-
-			//make sure passwords match (otherwise have to redo)
-			if password == passwordTest {
-				print("passwords match")
-			} else {
-				print("password does not match")
-				http.Redirect(w, r, "/login", http.StatusFound)
-				return
-			}
-			//create new business struct with given information
-			newBus := Buisness{
-				User:        name,
-				Pass:        password,
-				Ident:       00, // unsure if we need this since GORM includes their own ID that we can find using busName
-				Name:        busName,
-				Address:     address,
-				Category:    busCat,
-				Description: desc,
-			}
-			//add the new business created in sign in to the database
-			_ = json.NewDecoder(r.Body).Decode(&newBus)
-			//Add to database
-			db.Create(&newBus)
-			// "returns" the encoded n_b
-			//json.NewEncoder(w).Encode(newBus)
-			//redirect to business page:
-			login = true
-			db.Where("User = ?", name).First(&newBus)
-			//http.Redirect(w, r, "/"+strconv.Itoa(int(newBus.ID)), http.StatusFound)
-			http.Redirect(w, r, "/"+newBus.Name, http.StatusFound)
-			//http.Redirect(w, r, "/login", http.StatusFound)
-			//login = true
-		}
-		tmpl.Execute(w, nil)
-	*/
-
-}
-
 func signUpPage(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("signup.html"))
 	if r.Method == "GET" {
@@ -226,10 +168,9 @@ func signUpPage(w http.ResponseWriter, r *http.Request) {
 		//Add to database
 		db.Create(&newBus)
 
-		//redirect to business page:
+		//redirect to business page, directing there from business name
+		//will be:  "localhost:3000/{businessName}:
 		login = true
-		//db.Where("User = ?", name).First(&newBus)
-		//w.Header().Set("content-type", "text/html")
 		http.Redirect(w, r, "/"+newBus.Name, http.StatusFound)
 		return
 	}
