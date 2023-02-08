@@ -1,6 +1,6 @@
 # Back-end:
 
-User stories:
+**User stories**:
 - As a **customer**, I want to **log into my account** so that **I can find local businesses**.
 - As a **customer**, I want to **be able to access public business pages using the business name**, so that **I can discover local businesses that I would  like to go to**.
 - As a **customer**, I **want the business webpage to provide publicly available information on the business such as the name, address, category, logo, and  description** so that **I have an easy way of finding where to go and if it is a business I would like to visit**.
