@@ -1,0 +1,35 @@
+<!-- this is the browse files component -->
+<div>
+    <div class="dropzone">
+        <!-- explaining the user how to browse files -->
+        <div class="text-wrapper">
+            <div class="text-center">
+                <a (click)="selectFile.click()" class="browse-button">Browse</a>
+                and select up to 8 images!
+            </div>
+        </div>
+    </div>
+    <!-- when a file is selected, it gets added to the array of urls -->
+    <div>
+        <input type="file" multiple style="display: none;" value="select" #selectFile
+        (change)="onFileSelected($event)">
+    </div>
+    <!-- displays the url images in a grid formaiton -->
+    <div class="mt-5">
+        <div class="row">
+            <mat-grid-list cols="4" rowHeight="1:1">
+                <mat-grid-tile *ngFor="let file of buisness.buisnessImages; let i = index;">
+                    <div style="position: relative">
+                        <!-- user can click on an x to remove the file -->
+                        <span class="remove-button-image" (click)="removeImage(i)">x</span>
+                        <img [src]="file.url" width="95%" height="95%">
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </div>
+</div>
+<!-- TODO:
+    -screen layout (potentially needing to merge progile setup and image upload component!)
+    -have a drag and drop feature that can show file preview
+    -only allow the user to select image files (png, jpg etc.)-->
