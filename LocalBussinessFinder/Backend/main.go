@@ -155,9 +155,9 @@ func signUpPage(w http.ResponseWriter, r *http.Request) {
 		}
 		//create new business struct with given information
 		newBus := Buisness{
-			User:        name,
-			Pass:        password,
-			Ident:       00, // unsure if we need this since GORM includes their own ID that we can find using busName
+			User: name,
+			Pass: password,
+			//Ident:       00, // unsure if we need this since GORM includes their own ID that we can find using busName
 			Name:        busName,
 			Address:     address,
 			Category:    busCat,
