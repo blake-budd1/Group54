@@ -106,7 +106,7 @@ func userQuery(w http.ResponseWriter, r *http.Request) {
 			print("success!")
 			login = true
 			//http.Redirect(w, r, "/"+strconv.Itoa(int(sampleBuisness.ID)), http.StatusFound)
-			http.Redirect(w, r, "/"+sampleBuisness.Name, http.StatusFound)
+			http.Redirect(w, r, "/user/"+sampleBuisness.Name, http.StatusFound)
 			return
 		} else {
 			print("Incorrect Password!")
