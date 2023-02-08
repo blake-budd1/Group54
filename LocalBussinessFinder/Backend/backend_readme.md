@@ -1,20 +1,21 @@
 # Backend Documentation: 
 
-## The "Buisness" Model: 
-The Buisness model contains the data that will each buisness account will.
-The Buisness struct is converted into a model that will outline the schema 
-for the database (currently in sqlite) that contains the buisness accounts. 
-Currently, the information stored in the buisness model is: 
+## The "Business" Model: 
+The Business model contains the data that will each business account will.
+The Business struct is converted into a model that will outline the schema 
+for the database (currently in sqlite) that contains the business accounts. 
+Currently, the information stored in the business model is: 
 
 - Account Username
 - Account Password
-- Buisness name
-- Buisness Address
+- Business name
+- Business Address
 - Address
 - Category
 - Description 
 
 More will be added in future iterations of the project (including image etc). 
+*Note: each struct has an ID that is given by GORM, which the reason there is not one within the business struct
 
 ## REST API: 
 A rudimentary Rest API has been implimented for the buisness. So far, the following 
