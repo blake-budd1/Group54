@@ -1,22 +1,26 @@
-#Front-end:
+# Front-end:
+
 Youtube Link to video: https://www.youtube.com/watch?v=dvvSo_izhKc&ab_channel=IvanSaldarriaga
 
 **User Stories**
 _General User Stories for the entire Front-end part of the project_
--As a **business owner**, I want to be able to **upload product images and descriptions for my buisness** page to that customers/ app users can see what products the buisness provides.
--As a **business owner**, I want to be able to** drag and drop my images** to make the upload process simpler on my end!
--As a **business owner**, I want to be able to **set tags **related to my company to allow customers to quickly grasp what type of buiness I am running!
--As a **business user** I want the process of displaying my company to be easy and intuitive so that I do not need to worry about aesthetics or any technical aspects of displaying my information.
+- As a **business owner**, I want to be able to **upload product images and descriptions for my buisness** page to that customers/ app users can see what products the buisness provides.
+- As a **business owner**, I want to be able to** drag and drop my images** to make the upload process simpler on my end!
+- As a **business owner**, I want to be able to **set tags **related to my company to allow customers to quickly grasp what type of buiness I am running!
+- As a **business user** I want the process of displaying my company to be easy and intuitive so that I do not need to worry about aesthetics or any technical aspects of displaying my information.
 (General idea) Have a drag and drop for the buiness logo, name, banner, products and captions for EVERY buisness. Location of each is not customizable, but the images and descriptions (bio) are!
--**make a sign in page** - for users with saved business prefs and businesses to make/edit their page
+- **make a sign in page** - for users with saved business prefs and businesses to make/edit their page
 
 **What issues your team planned to address:**
+
 For the front-end team, we planned to tackle the sign-in and develop profile for the business user- deciding to start with the business user as they are the center of our project. We planned to get familiar with angular and typescript to make the integration with the backend more simple at a later date. We planned to do research on what libraries or angular components could be immplemented to make the application not only run smoother, but make it less complicated.
 
-**Which ones were successfully completed**
+**Which ones were successfully completed:**
+
 We were able to successfully generate both a sigh in and create a profile page. In the login page, the user is prompted to enter a username and and password. Moreover, in the create profile page, the user can enter data that will be publicly displayed once the application is fully complete. What was demonstrated in the video was: Company/ Business name, an address, a short description of the company and a image uploader. The image uploader allows the user to browse through their files and select images- then converting them into url links via. a Dom Sanitizer. These images are stored in an array, and then displayed with an image preview. 
 
 **Which ones didn't and why?**
+
 Ivan: I tackled the drag and drop with ngx-file-drop. While I was able to get it working, displaying the images through generated urls was difficult with the component. Hence, for this sprint, only the browse button was imlplemented- hoping to merge the two concepts into one once I get more familiar with angular. Some other user stories that were not complete yet were the rest of the "profile set-up" page such as business tags. This one was not succesfully completed because we still need to communicate what preset tags should be offer for the user to pick from and how many.
 Wavid: I did not succesfully make the registration page although it should be relatively easy to complete as it is another implementation of the login page (copy and paste, but with email). I got sick towards the end of the sprint and that limited the amount of user stories I couuld complete/ flesh out.
 Both: The implementation with teh back-end was something we were not able to comlplete by this sprint because both front and back-end were familiarizing ourselfes with our respective languages.
