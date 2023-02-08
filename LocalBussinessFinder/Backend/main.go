@@ -171,7 +171,7 @@ func signUpPage(w http.ResponseWriter, r *http.Request) {
 		//redirect to business page, directing there from business name
 		//will be:  "localhost:3000/{businessName}:
 		login = true
-		http.Redirect(w, r, "/"+newBus.Name, http.StatusFound)
+		http.Redirect(w, r, "/user/"+newBus.Name, http.StatusFound)
 		return
 	}
 	tmpl.Execute(w, nil)
