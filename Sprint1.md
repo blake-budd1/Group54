@@ -5,7 +5,7 @@ Youtube Link to video: https://www.youtube.com/watch?v=dvvSo_izhKc&ab_channel=Iv
 **User Stories**
 _General User Stories for the entire Front-end part of the project_
 - As a **business owner**, I want to be able to **upload product images and descriptions for my buisness** page to that customers/ app users can see what products the buisness provides.
-- As a **business owner**, I want to be able to **drag and drop my images** to make the upload process simpler on my end!
+- As a **business owner**, I want to be able to** drag and drop my images** to make the upload process simpler on my end!
 - As a **business owner**, I want to be able to **set tags **related to my company to allow customers to quickly grasp what type of buiness I am running!
 - As a **business user** I want the process of displaying my company to be easy and intuitive so that I do not need to worry about aesthetics or any technical aspects of displaying my information.
 (General idea) Have a drag and drop for the buiness logo, name, banner, products and captions for EVERY buisness. Location of each is not customizable, but the images and descriptions (bio) are!
@@ -33,7 +33,6 @@ Both: The implementation with teh back-end was something we were not able to com
 **Youtube link to video:** https://www.youtube.com/watch?v=57br3O9kbqs
 
 **User stories**:
-_General User Stories for the entire Back-end part of the project_
 - As a **customer**, I want to **log into my account** so that **I can find local businesses**.
 - As a **customer**, I want to **be able to access public business pages using the business name**, so that **I can discover local businesses that I would  like to go to**.
 - As a **customer**, I **want the business webpage to provide publicly available information on the business such as the name, address, category, logo, and  description** so that **I have an easy way of finding where to go and if it is a business I would like to visit**.
@@ -42,13 +41,18 @@ _General User Stories for the entire Back-end part of the project_
 
 
 **What issues your team planned to address:**
-
-Our team planned to address the initial setup of a database that could store a business struct. We planned to address the need for the front-end team to be able to access data from that database and show it on the screen. This was tested using the html/template feature of Go. Within this, we were able to sucessfuly get data from the database and use that to navigate to different pages as well as have a user signup page and a user login page. Additionally, we were planning on connecting it directly to the angular portion of the front-end. Furthermore, we were planning on implementing the ability to add images to the business page by including them in the business struct.
+Our team planned to address the initial setup of a database that could store a business struct. We planned to address the need for the front-end team to be able to access data from that database and show it on the screen. This was tested using the html/template feature of Go. Within this, we were able to successfully get data from the database and use that to navigate to different pages as well as have a user signup page and a user login page. The login page would have redirect the user to the business page if the credentials were correct, and prevent the user from progressing if the credentials were incorrect. Additionally, we were planning on connecting it directly to the angular portion of the front-end. Furthermore, we were planning on implementing the ability to add images to the business page by including them in the business struct.
 
 **Which ones were successfully completed:**
 
-The issues that were sucessfully completed included setting up the database by implementing a function REST API that included the functionality of using the method 'GET' to allow the user to get their business page through different functions such as 'getBusiness' and 'getAllBusinesses', creating a business struct, using templates to invoke different methods of the database from a mock front-end, and enabling the user to signup and login to their account using the username and password that was provided to the database during the signup. 
+The issues that were successfully completed included setting up the database by implementing a function REST API that included the functionality of using the method 'GET' to allow the user to get their business page through different functions such as 'getBusiness' and 'getAllBusinesses', creating a business struct, using templates to invoke different methods of the database from a mock front-end, and enabling the user to signup and login to their account using the username and password that was provided to the database during the signup. We were able to get functionality with the templates by making the template forms have POST http methods that would allow the backend to read the data from the html forms.  The REST API was made using the GORM and GorillaMux (for basic routing) and is capable of the following: 
+* Getting all Businesses in the Database
+* Getting a specific Business from the database (by ID or Username) 
+* Adding items to the database
+* Removing items from the database
+* Editing already existing items in the database
+
 
 **Which ones didn't and why:**
 
-The issues that were not implemented during this sprint was the implementation of the database into the angular component of the front end. This was because of the fact that we intended to ensure that the database was fully functional prior to implementing it into the front end. Additionally, we wanted to wait until both front-end and back-end had a good starting point within this first sprint so that each team understood how everything that they implemented worked to ensure that when it came time to implement the database into the front-end, we were able to do so easier. Another issue that was not implemented within this sprint was the ability to store images within the business struct of the database. This was due to the fact that we were unsure how the images would be saved when given to the front-end. Once this is figured out, this issue will be implemented in later sprints.
+The issues that were not implemented during this sprint was the implementation of the database into the angular component of the front end. This was because of the fact that we intended to ensure that the database was fully functional prior to implementing it into the front end. Additionally, we wanted to wait until both front-end and back-end had a good starting point within this first sprint so that each team understood how everything that they implemented worked to ensure that when it came time to implement the database into the front-end, we were able to do so easier. As of right now, our implementation of template loading and backend/frontend connection relies on the POST method, so we hope that the front end can implement HTTP posts. Another issue that was not implemented within this sprint was the ability to store images within the business struct of the database. This was due to the fact that we were unsure how the images would be saved when given to the front-end. Once this is figured out, this issue will be implemented in later sprints. Another issue that was not implemented were some login security. Right now, a user can bypass the login screen and go directly to the business page by typing the URL for the user. Obviously this would nullify the purpose of the login screen. Our team had some difficulty in figuring out how to keep a user from entering business page without authorization, but we decided that we should reinvestigate this issue when we figure out how to connect the front end and back end. 
