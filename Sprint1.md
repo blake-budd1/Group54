@@ -5,7 +5,7 @@ Youtube Link to video: https://www.youtube.com/watch?v=dvvSo_izhKc&ab_channel=Iv
 **User Stories**
 _General User Stories for the entire Front-end part of the project_
 - As a **business owner**, I want to be able to **upload product images and descriptions for my buisness** page to that customers/ app users can see what products the buisness provides.
-- As a **business owner**, I want to be able to** drag and drop my images** to make the upload process simpler on my end!
+- As a **business owner**, I want to be able to **drag and drop my images** to make the upload process simpler on my end!
 - As a **business owner**, I want to be able to **set tags **related to my company to allow customers to quickly grasp what type of buiness I am running!
 - As a **business user** I want the process of displaying my company to be easy and intuitive so that I do not need to worry about aesthetics or any technical aspects of displaying my information.
 (General idea) Have a drag and drop for the buiness logo, name, banner, products and captions for EVERY buisness. Location of each is not customizable, but the images and descriptions (bio) are!
@@ -30,7 +30,10 @@ Both: The implementation with teh back-end was something we were not able to com
 
 # Back-end:
 
+**Youtube link to video: ** https://www.youtube.com/watch?v=57br3O9kbqs
+
 **User stories**:
+_General User Stories for the entire Back-end part of the project_
 - As a **customer**, I want to **log into my account** so that **I can find local businesses**.
 - As a **customer**, I want to **be able to access public business pages using the business name**, so that **I can discover local businesses that I would  like to go to**.
 - As a **customer**, I **want the business webpage to provide publicly available information on the business such as the name, address, category, logo, and  description** so that **I have an easy way of finding where to go and if it is a business I would like to visit**.
@@ -39,6 +42,7 @@ Both: The implementation with teh back-end was something we were not able to com
 
 
 **What issues your team planned to address:**
+
 Our team planned to address the initial setup of a database that could store a business struct. We planned to address the need for the front-end team to be able to access data from that database and show it on the screen. This was tested using the html/template feature of Go. Within this, we were able to sucessfuly get data from the database and use that to navigate to different pages as well as have a user signup page and a user login page. Additionally, we were planning on connecting it directly to the angular portion of the front-end. Furthermore, we were planning on implementing the ability to add images to the business page by including them in the business struct.
 
 **Which ones were successfully completed:**
