@@ -30,7 +30,7 @@ Both: The implementation with teh back-end was something we were not able to com
 
 # Back-end:
 
-**Youtube link to video: ** https://www.youtube.com/watch?v=57br3O9kbqs
+**Youtube link to video:** https://www.youtube.com/watch?v=57br3O9kbqs
 
 **User stories**:
 _General User Stories for the entire Back-end part of the project_
