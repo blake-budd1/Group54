@@ -11,5 +11,6 @@ export class LoginComponent {
   submitted = false;
   onSubmit() {
     this.submitted = true;
+    JSON.stringify(this.user);
   }
 }
