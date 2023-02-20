@@ -38,3 +38,43 @@ input[type=text2] {
 .Address {
     font-size: large;
 }
+
+
+mat-grid-tile {
+    border: 1px solid #eee;
+}
+.rightSide {
+    float:right;
+}
+.dropzone {
+    height: 150px;
+    width: 300px;
+    min-width: 100px;
+    display: table;
+    border: dashed 1px #aaa;
+    border-radius: 30px 30px 30px 30px;
+    background-color: #eee;
+}
+.text-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+.text-center {
+    text-align: center;
+    opacity: 0.75;
+}
+.browse-button {
+    color: darkcyan;
+    cursor: pointer;
+}
+.remove-button-image {
+    position: absolute;
+    cursor: pointer;
+    top: -5%;
+    background-color:darkcyan;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: auto;
+    text-align: center;
+}

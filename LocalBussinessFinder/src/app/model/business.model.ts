@@ -1,5 +1,8 @@
 import { FileHandle } from "./file-handle"
 
 export interface Buisness {
-    buisnessImages: FileHandle[]
+    buisnessImages: FileHandle[];
+    buisnessName: string;
+    buisnessAddress: string;
+    buisnessDescription: string;
 }

@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProfileSetupComponent } from './profile-setup/profile-setup.component';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
     AppRoutingModule,
     MatGridListModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

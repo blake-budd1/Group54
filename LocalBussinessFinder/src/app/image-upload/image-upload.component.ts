@@ -11,7 +11,10 @@ import { Buisness } from '../model/business.model';
 export class ImageUploadComponent {
   constructor(private sanitizer: DomSanitizer) {}
   buisness: Buisness = {
-    buisnessImages: []
+    buisnessImages: [],
+    buisnessName: "",
+    buisnessAddress: "",
+    buisnessDescription: ""
   }
   
   onFileSelected(event: any){
