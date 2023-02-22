@@ -8,7 +8,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProfileSetupComponent } from './profile-setup/profile-setup.component';
-import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -16,12 +16,10 @@ import { RegisterComponent } from './register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
- Wavid
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileSetupComponent,
-    ImageUploadComponent
+    ProfileSetupComponent
   ],
 
   imports: [
@@ -29,7 +27,8 @@ import { RegisterComponent } from './register/register.component';
     AppRoutingModule,
     MatGridListModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
