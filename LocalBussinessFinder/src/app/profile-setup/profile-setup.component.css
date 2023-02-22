@@ -78,3 +78,7 @@ mat-grid-tile {
     height: auto;
     text-align: center;
 }
+.submit_buttom {
+   border-radius:  10px;
+   color: darkcyan;
+}

@@ -7,14 +7,12 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProfileSetupComponent } from './profile-setup/profile-setup.component';
-import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileSetupComponent,
-    ImageUploadComponent
+    ProfileSetupComponent
   ],
   imports: [
     BrowserModule,

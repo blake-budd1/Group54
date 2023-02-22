@@ -3,6 +3,7 @@ import { FileHandle } from '../model/file-handle';
 import {DomSanitizer} from '@angular/platform-browser';
 import { Buisness } from '../model/business.model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown/multiselect.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile-setup',
@@ -10,7 +11,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown/multiselect.model';
   styleUrls: ['./profile-setup.component.css']
 })
 export class ProfileSetupComponent implements OnInit {
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {}
   buisness: Buisness = {
     buisnessName: "",
     buisnessAddress: "",
@@ -72,7 +73,13 @@ export class ProfileSetupComponent implements OnInit {
       { item_id: 4, item_text: 'Pet-friendly' },
       { item_id: 5, item_text: 'Cafe' },
       { item_id: 6, item_text: 'Boba' },
-      { item_id: 7, item_text: 'Bakery' }
+      { item_id: 7, item_text: 'Bakery' },
+      { item_id: 8, item_text: 'Free Wifi'}
     ]
   };
+  sendData() {
+    console.warn('buisnessAddress is...' + this.buisness.buisnessAddress);
+    this.buisness.buisnessAddress;
+    // this.http.post(_.json, this.buisness);
+  }
 };
