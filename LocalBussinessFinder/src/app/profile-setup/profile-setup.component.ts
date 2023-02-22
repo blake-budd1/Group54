@@ -81,5 +81,6 @@ export class ProfileSetupComponent implements OnInit {
     console.warn('buisnessAddress is...' + this.buisness.buisnessAddress);
     this.buisness.buisnessAddress;
     // this.http.post(_.json, this.buisness);
+    //hello world!
   }
 };
