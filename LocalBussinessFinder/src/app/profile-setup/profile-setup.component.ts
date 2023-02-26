@@ -4,6 +4,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { Buisness } from '../model/business.model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown/multiselect.model';
 import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+
+
 
 @Component({
   selector: 'app-profile-setup',
@@ -17,6 +22,7 @@ export class ProfileSetupComponent implements OnInit {
     buisnessAddress: "",
     buisnessImages: [],
     buisnessDescription: ""
+
   }
   onFileSelected(event: any){
     console.log(event)
@@ -77,10 +83,15 @@ export class ProfileSetupComponent implements OnInit {
       { item_id: 8, item_text: 'Free Wifi'}
     ]
   };
-  sendData() {
-    console.warn('buisnessAddress is...' + this.buisness.buisnessAddress);
-    this.buisness.buisnessAddress;
-    // this.http.post(_.json, this.buisness);
-    //hello world!
+  async sendData() {
+    console.warn('buisnessName is...' + this.buisness.buisnessName);
+    return this.http.post('api/test', this.buisness).pipe(
+      catchError(error => {
+        console.error(error);
+        return throwError(error);
+      })
+    ).subscribe(response => {
+      console.log(response);
+    });
   }
 };

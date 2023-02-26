@@ -4,13 +4,15 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 	"html/template"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 // Make buisness Struct, initialize Gorm DB and error
@@ -60,10 +62,25 @@ func removeBuisness(w http.ResponseWriter, r *http.Request) {
 }
 
 func createBuisness(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 	w.Header().Set("Content-Type", "application/json")
-	var n_b Buisness
+
+	type sampleBuisness struct {
+		Name        string `json:"buisnessName"`
+		Address     string `json:"buisnessAddress"`
+		Images      string `json:"buisnessImages"`
+		Description string `json:"buisnessDescription"`
+	}
+
+	var n_b sampleBuisness
+
+	//Attempting a struct transfer with the normal Buisness struct
+	//var n_b Buisness
 	//New decoder stores the body of the javascript information into the variable n_b
 	_ = json.NewDecoder(r.Body).Decode(&n_b)
+
 	//Add to database
 	db.Create(&n_b)
 	// "returns" the encoded n_b
@@ -216,13 +233,13 @@ func main() {
 
 	r.HandleFunc("/login", userQuery)
 	r.HandleFunc("/signup", signUpPage) //might need to change from /signup to a different directory later on, just used for testing now
-	r.HandleFunc("/", getAllBuisnesses).Methods("GET")
+	r.HandleFunc("/api/", getAllBuisnesses).Methods("GET")
 	r.HandleFunc("/user/{uname}", showBuisnessPage).Methods("GET")
 	r.HandleFunc("/{id}", getBuisness).Methods("GET")
-	r.HandleFunc("/", createBuisness).Methods("POST")
+	r.HandleFunc("/api/test", createBuisness).Methods("POST")
 	r.HandleFunc("/{id}", updateBuisness).Methods("PUT")
 	r.HandleFunc("/{id}", removeBuisness).Methods("DELETE")
 
-	log.Fatal(http.ListenAndServe(":3000", r))
+	log.Fatal(http.ListenAndServe(":5000", handlers.CORS()(r)))
 
 }
