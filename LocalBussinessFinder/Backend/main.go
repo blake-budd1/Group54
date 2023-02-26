@@ -67,9 +67,6 @@ func createBuisness(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	type sampleBuisness struct {
-		User        string `json:"uname"`
-		Pass        string `json:"pword"`
-		Ident       int    `json:"id"`
 		Name        string `json:"buisnessName"`
 		Address     string `json:"buisnessAddress"`
 		Images      string `json:"buisnessImages"`
