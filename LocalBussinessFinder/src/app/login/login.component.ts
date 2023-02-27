@@ -12,5 +12,14 @@ export class LoginComponent {
   onSubmit() {
     this.submitted = true;
     JSON.stringify(this.user);
+    console.log("submitted ran");
+  }
+  setUsername(val: string){
+    this.user.username = val;
+    console.warn(val);
+  }
+  setPassword(val1: string){
+    this.user.password = val1; 
+    console.warn(val1);
   }
 }

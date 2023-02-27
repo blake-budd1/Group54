@@ -6,22 +6,42 @@
         <h1 class="sign">Register</h1>
         <form (ngSubmit)="onSubmit()" class="form1">
             <div class="form-group">
-                <input type="email" placeholder="Enter Email" class="email" id="email" required
-                    [(ngModel)]="user.email" #name="ngModel">
-                    <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-                        Email is invalid
-                    </div>
+                <input type="email"
+                 placeholder="Enter Email" 
+                 class="email" id="email" 
+                 required
+                 #box1 
+                 (keyup) = "setEmail(box1.value)"
+                 >
+                    
             </div>
             
             <div class="form-group">
-                <input type="text" placeholder="Enter Username" class="un" id="username" required
-                    [(ngModel)]="user.username" #name="ngModel">
+                <input type="text" 
+                    placeholder="Enter Username"
+                    class="un" id="username"
+                    required
+                    #box2 
+                    (keyup) = "setUsername(box2.value)"
+                >
                 
             </div>
             <div class="form-group">
-                <input type="text" class="pass" id="Password" required [(ngModel)]="user.password"
-                    placeholder="Enter Password" #name="ngModel">
-                
+                <input type="password" class="pass"
+                    id="Password"
+                    placeholder="Enter Password"
+                    required
+                    #box3
+                    (keyup) = "setPassword(box3.value)"
+                >
+            </div>
+            <div class="form-group">
+                <input type="password" class="pass" 
+                    id="Password" placeholder="Confirm Password"
+                    required
+                    #box4
+                    (keyup) = "setPassword(box3.value)"
+                >
             </div>
             <button class="submit" type = "submit">Sign in</button>
             <!--Make the hrefs on these 2 links to the other pages-->
