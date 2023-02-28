@@ -42,6 +42,25 @@ This will activate the web server.
 The webserver is located at localhost:3000 on your local machine. A program like Postman can be 
 used to test if routing works correctly with the route, method pair. 
 
+## Instructions to Test:
+The main.go file and http requests can be tested using the main_test.go file, which has test cases that add coverage for 'GET', 'DELETE', 'POST', and
+'PUT' Http requests. 
+To run the tests, use the following commands:
+- To run all tests within the file:
+  - 'go test -v'
+- To run specific tests within the file:
+  - 'go test -v -run <name of testing function>'
+
+## Testing Coverage and Implementation:
+Each test case handles each handler method similarly,
+  - First, start the database
+  - Then, define what the method is going to request (handler method)
+      - and the path of that request, ie. "/id" or just "/"
+  - Then start a new recorder for httptest that can check the status
+  - Define which function from main it is calling in the 'http.HandlerFunc()'
+  - Use handler.ServeHTTP(rr, req) to have it write to the recorder
+  - Check if status code is as expected.
+
 ## Current implementation with front-end:
 As of right now, an html template is being used for both logging in and signing up. By navigating to
 localhost:3000/signup, users are able to create an account which is stored in the database. Once that is
