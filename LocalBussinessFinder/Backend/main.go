@@ -8,8 +8,10 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -68,6 +70,8 @@ func createBuisness(w http.ResponseWriter, r *http.Request) {
 	db.Create(&n_b)
 	// "returns" the encoded n_b
 	json.NewEncoder(w).Encode(n_b)
+	w.WriteHeader(200)
+	w.Write([]byte("Sucessfully added"))
 }
 
 func updateBuisness(w http.ResponseWriter, r *http.Request) {
@@ -177,6 +181,68 @@ func signUpPage(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
+// post -> frontend calls post request it creates a new business struct with
+// username and password, reroutes to sign up page
+func newAccount(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var t Buisness
+	err := decoder.Decode(&t)
+	if err != nil {
+		panic(err)
+	}
+	log.Println(t.User)
+	log.Println(t.Pass)
+}
+
+// put -> sign up page adds a put where the user can update the rest
+// of the variables in the business struct
+func signUpPage_(w http.ResponseWriter, r *http.Request) {
+	/*
+	   	    decoder := json.NewDecoder(r.Body)
+	   	  	var t Buisness
+	   	  	err := decoder.Decode(&t)
+	   	  	if err != nil {
+	   	  		panic(err)
+	   	  	}
+	   	  	log.Println(t.Name)
+
+	     testJson := {}
+	     var result map[string]any
+	     json.Unmarshal([]byte(testJson), &result)
+
+	     newBusi:= result["Name"].
+	*/
+	jsonFile, err := os.Open("signup.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Sucessfully opened signup.json")
+	//defer cloing of json File so we can parse later
+	defer jsonFile.Close()
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	var result map[string]interface{}
+	err_ := json.Unmarshal([]byte(byteValue), &result)
+	if err_ != nil {
+		return
+	}
+
+	fmt.Println(result["User"])
+
+}
+
+func login_(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var t Buisness
+	err := decoder.Decode(&t)
+	if err != nil {
+		panic(err)
+	}
+	log.Println(t.Name)
+	log.Println(t.Pass)
+}
+
 // Shows the buisness page when entering a certain buisness
 func showBuisnessPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -197,23 +263,25 @@ func showBuisnessPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func main() {
-	r := mux.NewRouter()
+func initDB() {
+	//r := mux.NewRouter()
 	//Establish the buisness database with gorm:
 
 	db, err = gorm.Open(sqlite.Open("BuisnessDB.db"), &gorm.Config{})
 	if err != nil {
 		panic("Connection to database failed!")
 	}
-	fmt.Println("Database started....")
-	fmt.Println("Running ....")
+	//fmt.Println("Database started....")
+	//fmt.Println("Running ....")
 	//Create the Buisness dataBase Schema
 	db.AutoMigrate(&Buisness{})
+}
+func main() {
 
 	//Establish the router for the mux router
-
+	r := mux.NewRouter()
 	//Build the routes
-
+	initDB()
 	r.HandleFunc("/login", userQuery)
 	r.HandleFunc("/signup", signUpPage) //might need to change from /signup to a different directory later on, just used for testing now
 	r.HandleFunc("/", getAllBuisnesses).Methods("GET")
@@ -222,7 +290,9 @@ func main() {
 	r.HandleFunc("/", createBuisness).Methods("POST")
 	r.HandleFunc("/{id}", updateBuisness).Methods("PUT")
 	r.HandleFunc("/{id}", removeBuisness).Methods("DELETE")
-
+	r.HandleFunc("/user/{uname}", signUpPage_).Methods("PUT") // method to handle front end sign up page
+	r.HandleFunc("/signup", newAccount).Methods("POST")
+	r.HandleFunc("/login", login_).Methods("POST")
 	log.Fatal(http.ListenAndServe(":3000", r))
 
 }
