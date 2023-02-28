@@ -1,16 +1,30 @@
 import { Component } from '@angular/core';
 import { LoginList } from '../lfile';
-
-@Component({
-  selector: 'app-login',
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+@Component({  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  constructor(private http: HttpClient){}
   user = new LoginList('Enter Username', 'Enter Password');
-  submitted = false;
   onSubmit() {
-    this.submitted = true;
-    JSON.stringify(this.user);
+    return this.http.post('api/test', this.user).pipe(
+      catchError(error => {
+        console.error(error);
+        return throwError(error);
+      })
+    ).subscribe(response => {
+      console.log(response);
+    });}
+  setUsername(val: string){
+    this.user.username = val;
+    console.warn(this.user.username);
+  }
+  setPassword(val1: string){
+    this.user.password = val1; 
+    console.warn(this.user.password);
   }
 }

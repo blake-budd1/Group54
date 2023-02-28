@@ -7,9 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-
-
-
 @Component({
   selector: 'app-profile-setup',
   templateUrl: './profile-setup.component.html',
@@ -21,9 +18,10 @@ export class ProfileSetupComponent implements OnInit {
     buisnessName: "",
     buisnessAddress: "",
     buisnessImages: [],
-    buisnessDescription: ""
-
+    buisnessDescription: "",
+    username: ""
   }
+  
   onFileSelected(event: any){
     console.log(event)
     if (event.target.files) {
@@ -56,7 +54,10 @@ export class ProfileSetupComponent implements OnInit {
     this.buisness.buisnessDescription = val3;
     console.warn(val3);
   }
-
+  setUSERNAMETEMP(val4: string) {
+    this.buisness.username = val4;
+    console.warn(val4);
+  }
 
   dropdownList = [{}];
   selectedItems = [{}];
