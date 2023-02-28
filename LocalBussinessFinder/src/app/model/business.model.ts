@@ -5,4 +5,5 @@ export interface Buisness {
     buisnessName: string;
     buisnessAddress: string;
     buisnessDescription: string;
+    username: string;
 }
