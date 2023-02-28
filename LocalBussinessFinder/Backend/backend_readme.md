@@ -49,7 +49,8 @@ To run the tests, use the following commands:
 - To run all tests within the file:
   - 'go test -v'
 - To run specific tests within the file:
-  - 'go test -v -run <name of testing function>'
+  - 'go test -v -run {name of testing function}'
+  - example: go test -v -run TestGetBuisness
 
 ## Testing Coverage and Implementation:
 Each test case handles each handler method similarly,
