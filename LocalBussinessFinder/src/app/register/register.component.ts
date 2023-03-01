@@ -15,7 +15,7 @@ export class RegisterComponent {
   onSubmit(httpSend:boolean = true) {
     this.submitted = true;
     if(httpSend){
-      return this.http.post('api/test', this.user).pipe(
+      return this.http.post('api/register', this.user).pipe(
         catchError(error => {
           console.error(error);
           return throwError(error);
@@ -37,6 +37,6 @@ export class RegisterComponent {
     this.user.password = val3;
   }
   setConfirmPassword(val4: string){
-    this.user.confirmPassword;
+    this.user.confirmPassword = val4;
   }
 }
