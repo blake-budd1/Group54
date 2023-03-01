@@ -4,7 +4,6 @@ package main
   To run these test cases, navigate to the backend folder and use "go test -v" to run all test cases
   or, "go test -v -run <name of testing function>" to run individual tests within the main_test.go file
 */
-
 /*
 This file "main_test.go is ran to test the http handler methods :
   - GET
@@ -33,7 +32,7 @@ import (
 	"testing"
 )
 
-func TestGetAllBuisnesses(t *testing.T) {
+func TestGetAllBusinesses(t *testing.T) {
 	initDB()
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
@@ -59,7 +58,7 @@ func TestGetAllBuisnesses(t *testing.T) {
 	}
 }
 
-func TestGetBuisness(t *testing.T) {
+func TestGetBusiness(t *testing.T) {
 	initDB()
 	req, err := http.NewRequest("GET", "/8", nil)
 	if err != nil {
@@ -85,7 +84,35 @@ func TestGetBuisness(t *testing.T) {
 	}
 }
 
-func TestCreateBuisness(t *testing.T) {
+// testing to make sure we do not get a fatal error when trying to get a business that doesn't exist
+// instead, it just doesnt return anything
+func TestGetBusinessNone(t *testing.T) {
+	initDB()
+	req, err := http.NewRequest("GET", "/100", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(getAllBuisnesses)
+
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+	var response []Buisness
+
+	if err := json.Unmarshal(rr.Body.Bytes(), &response); err != nil {
+		t.Errorf("got invalid response, expected list of buisnesses, got: %v", rr.Body.String())
+	}
+
+	if len(response) < 1 {
+		t.Errorf("expected at least 1 job, got %v", len(response))
+	}
+}
+
+func TestCreateBusiness(t *testing.T) {
 	initDB()
 	var jsonStr = []byte(`{"uname": "test", "pword":"test", "id":0, "name":"test", "address":"123", "cat": "test", "desc" = "test"}`)
 
@@ -104,7 +131,7 @@ func TestCreateBuisness(t *testing.T) {
 	}
 }
 
-func TestUpdateBuisness(t *testing.T) {
+func TestUpdateBusiness(t *testing.T) {
 	initDB()
 	var jsonStr = []byte(`{"uname": "test"}`)
 
@@ -123,7 +150,7 @@ func TestUpdateBuisness(t *testing.T) {
 	}
 }
 
-func TestRemoveBuisness(t *testing.T) {
+func TestRemoveBusiness(t *testing.T) {
 	initDB()
 	req, err := http.NewRequest("DELETE", "/12", nil)
 	if err != nil {
