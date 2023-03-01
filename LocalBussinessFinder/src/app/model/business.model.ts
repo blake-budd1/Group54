@@ -6,4 +6,5 @@ export interface Buisness {
     buisnessAddress: string;
     buisnessDescription: string;
     username: string;
+    buisnessTags: string[];
 }

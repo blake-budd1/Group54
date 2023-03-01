@@ -19,7 +19,8 @@ export class ProfileSetupComponent implements OnInit {
     buisnessAddress: "",
     buisnessImages: [],
     buisnessDescription: "",
-    username: ""
+    username: "",
+    buisnessTags: []
   }
   
   onFileSelected(event: any){
@@ -60,7 +61,6 @@ export class ProfileSetupComponent implements OnInit {
   }
 
   dropdownList = [{}];
-  selectedItems = [{}];
   dropdownSettings = {};
   ngOnInit() {
     this.dropdownList = this.getData();
@@ -70,6 +70,26 @@ export class ProfileSetupComponent implements OnInit {
       textField: "item_text",
       enableCheckAll: false,
       limitSelection: 5
+    }
+  }
+  //does not remove any
+  onTagSelect(item: any) {
+    this.buisness.buisnessTags.push(item.item_text);
+    console.warn(item.item_text);
+    for (let index = 0; index < this.buisness.buisnessTags.length; index++) {
+      console.warn(this.buisness.buisnessTags[index]);
+    }
+  }
+  onTagDeSelect(item: any) {
+    let word = item.item_text;
+    console.warn(word);
+    for (let index = 0; index < this.buisness.buisnessTags.length; index++) {
+      if (this.buisness.buisnessTags[index] == word) {
+        this.buisness.buisnessTags.splice(index,1);
+      }
+    }
+    for (let index = 0; index < this.buisness.buisnessTags.length; index++) {
+      console.warn(this.buisness.buisnessTags[index]);
     }
   }
   getData() {
@@ -86,6 +106,7 @@ export class ProfileSetupComponent implements OnInit {
   };
   async sendData() {
     console.warn('buisnessName is...' + this.buisness.buisnessName);
+    console.warn(this.buisness.buisnessTags.length);
     return this.http.post('api/test', this.buisness).pipe(
       catchError(error => {
         console.error(error);

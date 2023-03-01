@@ -35,3 +35,6 @@ import { RegisterComponent } from './register/register.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+// ng add @cypress/schematic
+// ng test (karma/ jasmine tests)
+// npx cypress open
