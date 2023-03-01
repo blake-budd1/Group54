@@ -17,8 +17,10 @@ Currently, the information stored in the business model is:
 More will be added in future iterations of the project (including image etc). 
 *Note: each struct has an ID that is given by GORM, which the reason there is not one within the business struct
 
+## Sprint 1
+
 ## REST API: 
-A rudimentary Rest API has been implemented for the business. So far, the following 
+A rudimentary Rest API has been implimented for the buisness. So far, the following 
 routes and http methods have been implemented: 
 
 The following list is of the following format: 
@@ -42,6 +44,47 @@ This will activate the web server.
 The webserver is located at localhost:3000 on your local machine. A program like Postman can be 
 used to test if routing works correctly with the route, method pair. 
 
+## Current implementation with Postman (Sprint 1):
+As of right now, an html template is being used for both logging in and signing up. By navigating to
+localhost:3000/signup, users are able to create an account which is stored in the database. Once that is
+done, it redirects the user to their business page (localhost:3000/{businessName}). After the initial
+signup, the user can use localhost:3000/login to sign into their account, which also redirects to
+their business page (localhost:3000/{businessName}). 
+
+
+## Sprint 2
+
+## Current implementation with angular front-end (as of Sprint 2): 
+The REST API remains, but there is now greater interaction between the front end and the backend. Users can regsister thier accounts from the front end interface, and they can make edits to thier buisnesses using the Profile Setup components from the front end. Additionally, there the loginParser and RegistryParser first perform necessary queues on the database to determine if the the login and account registry is valid or not. The current version of the "Business" databse model also allows for the storage of image names (assuming images are stored in the front end server and not in the database). 
+
+## Instructions on parsing backend response JSONS: 
+The Login, Registry, and Setup have special response codes that the front end can use to determine to perform conditional rendering. 
+
+Login Component (loginStatus): 
+ - "Username_Not_Found": The username entered is not in the database 
+ - "Incorrect_Password": The Username has been found but the password is incorrect
+ - "Success" The username has been found and the correct password was provided, this gives the queue to the front end to route to the Buisness     account page
+
+Register Component (Reg_State): 
+- "Unmatched_Password" : The entry in "Password" and "Confirm Password" do not match
+- "Email_Registered" : An account with an identical email to the one provided exists in the database
+- "Username_Taken" : An account with an idential username to the one provided exists in the database
+- "Successful" : The account registration was successful, queue to route to the Buisness Account page. 
+
+Profile Setup Component (update_status): 
+The profile setup will be done in the Buisness account page. Once the routing the implemented, the username of the updating buisness will be extracted from the origin of the PUT request. As a temporary solution the user must input the username manually, this will not be needed when routing is implemented. 
+
+- "User_Not_Found": The Username of the entry to receive the update is not in the database. 
+- "Success": The updates were successful 
+
+## Parsing delimeter Strings
+Due to SQLite limitations, arrays cannot be stored as attributes to our GORM Model. We hope to update this in future sprints. Due to thier simplicity and relatively short length, the names of images and the tags for categories are stores in a singular string where the entries are seperated by semicolons. There will be a check implemented to ensure that no image filename has a semicolon in the name. It is assumed that the front end will store all uploaded images in an asset file.
+
+Example: For an account the images attribute may look like
+"Picture1.png;Picture2.png;Picture3.png"
+
+The front-end can easily parse this string and isolate the images in its asset storage that is associated with each account. 
+
 ## Instructions to Test:
 To run the tests, use the following commands:
 - To run all tests within the file:
@@ -64,10 +107,3 @@ Each test case handles each handler method similarly:
   - Check if status code is as expected, which will be returned from the handler method function.
   - If status code is equal to 'StatusOk' which is equal to 200, then the test passed, otherwise,
       - returned a different status code and failed test case.
-
-## Current implementation with front-end:
-As of right now, an html template is being used for both logging in and signing up. By navigating to
-localhost:3000/signup, users are able to create an account which is stored in the database. Once that is
-done, it redirects the user to their business page (localhost:3000/{businessName}). After the initial
-signup, the user can use localhost:3000/login to sign into their account, which also redirects to
-their business page (localhost:3000/{businessName}). 
