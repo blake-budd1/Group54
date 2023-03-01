@@ -111,7 +111,7 @@ export class ProfileSetupComponent implements OnInit {
     var buildUrl = `api/user=` + this.buisness.username + '/'
     
     console.warn(this.buisness.buisnessTags.length);
-    return this.http.post(buildUrl, this.buisness).pipe(
+    return this.http.put(buildUrl, this.buisness).pipe(
       catchError(error => {
         console.error(error);
         return throwError(error);
