@@ -4,24 +4,6 @@ package main
   To run these test cases, navigate to the backend folder and use "go test -v" to run all test cases
   or, "go test -v -run <name of testing function>" to run individual tests within the main_test.go file
 */
-/*
-This file "main_test.go is ran to test the http handler methods :
-  - GET
-  - POST
-  - DELETE
-  - PUT
-Also, needed to refactor main.go to allow for an initDB() function, just moved the mux router definition to its
-own function then called in main.
-
-Each test case handles each handler method similarly,
-  - first, start the database
-  - then, define what the method is going to request (handler method)
-      - and the path of that request, ie. "/id" or just "/"
-  - then start a new recorder for httptest that can check the status
-  - define which function from main it is calling in the 'http.HandlerFunc()'
-  - use handler.ServeHTTP(rr, req) to have it write to the recorder
-  - check if status code is as expected.
-*/
 
 //imports needed for testing
 import (
@@ -85,7 +67,7 @@ func TestGetBusiness(t *testing.T) {
 }
 
 // testing to make sure we do not get a fatal error when trying to get a business that doesn't exist
-// instead, it just doesnt return anything
+// instead, it just doesn't return anything
 func TestGetBusinessNonExistent(t *testing.T) {
 	initDB()
 	req, err := http.NewRequest("GET", "/100", nil)
@@ -182,16 +164,18 @@ func TestRemoveBusinessNonExistent(t *testing.T) {
 }
 
 /*
-	r.HandleFunc("/", getAllBuisnesses).Methods("GET")                  -> being tested
-	r.HandleFunc("/{id}", getBuisness).Methods("GET")                   -> being tested
-  r.HandleFunc("/", createBuisness).Methods("POST")                   -> being tested
-	r.HandleFunc("/{id}", updateBuisness).Methods("PUT")                -> not tested yet
-	r.HandleFunc("/{id}", removeBuisness).Methods("DELETE")             -> not tested yet
-	r.HandleFunc("/{id}", updateBuisness).Methods("PUT")                -> not tested yet
+	r.HandleFunc("/", getAllBusinesses).Methods("GET")                  -> being tested
+	r.HandleFunc("/{id}", getBusiness).Methods("GET")                   -> being tested
+  r.HandleFunc("/", createBusiness).Methods("POST")                   -> being tested
+	r.HandleFunc("/{id}", updateBusiness).Methods("PUT")                -> being tested
+	r.HandleFunc("/{id}", removeBusiness).Methods("DELETE")             -> being tested
+	r.HandleFunc("/{id}", updateBusiness).Methods("PUT")                -> being tested
+  r.HandleFunc("/{id}", updateBusiness).Methods("PUT) -> with non existent profile -> being tested
+	r.HandleFunc("/{id}", removeBusiness).Methods("DELETE") -> with non existent profile -> being tested
 --------------------------------------------------------------------------------------
  --------------------------------------------------------------------------------------
 	r.HandleFunc("/user/{uname}", signUpPage_).Methods("PUT")           -> not going to test
-	r.HandleFunc("/user/{uname}", showBuisnessPage).Methods("GET")      -> not going to test
+	r.HandleFunc("/user/{uname}", showBusinessPage).Methods("GET")      -> not going to test
 	r.HandleFunc("/signup", newAccount).Methods("POST")                 -> not going to test
 	r.HandleFunc("/login", login_).Methods("POST")                      -> not going to test
 */
