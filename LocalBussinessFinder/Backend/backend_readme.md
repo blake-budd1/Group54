@@ -61,6 +61,8 @@ Each test case handles each handler method similarly,
   - Define which function from main it is calling in the 'http.HandlerFunc()'
   - Use handler.ServeHTTP(rr, req) to have it write to the recorder
   - Check if status code is as expected, which will be retuned from the handler method function.
+  - If status code is equal to 'StatusOk' which is equal to 200, then the test passed, otherwise,
+      - returned a different status code and failed test case.
 
 ## Current implementation with front-end:
 As of right now, an html template is being used for both logging in and signing up. By navigating to
