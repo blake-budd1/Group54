@@ -280,8 +280,9 @@ func main() {
 
 	//Establish the router for the mux router
 	r := mux.NewRouter()
-	//Build the routes
 	initDB()
+	//Build the routes
+
 	r.HandleFunc("/login", userQuery)
 	r.HandleFunc("/signup", signUpPage) //might need to change from /signup to a different directory later on, just used for testing now
 	r.HandleFunc("/", getAllBuisnesses).Methods("GET")
