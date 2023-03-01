@@ -304,10 +304,25 @@ func parseRegistry(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func main() {
-	r := mux.NewRouter()
+func initDB() {
+	//r := mux.NewRouter()
 	//Establish the buisness database with gorm:
 
+	db, err = gorm.Open(sqlite.Open("BuisnessDB.db"), &gorm.Config{})
+	if err != nil {
+		panic("Connection to database failed!")
+	}
+	//fmt.Println("Database started....")
+	//fmt.Println("Running ....")
+	//Create the Buisness dataBase Schema
+	db.AutoMigrate(&Buisness{})
+}
+
+func main() {
+	r := mux.NewRouter()
+  initDB()
+	//Establish the buisness database with gorm:
+  /*
 	db, err = gorm.Open(sqlite.Open("BuisnessDB.db"), &gorm.Config{})
 	if err != nil {
 		panic("Connection to database failed!")
@@ -317,7 +332,7 @@ func main() {
 	fmt.Println("Running ....")
 	//Create the Buisness dataBase Schema
 	db.AutoMigrate(&Buisness{})
-
+  */
 	//Establish the router for the mux router
 
 	//Build the routes
