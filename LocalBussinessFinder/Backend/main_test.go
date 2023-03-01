@@ -86,7 +86,7 @@ func TestGetBusiness(t *testing.T) {
 
 // testing to make sure we do not get a fatal error when trying to get a business that doesn't exist
 // instead, it just doesnt return anything
-func TestGetBusinessNone(t *testing.T) {
+func TestGetBusinessNonExistent(t *testing.T) {
 	initDB()
 	req, err := http.NewRequest("GET", "/100", nil)
 	if err != nil {
@@ -153,6 +153,22 @@ func TestUpdateBusiness(t *testing.T) {
 func TestRemoveBusiness(t *testing.T) {
 	initDB()
 	req, err := http.NewRequest("DELETE", "/12", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(removeBuisness)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("hander returned wrong status code: got %v, wanted %v",
+			status, http.StatusOK)
+	}
+}
+
+// making sure we do not get fatal error when something tries to access non existent businesses
+func TestRemoveBusinessNonExistent(t *testing.T) {
+	initDB()
+	req, err := http.NewRequest("DELETE", "/100", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

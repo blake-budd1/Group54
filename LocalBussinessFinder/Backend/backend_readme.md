@@ -18,7 +18,7 @@ More will be added in future iterations of the project (including image etc).
 *Note: each struct has an ID that is given by GORM, which the reason there is not one within the business struct
 
 ## REST API: 
-A rudimentary Rest API has been implimented for the buisness. So far, the following 
+A rudimentary Rest API has been implemented for the business. So far, the following 
 routes and http methods have been implemented: 
 
 The following list is of the following format: 
@@ -43,24 +43,25 @@ The webserver is located at localhost:3000 on your local machine. A program like
 used to test if routing works correctly with the route, method pair. 
 
 ## Instructions to Test:
-The main.go file and http requests can be tested using the 'main_test.go' file, which has test cases that add coverage for 'GET', 'DELETE', 'POST', and
-'PUT' http requests. 
 To run the tests, use the following commands:
 - To run all tests within the file:
   - 'go test -v'
 - To run specific tests within the file:
   - 'go test -v -run {name of testing function}'
-  - example: go test -v -run TestGetBuisness
+  - example: go test -v -run TestGetBusiness
 
 ## Testing Coverage and Implementation:
-Each test case handles each handler method similarly,
+The main.go file and http requests can be tested using the 'main_test.go' file, which has test cases that add coverage for 'GET', 'DELETE', 'POST', and
+'PUT' http requests. It also tests trying to access ID's that are not in the database to make sure that can be handled without 
+causing any errors.
+Each test case handles each handler method similarly: 
   - First, start the database
   - Then, define what the method is going to request (handler method)
       - and the path of that request, ie. "/id" or just "/"
   - Then start a new recorder for httptest that can check the status
   - Define which function from main it is calling in the 'http.HandlerFunc()'
   - Use handler.ServeHTTP(rr, req) to have it write to the recorder
-  - Check if status code is as expected, which will be retuned from the handler method function.
+  - Check if status code is as expected, which will be returned from the handler method function.
   - If status code is equal to 'StatusOk' which is equal to 200, then the test passed, otherwise,
       - returned a different status code and failed test case.
 
