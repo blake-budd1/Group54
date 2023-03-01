@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ProfileSetupComponent } from './profile-setup.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { DebugElement } from '@angular/core';
+import { DebugElement, Input } from '@angular/core';
 import { By } from '@angular/platform-browser';
 describe('ProfileSetupComponent', () => {
   let component: ProfileSetupComponent;
@@ -35,7 +35,7 @@ describe('ProfileSetupComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should display current business name', () => {
+  it('should display default business name', () => {
     expect(htmlElement.textContent).toEqual("Company name is: ");
     //what happens when you write something (should update every time a character is pressed)
   })
@@ -106,5 +106,32 @@ describe('ProfileSetupComponent', () => {
     fixture.detectChanges();
     expect(component.buisness.buisnessImages.length).toBe(8);
     //expect(component.buisness.buisnessImages[8].file.toString()).toBe('test-file1.pdf');
+  })
+  //this should add the string of the selcted tag to the array!
+  it('should add tag correctly', () => {
+    const input = { item_id: 1, item_text: 'Food' };
+    component.onTagSelect(input);
+    expect(component.buisness.buisnessTags).toContain(input.item_text);
+    //should be incorrect
+  })
+  it('should add 5 and remove one tag correctly', () => {
+    const input1 = { item_id: 1, item_text: 'Food1' };
+    component.onTagSelect(input1);
+    const input2 = { item_id: 2, item_text: 'Food2' };
+    component.onTagSelect(input2);
+    const input3 = { item_id: 3, item_text: 'Food3' };
+    component.onTagSelect(input3);
+    const input4 = { item_id: 4, item_text: 'Food4' };
+    component.onTagSelect(input4);
+    const input5 = { item_id: 5, item_text: 'Food5' };
+    component.onTagSelect(input5);
+
+    expect(component.buisness.buisnessTags.length).toBe(5);
+
+    component.onTagDeSelect(input4);
+    //check if it contains food4
+    expect(component.buisness.buisnessTags).not.toContain('Food4');
+    expect(component.buisness.buisnessTags.length).toBe(4);
+    
   })
 });
