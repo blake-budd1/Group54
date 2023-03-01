@@ -27,11 +27,41 @@ type Buisness struct {
 	User        string `json:"uname"`
 	Pass        string `json:"pword"`
 	Ident       int    `json:"id"`
-	Name        string `json:"name"`
-	Address     string `json:"address"`
-	Category    string `json:"cat"`
-	Description string `json:"desc"`
+	Image       string `json:"buisnessImages"`
+	Name        string `json:"buisnessName"`
+	Address     string `json:"buisnessAddress"`
+	Description string `json:"buisnessDescription"`
+	Email       string `json:"buisnessEmail"`
+	Category    string `json:"buisnessTag"`
 }
+
+func fill_defaults(bsn *Buisness) {
+
+	// setting default values
+	if bsn.User == "" {
+		bsn.User = "Please provide a username (Something is wrong)"
+	}
+	if bsn.Pass == "" {
+		bsn.Pass = "Please provide a password (Something is wrong)"
+	}
+	if bsn.Email == "" {
+		bsn.Email = "Please provide an email (Something is wrong)"
+	}
+	if bsn.Name == "" {
+		bsn.Name = "A business name can be added in the registry page!"
+	}
+	if bsn.Address == "" {
+		bsn.Address = "A business address can be added in the registry page!"
+	}
+	if bsn.Description == "" {
+		bsn.Description = "A business description can be added in the registry page!"
+	}
+	if bsn.Category == "" {
+		bsn.Category = "Business categories be added to in the registry page!"
+	}
+}
+
+//Fill Defaults
 
 // REST API:
 func getAllBuisnesses(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +104,7 @@ func createBuisness(w http.ResponseWriter, r *http.Request) {
 		Description string `json:"buisnessDescription"`
 	}
 
-	var n_b sampleBuisness
+	var n_b Buisness
 
 	//Attempting a struct transfer with the normal Buisness struct
 	//var n_b Buisness
@@ -87,114 +117,56 @@ func createBuisness(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(n_b)
 }
 
+// Update Status can have 2 responses (successful and User_Not_Found)
 func updateBuisness(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	param := mux.Vars(r)
 	//Filter by ID
 	var targetBuis Buisness
-	req, _ := strconv.Atoi(param["id"])
-	db.Where("id = ?", req).First(&targetBuis)
-	json.NewDecoder(r.Body).Decode(&targetBuis)
-	db.Save(&targetBuis)
-	json.NewEncoder(w).Encode(targetBuis)
-}
+	req, _ := param["user"]
 
-// Querying the database for when provided with a name in the get request
-func userQuery(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("index.html"))
-	if r.Method == "GET" {
-		tmpl.Execute(w, nil)
-		return
-	} else if r.Method == "POST" {
-		err := r.ParseForm()
-		if err != nil {
-			fmt.Printf("Die")
-			return
-		}
-		//store the username and password entered in the login form
-		name := r.PostFormValue("userNameI")
-		password := r.PostFormValue("pWord")
-
-		//if found, store in sample business
-		var sampleBuisness Buisness
-		db.Where("User = ?", name).First(&sampleBuisness)
-
-		if password == sampleBuisness.Pass {
-			print("success!")
-			login = true
-			//http.Redirect(w, r, "/"+strconv.Itoa(int(sampleBuisness.ID)), http.StatusFound)
-			http.Redirect(w, r, "/user/"+sampleBuisness.Name, http.StatusFound)
-			return
-		} else {
-			print("Incorrect Password!")
-			http.Redirect(w, r, "/login", http.StatusFound)
-		}
+	type updateStatus struct {
+		Update_Status string `json:"update_status"`
 	}
-	tmpl.Execute(w, nil)
-}
 
-// allows the user to use a sign-up page to enter their information into the database
-// can be changed if we want to just have a sign-up page with username and password
-// then redirect to a page where they can set up their profile, would just have to do the
-// username and password first then redirect to the new page and load the data in from there
-// but it can be done with the same function just get confirmation they created user and pword.
+	type arrayCarrier struct {
+		ImageArray []string `json:"buisnessImageNames"`
+	}
 
-func signUpPage(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("signup.html"))
-	if r.Method == "GET" {
-		tmpl.Execute(w, nil)
+	var uStatus updateStatus
+	var arryCarry arrayCarrier
+
+	uStatus.Update_Status = "Successful"
+
+	result := db.First(&targetBuis, "User = ?", req)
+
+	if result.RowsAffected == 0 {
+		uStatus.Update_Status = "User_Not_Found"
+		json.NewEncoder(w).Encode(&uStatus)
 		return
-	} else if r.Method == "POST" {
-		err := r.ParseForm()
-		if err != nil {
-			fmt.Printf("Die")
-			return
+	} else {
+		json.NewDecoder(r.Body).Decode(&arryCarry)
+		json.NewDecoder(r.Body).Decode(&targetBuis)
+
+		var imageString string = ""
+
+		print(len(arryCarry.ImageArray))
+		for i := 0; i < len(arryCarry.ImageArray); i++ {
+			if i < (len(arryCarry.ImageArray) - 1) {
+				imageString += arryCarry.ImageArray[i] + ";"
+			} else {
+				imageString += arryCarry.ImageArray[i]
+			}
 		}
 
-		//get all info from signup page
-		name := r.PostFormValue("userNameI")
-		password := r.PostFormValue("pWord")
-		// used to double check password, if password and passwordTest
-		// do not match, must redo login
-		passwordTest := r.PostFormValue("pWordTest")
-		busName := r.PostFormValue("busName")
-		address := r.PostFormValue("address")
-		busCat := r.PostFormValue("busCat")
-		desc := r.PostFormValue("busDesc")
-
-		//make sure passwords match (otherwise have to redo)
-		if password == passwordTest {
-			print("passwords match")
-		} else {
-			print("password does not match")
-			http.Redirect(w, r, "/signup", http.StatusFound)
-			return
-		}
-		//create new business struct with given information
-		newBus := Buisness{
-			User: name,
-			Pass: password,
-			//Ident:       00, // unsure if we need this since GORM includes their own ID that we can find using busName
-			Name:        busName,
-			Address:     address,
-			Category:    busCat,
-			Description: desc,
-		}
-		//add the new business created in sign in to the database
-		_ = json.NewDecoder(r.Body).Decode(&newBus)
-		//Add to database
-		db.Create(&newBus)
-
-		//redirect to business page, directing there from business name
-		//will be:  "localhost:3000/{businessName}:
-		login = true
-		http.Redirect(w, r, "/user/"+newBus.Name, http.StatusFound)
+		targetBuis.Image = imageString
+		db.Save(&targetBuis)
+		json.NewEncoder(w).Encode(&uStatus)
 		return
 	}
-	tmpl.Execute(w, nil)
 }
 
-// Shows the buisness page when entering a certain buisness
+// Shows the buisness page when entering a certain buisness //REPLACE WITH ANGULAR STUFF
 func showBuisnessPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if login == true {
@@ -214,6 +186,124 @@ func showBuisnessPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+/*
+The output json can contain 3 states: Successful, Username_not_found,
+incorrect_password
+*/
+func parseLogin(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	type Login struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	type Status struct {
+		LoginStatus string `json:"loginStatus"`
+	}
+
+	var logStruct Login
+	_ = json.NewDecoder(r.Body).Decode(&logStruct)
+
+	var usrInput string = logStruct.Username
+	var passInput string = logStruct.Password
+
+	var logStatus Status
+	logStatus.LoginStatus = "Successful"
+
+	//Check the database for the usrname and password
+	var targetBuisness Buisness
+	result := db.First(&targetBuisness, "User = ?", usrInput)
+
+	if result.RowsAffected == 0 {
+		logStatus.LoginStatus = "Username_Not_Found"
+		json.NewEncoder(w).Encode(&logStatus)
+		return
+	} else {
+		if passInput == targetBuisness.Pass {
+			logStatus.LoginStatus = "Success"
+			json.NewEncoder(w).Encode(&logStatus)
+		} else {
+			logStatus.LoginStatus = "Incorrect_Password"
+			json.NewEncoder(w).Encode(&logStatus)
+		}
+
+		//return the status of the log file
+
+	}
+}
+
+/*
+  Registation Data can contain 4 states. Successful, Username is taken,
+  email is already registered, and passwords does not match
+*/
+
+func parseRegistry(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	type Registration struct {
+		Email           string `json:"email"`
+		Username        string `json:"username"`
+		Password        string `json:"password"`
+		ConfirmPassword string `json:"confirmPassword"`
+	}
+
+	type Status struct {
+		RegistrationState string `json:"Reg_State"`
+	}
+	//Initialize the status struct
+	var reg_status Status
+	reg_status.RegistrationState = "Successful"
+
+	//Place the registration into the
+	var new_register Registration
+	_ = json.NewDecoder(r.Body).Decode(&new_register)
+
+	//Unpack the variables of the new_register
+	var in_email string = new_register.Email
+	var in_username string = new_register.Username
+	var in_password string = new_register.Password
+	var in_ConfirmPass string = new_register.ConfirmPassword
+
+	//perform the following tests
+
+	//Confirm password and main passwords do not match
+	if in_password != in_ConfirmPass {
+		println(in_password)
+		println(in_ConfirmPass)
+		reg_status.RegistrationState = "Unmatched_Password"
+		json.NewEncoder(w).Encode(reg_status)
+		return
+	}
+
+	//Search if the Email already exists in the system
+	var sampleBuisness Buisness
+	result := db.First(&sampleBuisness, "Email = ?", in_email)
+	if result.RowsAffected != 0 {
+		reg_status.RegistrationState = "Email_Registered"
+		json.NewEncoder(w).Encode(reg_status)
+		return
+	}
+
+	//Search if the Username is already in use:
+	result = db.First(&sampleBuisness, "User = ?", in_username)
+	if result.RowsAffected != 0 {
+		reg_status.RegistrationState = "Username_Taken"
+		json.NewEncoder(w).Encode(reg_status)
+		return
+	}
+
+	//
+	if reg_status.RegistrationState == "Successful" {
+		var new_Buisness Buisness
+		fill_defaults(&new_Buisness)
+		new_Buisness.User = in_username
+		new_Buisness.Pass = in_password
+		new_Buisness.Email = in_email
+		db.Create(&new_Buisness)
+		json.NewEncoder(w).Encode(reg_status)
+	}
+
+}
+
 func main() {
 	r := mux.NewRouter()
 	//Establish the buisness database with gorm:
@@ -222,6 +312,7 @@ func main() {
 	if err != nil {
 		panic("Connection to database failed!")
 	}
+
 	fmt.Println("Database started....")
 	fmt.Println("Running ....")
 	//Create the Buisness dataBase Schema
@@ -231,15 +322,16 @@ func main() {
 
 	//Build the routes
 
-	r.HandleFunc("/login", userQuery)
-	r.HandleFunc("/signup", signUpPage) //might need to change from /signup to a different directory later on, just used for testing now
+	r.HandleFunc("/api/login", parseLogin).Methods("POST")
+	r.HandleFunc("/api/register", parseRegistry).Methods("POST")
 	r.HandleFunc("/api/", getAllBuisnesses).Methods("GET")
-	r.HandleFunc("/user/{uname}", showBuisnessPage).Methods("GET")
+	r.HandleFunc("/api/user/{uname}", showBuisnessPage).Methods("GET")
 	r.HandleFunc("/{id}", getBuisness).Methods("GET")
 	r.HandleFunc("/api/test", createBuisness).Methods("POST")
-	r.HandleFunc("/{id}", updateBuisness).Methods("PUT")
-	r.HandleFunc("/{id}", removeBuisness).Methods("DELETE")
+	r.HandleFunc("/api/user={user}/", updateBuisness).Methods("PUT")
+	r.HandleFunc("/api/{id}", removeBuisness).Methods("DELETE")
 
+	//r.PathPrefix("/").Handler(AngularHandler).Methods("GET")
 	log.Fatal(http.ListenAndServe(":5000", handlers.CORS()(r)))
 
 }
