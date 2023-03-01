@@ -11,16 +11,22 @@ import { catchError } from 'rxjs/operators';
 export class RegisterComponent {
   constructor(private http: HttpClient){}
   user = new RegisterList('Enter Email', 'Enter Username', 'Enter Password', 'Confirm Password');
-  submitted = false;
-  onSubmit() {
-    return this.http.post('api/test', this.user).pipe(
-      catchError(error => {
-        console.error(error);
-        return throwError(error);
-      })
-    ).subscribe(response => {
-      console.log(response);
-    });}
+  submitted:boolean = false;
+  onSubmit(httpSend:boolean = true) {
+    this.submitted = true;
+    if(httpSend){
+      return this.http.post('api/test', this.user).pipe(
+        catchError(error => {
+          console.error(error);
+          return throwError(error);
+        })
+      ).subscribe(response => {
+        console.log(response);
+      });
+    }else{
+      return true;
+    }
+  }
   setEmail(val1: string){
     this.user.email = val1;
   }
