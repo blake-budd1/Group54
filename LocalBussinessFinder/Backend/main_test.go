@@ -16,7 +16,7 @@ import (
 
 func TestGetAllBusinesses(t *testing.T) {
 	initDB()
-	req, err := http.NewRequest("GET", "/", nil)
+	req, err := http.NewRequest("GET", "/api/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -98,7 +98,7 @@ func TestCreateBusiness(t *testing.T) {
 	initDB()
 	var jsonStr = []byte(`{"uname": "test", "pword":"test", "id":0, "name":"test", "address":"123", "cat": "test", "desc" = "test"}`)
 
-	req, err := http.NewRequest("POST", "/", bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest("POST", "/api/test", bytes.NewBuffer(jsonStr))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -117,7 +117,7 @@ func TestUpdateBusiness(t *testing.T) {
 	initDB()
 	var jsonStr = []byte(`{"uname": "test"}`)
 
-	req, err := http.NewRequest("PUT", "/8", bytes.NewBuffer(jsonStr))
+	req, err := http.NewRequest("PUT", "/api/user=8", bytes.NewBuffer(jsonStr))
 	if err != nil {
 		t.Fatal(err)
 	}
