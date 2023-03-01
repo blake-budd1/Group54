@@ -14,7 +14,7 @@ export class LoginComponent {
   onSubmit(httpSend:boolean = true) {
     this.submitted = true;
     if(httpSend){
-      return this.http.post('api/test', this.user).pipe(
+      return this.http.post('api/login', this.user).pipe(
         catchError(error => {
           console.error(error);
           return throwError(error);
