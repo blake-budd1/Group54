@@ -10,15 +10,22 @@ import { catchError } from 'rxjs/operators';
 export class LoginComponent {
   constructor(private http: HttpClient){}
   user = new LoginList('Enter Username', 'Enter Password');
-  onSubmit() {
-    return this.http.post('api/test', this.user).pipe(
-      catchError(error => {
-        console.error(error);
-        return throwError(error);
-      })
-    ).subscribe(response => {
-      console.log(response);
-    });}
+  submitted:boolean = false;
+  onSubmit(httpSend:boolean = true) {
+    this.submitted = true;
+    if(httpSend){
+      return this.http.post('api/test', this.user).pipe(
+        catchError(error => {
+          console.error(error);
+          return throwError(error);
+        })
+      ).subscribe(response => {
+        console.log(response);
+      });
+    }else{
+      return true;
+    }
+  } 
   setUsername(val: string){
     this.user.username = val;
     console.warn(this.user.username);
