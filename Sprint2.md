@@ -34,6 +34,8 @@ As far as the next steps for the front end- routing and developpping the rest of
   In the future, more test cases will be developed to ensure that other actions from the frontend can be handled correctly by the backend implementation and will be created using the same process used for these, which is also detailed in the backend_readme.md file.
   
 *Rohan*: 
+
+
 Worked on front-end and backend integration. I was able to get input validation and was able to add a method of getting image names to appear in the database. Users can now use the front end as an interface to create new accounts and can have a secure log in. Users can also edit elements of thier accounts in the profile page. 
 
 In addition, I made several edits to the front end files in order to perform post and put requests, and was able to use json to send requests from the front end and send responses (for input validation/confirmation) to the front-end from the backend. 
