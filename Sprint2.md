@@ -24,7 +24,10 @@ Back-End Video Link:
 As far as the next steps for the front end- routing and developpping the rest of our program (its main functionality) is out next big goal. We have worked on creating a solid framework and strong understanding of the languages and process of communication so that our next steps would come easier and seem less daunting!
 
 ****BACKEND:****
+
+
 *Blake:*
+
 
   Developed test cases to make sure that the http requests were being handled correctly. Added coverage for testing 'GET', 'POST', 'PUT', and 'DELETE' methods. This testing ensures that the handlers allow for mutliple different functions to work correctly and there are no unknown responses to any of them. The test cases go through different scenarios such as creating a new business, deleting a business, getting a business, getting all businesses, and a there are additional cases of trying to get and delete businesses that do not exist to ensure that if that happens, the backend is able to handle it. 
   These test cases and instructions to these tests cases are in the Backend/main_test.go as well as documentation for it in the backend/backend_readme.md file. 
