@@ -130,7 +130,10 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 	}
 
 	type arrayCarrier struct {
-		ImageArray []string `json:"buisnessImageNames"`
+		Name        string   `json:"buisnessName"`
+		Address     string   `json:"buisnessAddress"`
+		Description string   `json:"buisnessDescription"`
+		ImageArray  []string `json:"buisnessImageNames"`
 	}
 
 	var uStatus updateStatus
@@ -146,7 +149,10 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 		json.NewDecoder(r.Body).Decode(&arryCarry)
-		json.NewDecoder(r.Body).Decode(&targetBuis)
+		
+    targetBuis.Address = arryCarry.Address
+		targetBuis.Description = arryCarry.Description
+		targetBuis.Name = arryCarry.Name
 
 		var imageString string = ""
 
@@ -160,6 +166,7 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 		}
 
 		targetBuis.Image = imageString
+    
 		db.Save(&targetBuis)
 		json.NewEncoder(w).Encode(&uStatus)
 		return
