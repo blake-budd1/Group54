@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http'
 
 import {FormsModule} from '@angular/forms';
@@ -13,6 +14,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { RegisterComponent } from './register/register.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileSetupComponent
+    ProfileSetupComponent,
+    NavbarComponent
   ],
 
   imports: [
@@ -29,7 +33,11 @@ import { RegisterComponent } from './register/register.component';
     MatGridListModule,
     FormsModule,
     HttpClientModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

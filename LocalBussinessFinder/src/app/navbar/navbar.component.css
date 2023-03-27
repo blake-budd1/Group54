@@ -1,0 +1,7 @@
+.toolbar {
+    background-color: #A4BA9a;
+    box-shadow: inset;
+}
+.spacer {
+    flex:1 1 auto;
+}

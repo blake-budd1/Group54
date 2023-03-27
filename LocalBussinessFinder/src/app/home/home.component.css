@@ -1,0 +1,25 @@
+.default {
+    background-image: url("../images/home.jpeg");
+    background-size: cover;
+    height: 100vh;
+    background-position:center;
+    display: flex;
+}
+.search_button {
+    height: 100px;
+    width: 500px;
+    border-radius: 50px;
+    background-color: #C6DFBB;
+    font-size: xxx-large;
+    font-family: monospace;
+    color: #435042;
+    cursor: pointer;
+}
+button:hover {
+    opacity: 80%;
+}
+.align_Center {
+    text-align: center;
+    position: 50%;
+    margin: auto;
+}
