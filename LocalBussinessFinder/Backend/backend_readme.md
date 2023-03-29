@@ -138,4 +138,4 @@ Each test case handles each handler method similarly:
  - "strings"
  - "testing"
  - To ensure Go has these modules, run:
- - go get -u <module name> 
+ - go get -u (module name)
