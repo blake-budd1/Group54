@@ -185,7 +185,7 @@ func TestRemoveBusinessNonExistent(t *testing.T) {
 	r.HandleFunc("/api/test", createBuisness).Methods("POST")                     --> good
 	r.HandleFunc("/api/user={user}/", updateBuisness).Methods("PUT")              --> good
 	r.HandleFunc("/api/{id}", removeBuisness).Methods("DELETE")                   --> good
-	r.HandleFunc("/api/tag={tags}/inclusive={incl}", queryByTags).Methods("GET")  --> need to test, figure out the tags
+	r.HandleFunc("/api/tag={tags}/inclusive={incl}", queryByTags).Methods("GET")  --> good
 
 */
 
