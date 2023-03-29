@@ -18,6 +18,7 @@ export class ProfileSetupComponent implements OnInit {
     buisnessName: "",
     buisnessAddress: "",
     buisnessImages: [],
+    buisnessImageNames: [],
     buisnessDescription: "",
     username: "",
     buisnessTags: []
@@ -36,6 +37,7 @@ export class ProfileSetupComponent implements OnInit {
     }
     if(this.buisness.buisnessImages.length < 8) {
       this.buisness.buisnessImages.push(fileHandle);
+      this.buisness.buisnessImageNames.push(event.target.files[0].name)
     }
     }
 
@@ -107,12 +109,15 @@ export class ProfileSetupComponent implements OnInit {
   async sendData() {
 
     console.warn('buisnessName is...' + this.buisness.buisnessName);
+    var buildUrl = `api/user=` + this.buisness.username + '/'
+    
     console.warn(this.buisness.buisnessTags.length);
     this.buisness.buisnessTags.forEach(element => {
       console.warn(element);
     });
     /*
     return this.http.post('api/test', this.buisness).pipe(
+
       catchError(error => {
         console.error(error);
         return throwError(error);

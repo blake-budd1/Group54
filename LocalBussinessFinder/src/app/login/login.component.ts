@@ -41,6 +41,7 @@ export class LoginComponent {
       }
     })
     ;}
+
   setUsername(val: string){
     this.user.username = val;
     console.warn(this.user.username);

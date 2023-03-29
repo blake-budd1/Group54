@@ -40,6 +40,7 @@ export class RegisterComponent {
 
       console.log(response);
     });}
+
   setEmail(val1: string){
     this.user.email = val1;
   }
