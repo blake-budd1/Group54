@@ -129,3 +129,13 @@ Each test case handles each handler method similarly:
  
  ## Further Testing:
  In the future sprints, testing will have to be done on what the front-end requires from back end and to see if that is being sent properly. Additionally, any new features that may be implemented within the last sprint (sprint 4) will also require test cases to ensure that each action that could happen with that functionality will perform in the expected manner. 
+ 
+ ## Necessary Go Modules for Testing:
+ - "bytes"
+ - "encoding/json"
+ - "net/http"
+ - "net/http/httptest"
+ - "strings"
+ - "testing"
+ - To ensure Go has these modules, run:
+ - go get -u <module name> 
