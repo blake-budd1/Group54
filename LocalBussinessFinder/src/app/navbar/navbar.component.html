@@ -1,8 +1,14 @@
 <mat-toolbar class="toolbar">
     <span> <mat-icon>eco</mat-icon>Sprout</span>
     <div class="spacer"></div>
-    <a mat-button routerLink="Home">Home</a>
-    <a mat-button routerLink="Setup">About Us</a>
-    <a mat-button routerLink="Login">Login</a>
-    <a mat-raised-button color="accent" routerLink="Register">Sign Up!</a>
+    <div *ngIf="loggedIn; else loggedout ">
+        <a mat-button routerLink="Home">Home</a>
+        <a mat-button routerLink="Setup">About Us</a>
+    </div>
+    <ng-template #loggedout>
+        <a mat-button routerLink="Home">Home</a>
+        <a mat-button routerLink="Setup">About Us</a>
+        <a mat-button routerLink="Login">Login</a>
+        <a mat-raised-button color="accent" routerLink="Register">Sign Up!</a>
+    </ng-template>
 </mat-toolbar>
