@@ -6,7 +6,10 @@
 <!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<app-navbar [loggedIn] = "loggedIn"></app-navbar>
+<app-navbar 
+    [loggedIn] = "loggedIn"
+    (checkLog) = "onCheckLog($event)"
+></app-navbar>
 <!-- <div>
     <div class="nav-container">
         <ul>

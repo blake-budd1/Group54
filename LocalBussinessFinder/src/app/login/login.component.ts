@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginList } from '../lfile';
+import { LoginList, userSignedIn } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -33,6 +33,7 @@ export class LoginComponent {
       else if(obj.loginStatus == "Success"){
         //CODE FOR IF CORRECT PASSWORD/USER COMBO
         console.log("route to next page")
+        userSignedIn.currentUser = this.user.username;
       }
       else if(obj.loginStatus == "Incorrect_Password"){
         //CODE FOR INCORRECT PASSWORD 

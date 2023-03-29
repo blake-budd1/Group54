@@ -10,10 +10,14 @@ export class AppComponent {
   title = 'LocalBusinessFinder';
   loggedIn: boolean = false;
   checkLogged(){
+    console.log("checkLogged Ran");
     if(userSignedIn.currentUser != "NULL"){
       this.loggedIn = true;
     }else{
       this.loggedIn = false
     }
+  }
+  onCheckLog(input: boolean){
+    this.checkLogged();
   }
 }
