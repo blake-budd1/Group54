@@ -100,10 +100,32 @@ causing any errors.
 Each test case handles each handler method similarly: 
   - First, start the database
   - Then, define what the method is going to request (handler method)
-      - and the path of that request, ie. "/id" or just "/"
+      - and the path of that request, ie. "/api/id" or just "/api/"
   - Then start a new recorder for httptest that can check the status
   - Define which function from main it is calling in the 'http.HandlerFunc()'
   - Use handler.ServeHTTP(rr, req) to have it write to the recorder
   - Check if status code is as expected, which will be returned from the handler method function.
   - If status code is equal to 'StatusOk' which is equal to 200, then the test passed, otherwise,
       - returned a different status code and failed test case.
+    
+ ## Sprint 3
+ 
+ ## Testing Coverage:
+ The main_test.go file was updated to include 11 new test cases (each with a desription below):
+ - TestQueryByTags_Pass : Tests passing tags in that will prompt a response
+ - TestQueryByTags_Fail : Tests passing tags in that will not be found, no response will be recieved
+ - TestQueryByName_Pass : Tests passing a username in that will prompt a response
+ - TestQueryByName_Fail : Tests passing a username in that will not prompt a response
+ - TestParseRegistry_Pword : Tests creating an account with a password that does not match the confirm password
+ - TestParseRegistry_Email : Tests creating an account with an email that has already been used
+ - TestParseRegistry_Uname : Tests creating an account with a username that has already been used
+ - TestParseRegistry_Successful : Tests creating an account with all unique information which successfully creates an account
+ - TestParseLoginPasswordFound : Tests login with a successful username and password
+ - TestParseLoginPassword : Tests login with an incorrect password
+ - TestParseLoginUsername_Unknown : Tests login with an unknown username
+ 
+ ## Testing Implementation:
+ These tests were created to ensure that all features implemented within sprint 3 were working correctly. The biggest changes in this sprint were the    query by tags, the query by name, and the abilitiy for the registry and login to send back a status depending on what went wrong or right. The test cases make use of those status returns by sending data that is either expected to be incorrect or correct and reading those status returns to figure out whether the action that was performed returned the expected status. This status was determined using string.Contains(rr.Body.String(), "expected string"), where rr.Body.String() is what was returned from the function that was being called in the 'main.go' file. 
+ 
+ ## Further Testing:
+ In the future sprints, testing will have to be done on what the front-end requires from back end and to see if that is being sent properly. Additionally, any new features that may be implemented within the last sprint (sprint 4) will also require test cases to ensure that each action that could happen with that functionality will perform in the expected manner. 
