@@ -1,9 +1,18 @@
+:host {
+    background-image: url("../images/sprout_background.png");
+}
 body {
     background-color: #080808;
     font-family: 'Ubuntu', sans-serif;
     text-align: center;
 }
-
+.container{
+    background-image: url("../images/sprout_background.png");
+    background-position:center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+}
 .main {
     background-color: #292626;
     text-align: center;
@@ -92,7 +101,6 @@ form.form1 {
 button:hover{
     background: linear-gradient(to right, #9d23b3, #da2ff8);
     color: #ffffffc4;
-
 }
 
 .forgot {
