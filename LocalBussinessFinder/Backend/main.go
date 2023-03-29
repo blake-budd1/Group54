@@ -4,10 +4,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"hash/fnv"
 	"html/template"
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -21,18 +23,24 @@ var db *gorm.DB
 var err error
 var login bool
 
+func hash(s string) uint32 {
+	h := fnv.New32a()
+	h.Write([]byte(s))
+	return h.Sum32()
+}
+
 // Buisness struct made into to a gorm model for DB schema
 type Buisness struct {
 	gorm.Model
 	User        string `json:"uname"`
-	Pass        string `json:"pword"`
+	Pass        uint32 `json:"pword"`
 	Ident       int    `json:"id"`
 	Image       string `json:"buisnessImages"`
+	Tags        string `json:"buisnessTags"`
 	Name        string `json:"buisnessName"`
 	Address     string `json:"buisnessAddress"`
 	Description string `json:"buisnessDescription"`
 	Email       string `json:"buisnessEmail"`
-	Category    string `json:"buisnessTag"`
 }
 
 func fill_defaults(bsn *Buisness) {
@@ -40,9 +48,6 @@ func fill_defaults(bsn *Buisness) {
 	// setting default values
 	if bsn.User == "" {
 		bsn.User = "Please provide a username (Something is wrong)"
-	}
-	if bsn.Pass == "" {
-		bsn.Pass = "Please provide a password (Something is wrong)"
 	}
 	if bsn.Email == "" {
 		bsn.Email = "Please provide an email (Something is wrong)"
@@ -56,9 +61,25 @@ func fill_defaults(bsn *Buisness) {
 	if bsn.Description == "" {
 		bsn.Description = "A business description can be added in the registry page!"
 	}
-	if bsn.Category == "" {
-		bsn.Category = "Business categories be added to in the registry page!"
+	if bsn.Tags == "" {
+		bsn.Tags = "Business categories be added to in the registry page!"
 	}
+}
+
+func queryStringGen(searchTerms []string, columnName string, inclMode string) (string, []interface{}) {
+	var QArgs []interface{}
+	var queryString string
+
+	for i, term := range searchTerms {
+		if i == 0 {
+			queryString = columnName + " LIKE ? "
+			QArgs = append(QArgs, "%"+term+"%")
+		} else {
+			queryString += inclMode + " " + columnName + " LIKE ? "
+			QArgs = append(QArgs, "%"+term+"%")
+		}
+	}
+	return queryString, QArgs
 }
 
 //Fill Defaults
@@ -79,6 +100,35 @@ func getBuisness(w http.ResponseWriter, r *http.Request) {
 	req, _ := strconv.Atoi(param["id"])
 	db.Where("id = ?", req).First(&targetBuis)
 	json.NewEncoder(w).Encode(targetBuis)
+}
+
+func queryByTags(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	type TagStruct struct {
+		// Tag list contains the list of inputted tags
+		TagList []string `json:"qtaglist"`
+
+		//Inclusive is a string determining if the query by
+		//MUST BE EITHER AND OR OR
+		Inclusive string `json:"inclString"`
+	}
+
+	// Parsing Data containing TAG information
+
+	param := mux.Vars(r)
+	tagListStr := param["tags"]
+	includeString := param["incl"]
+
+	//Extract the qTagList from tagListString
+	qTagList := strings.Split(tagListStr, ",")
+
+	qryString, Qargs := queryStringGen(qTagList, "Tags", includeString)
+
+	var BuisnessList []Buisness
+	db.Where(qryString, Qargs...).Find(&BuisnessList)
+
+	json.NewEncoder(w).Encode(BuisnessList)
+
 }
 
 func removeBuisness(w http.ResponseWriter, r *http.Request) {
@@ -134,6 +184,7 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 		Address     string   `json:"buisnessAddress"`
 		Description string   `json:"buisnessDescription"`
 		ImageArray  []string `json:"buisnessImageNames"`
+		TagArray    []string `json:"buisnessTags"`
 	}
 
 	var uStatus updateStatus
@@ -149,26 +200,38 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 		json.NewDecoder(r.Body).Decode(&arryCarry)
-		
-    targetBuis.Address = arryCarry.Address
+
+		targetBuis.Address = arryCarry.Address
 		targetBuis.Description = arryCarry.Description
 		targetBuis.Name = arryCarry.Name
 
 		var imageString string = ""
+		var tagString string = ""
 
 		print(len(arryCarry.ImageArray))
+
 		for i := 0; i < len(arryCarry.ImageArray); i++ {
 			if i < (len(arryCarry.ImageArray) - 1) {
+				print(arryCarry.TagArray[i])
 				imageString += arryCarry.ImageArray[i] + ";"
 			} else {
 				imageString += arryCarry.ImageArray[i]
 			}
 		}
 
+		for i := 0; i < len(arryCarry.TagArray); i++ {
+			if i < (len(arryCarry.TagArray) - 1) {
+				print(arryCarry.TagArray[i])
+				tagString += arryCarry.TagArray[i] + ";"
+			} else {
+				tagString += arryCarry.TagArray[i]
+			}
+		}
+
 		targetBuis.Image = imageString
-    
+		targetBuis.Tags = tagString
 		db.Save(&targetBuis)
-		json.NewEncoder(w).Encode(&uStatus)
+		json.NewEncoder(w).Encode(targetBuis)
 		return
 	}
 }
@@ -226,7 +289,7 @@ func parseLogin(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(&logStatus)
 		return
 	} else {
-		if passInput == targetBuisness.Pass {
+		if hash(passInput) == targetBuisness.Pass {
 			logStatus.LoginStatus = "Success"
 			json.NewEncoder(w).Encode(&logStatus)
 		} else {
@@ -303,7 +366,9 @@ func parseRegistry(w http.ResponseWriter, r *http.Request) {
 		var new_Buisness Buisness
 		fill_defaults(&new_Buisness)
 		new_Buisness.User = in_username
-		new_Buisness.Pass = in_password
+		fmt.Println(in_password)
+		fmt.Println(hash(in_password))
+		new_Buisness.Pass = hash(in_password)
 		new_Buisness.Email = in_email
 		db.Create(&new_Buisness)
 		json.NewEncoder(w).Encode(reg_status)
@@ -311,25 +376,31 @@ func parseRegistry(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func initDB() {
-	//r := mux.NewRouter()
-	//Establish the buisness database with gorm:
+func QueryByName(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	param := mux.Vars(r)
+	req, _ := param["name"]
+	var targetBuisness Buisness
+	result := db.First(&targetBuisness, "Name = ?", req)
 
-	db, err = gorm.Open(sqlite.Open("BuisnessDB.db"), &gorm.Config{})
-	if err != nil {
-		panic("Connection to database failed!")
+	type Fail struct {
+		Status string `json:"status"`
 	}
-	//fmt.Println("Database started....")
-	//fmt.Println("Running ....")
-	//Create the Buisness dataBase Schema
-	db.AutoMigrate(&Buisness{})
+
+	if result.RowsAffected == 0 {
+		var msg Fail
+		msg.Status = "Failure"
+		json.NewEncoder(w).Encode(&msg)
+		return
+	} else {
+		json.NewEncoder(w).Encode(&targetBuisness)
+		return
+	}
+
 }
 
-func main() {
-	r := mux.NewRouter()
-  initDB()
-	//Establish the buisness database with gorm:
-  /*
+func buildDB() {
+
 	db, err = gorm.Open(sqlite.Open("BuisnessDB.db"), &gorm.Config{})
 	if err != nil {
 		panic("Connection to database failed!")
@@ -339,7 +410,15 @@ func main() {
 	fmt.Println("Running ....")
 	//Create the Buisness dataBase Schema
 	db.AutoMigrate(&Buisness{})
-  */
+
+	//Establish the router for the mux router
+}
+
+func main() {
+	r := mux.NewRouter()
+	//Establish the buisness database with gorm:
+	buildDB()
+
 	//Establish the router for the mux router
 
 	//Build the routes
@@ -348,10 +427,12 @@ func main() {
 	r.HandleFunc("/api/register", parseRegistry).Methods("POST")
 	r.HandleFunc("/api/", getAllBuisnesses).Methods("GET")
 	r.HandleFunc("/api/user/{uname}", showBuisnessPage).Methods("GET")
+	r.HandleFunc("/api/Name={name}", QueryByName).Methods("GET")
 	r.HandleFunc("/{id}", getBuisness).Methods("GET")
 	r.HandleFunc("/api/test", createBuisness).Methods("POST")
 	r.HandleFunc("/api/user={user}/", updateBuisness).Methods("PUT")
 	r.HandleFunc("/api/{id}", removeBuisness).Methods("DELETE")
+	r.HandleFunc("/api/tag={tags}/inclusive={incl}", queryByTags).Methods("GET")
 
 	//r.PathPrefix("/").Handler(AngularHandler).Methods("GET")
 	log.Fatal(http.ListenAndServe(":5000", handlers.CORS()(r)))
