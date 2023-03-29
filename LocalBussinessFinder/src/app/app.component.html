@@ -6,12 +6,29 @@
 <!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<app-navbar 
+    [loggedIn] = "loggedIn"
+    (checkLog) = "onCheckLog($event)"
+></app-navbar>
+<!-- <div>
+    <div class="nav-container">
+        <ul>
+            <li><a routerLink="Home">Home</a></li>
+            <li><a routerLink="Login">Login</a></li>
+            <li><a routerLink="Register">Register</a></li>
+            
+        </ul>
+    </div>
+</div> -->
+<router-outlet></router-outlet>
 
-<app-login></app-login>
-<app-register></app-register>
+
+
+<!-- <app-login></app-login> -->
+<!-- <app-register></app-register> -->
 
 <!-- Ivan's create profile page -->
-<app-profile-setup></app-profile-setup>
+<!-- <app-profile-setup></app-profile-setup> -->
 <!-- <app-image-upload></app-image-upload> -->
 <!-- end of Ivan's create profile page -->
 

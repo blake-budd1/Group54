@@ -107,11 +107,17 @@ export class ProfileSetupComponent implements OnInit {
     ]
   };
   async sendData() {
+
     console.warn('buisnessName is...' + this.buisness.buisnessName);
     var buildUrl = `api/user=` + this.buisness.username + '/'
     
     console.warn(this.buisness.buisnessTags.length);
-    return this.http.put(buildUrl, this.buisness).pipe(
+    this.buisness.buisnessTags.forEach(element => {
+      console.warn(element);
+    });
+    /*
+    return this.http.post('api/test', this.buisness).pipe(
+
       catchError(error => {
         console.error(error);
         return throwError(error);
@@ -119,5 +125,6 @@ export class ProfileSetupComponent implements OnInit {
     ).subscribe(response => {
       console.log(response);
     });
+    */
   }
 };

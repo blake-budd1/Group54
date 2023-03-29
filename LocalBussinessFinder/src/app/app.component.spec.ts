@@ -1,6 +1,7 @@
 import { TestBed} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileSetupComponent } from './profile-setup/profile-setup.component';
@@ -22,7 +23,8 @@ describe('AppComponent', () => {
         AppComponent,
         ProfileSetupComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        NavbarComponent
       ],
     }).compileComponents();
   });
