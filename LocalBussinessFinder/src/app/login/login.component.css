@@ -2,7 +2,7 @@
     background-image: url("../images/sprout_background.png");
 }
 body {
-    background-color: #080808;
+    background-color: #c6dfbb;
     font-family: 'Ubuntu', sans-serif;
     text-align: center;
 }
@@ -14,7 +14,7 @@ body {
     display: flex;
 }
 .main {
-    background-color: #292626;
+    background-color: #c6dfbb;
     text-align: center;
     width: 400px;
     height: 400px;
@@ -26,7 +26,7 @@ body {
 .sign {
     padding-top: 40px;
     text-align: center;
-    color: #8C55AA;
+    color: rgba(136, 126, 126);
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
     font-size: 23px;
@@ -34,7 +34,7 @@ body {
 
 .un {
     width: 76%;
-    color: #ffffffc4;
+    color: rgba(136, 126, 126);
     font-weight: 700;
     font-size: 14px;
     letter-spacing: 1px;
@@ -58,7 +58,7 @@ form.form1 {
 .pass {
 
     width: 76%;
-    color: #ffffffc4;
+    color: rgba(136, 126, 126);
     text-align: center;
     font-weight: 700;
     font-size: 14px;
@@ -87,8 +87,8 @@ form.form1 {
     text-align: center;
     cursor: pointer;
     border-radius: 5em;
-    color: #fff;
-    background: linear-gradient(to right, #9C27B0, #E040FB);
+    color: #c6dfbb;
+    background: linear-gradient(to right, #f75d90, #f03c78);
     border: 0;
     padding-left: 40px;
     padding-right: 40px;
@@ -99,20 +99,20 @@ form.form1 {
     box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
 button:hover{
-    background: linear-gradient(to right, #9d23b3, #da2ff8);
+    background: linear-gradient(to right, #ff4081, #e02e6a);
     color: #ffffffc4;
 }
 
 .forgot {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-    color: #8C55AA;
+    color: rgba(136, 126, 126);;
     padding-top: 12px;
     text-align: center;
 }
 
 a {
     text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-    color: #E1BEE7;
+    color: rgba(136, 126, 126);
     text-decoration: none
 }
 
