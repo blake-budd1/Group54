@@ -2,8 +2,11 @@
 
 ## Video Links:
 Back-end: https://youtu.be/hGJQSQE2DUw
-Front-end:
+Front-end: https://youtu.be/JvaWVG97-hI
 
+## Front-end:
+### Ivan:
+Created the routing module and set up all the routes. For the routing, I created a navigation bar such that the user can navigate the app easily- and linked each fitting component to their respective navigation bar title. This was done using several materials packages such as the toolbar, icons and buttons! I also created the backgrounds for the applicaiton in order to make the application appealing and interesting to look at. This implementation promped a lot of change to layouts such as the profile setup component/ page and the login and register pages that Wavid re-colored. By craeting the framework of the rest of the project (such as the 'search sprouts' button on the home page I designed which will lead to the searching buisnesses though filters page) I was able to setup our team for a hopefully less strenuous final sprint.Something  I really tried to do was have the profile setup component designed in such a way that it can be reused and minorly altered to fit the spots where the buisness page is displayed! Almost as a template used in all the places where the business information would be needed! These pushes were done in the New-Version-Sprout branch and then Wavid merged the two into the main branch!
 
 ## Back-end:
 ### Blake:
