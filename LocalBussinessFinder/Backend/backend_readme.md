@@ -108,7 +108,7 @@ Each test case handles each handler method similarly:
   - If status code is equal to 'StatusOk' which is equal to 200, then the test passed, otherwise,
       - returned a different status code and failed test case.
     
- ## Sprint 3
+ # Sprint 3
  
   ## Necessary Go Modules:
   ### For Testing: 
