@@ -110,6 +110,19 @@ Each test case handles each handler method similarly:
     
  ## Sprint 3
  
+  ## Necessary Go Modules:
+  # For Testing: 
+ - "bytes"
+ - "encoding/json"
+ - "net/http"
+ - "net/http/httptest"
+ - "strings"
+ - "testing"
+ - To ensure Go has these modules, run:
+ - go get -u (module name)
+ - ie. go get -u encoding/json
+
+
  ## Testing Coverage:
  The main_test.go file was updated to include 11 new test cases (each with a desription below):
  - TestQueryByTags_Pass : Tests passing tags in that will prompt a response
@@ -130,13 +143,4 @@ Each test case handles each handler method similarly:
  ## Further Testing:
  In the future sprints, testing will have to be done on what the front-end requires from back end and to see if that is being sent properly. Additionally, any new features that may be implemented within the last sprint (sprint 4) will also require test cases to ensure that each action that could happen with that functionality will perform in the expected manner. 
  
- ## Necessary Go Modules for Testing:
- - "bytes"
- - "encoding/json"
- - "net/http"
- - "net/http/httptest"
- - "strings"
- - "testing"
- - To ensure Go has these modules, run:
- - go get -u (module name)
- - ie. go get -u encoding/json
+
