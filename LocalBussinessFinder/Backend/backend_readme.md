@@ -139,3 +139,4 @@ Each test case handles each handler method similarly:
  - "testing"
  - To ensure Go has these modules, run:
  - go get -u (module name)
+ - ie. go get -u encoding/json
