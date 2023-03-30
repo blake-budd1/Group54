@@ -27,17 +27,15 @@ export class LoginComponent {
 
       //MAKE SURE THE NAMES OF YOUR ATTRIBUTE (after obj.) MATCHES THE RESPONSE NAME (IN BACKEND DOCS)
       if(obj.loginStatus == "Username_Not_Found"){
-        //CODE FOR IF USERNAME NOT FOUND 
-        console.log("Do bad stuff")
+        console.warn("Username not found -> implement warning)")
       }
       else if(obj.loginStatus == "Success"){
         //CODE FOR IF CORRECT PASSWORD/USER COMBO
-        console.log("route to next page")
-        userSignedIn.currentUser = this.user.username;
+        this.router.navigate(['Setup'])
       }
       else if(obj.loginStatus == "Incorrect_Password"){
         //CODE FOR INCORRECT PASSWORD 
-        console.log("Incorrect Password")
+        console.warn("Incorrect Password -> implement warning)")
       }
     })
     ;}
