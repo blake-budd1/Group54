@@ -115,16 +115,28 @@ export class ProfileSetupComponent implements OnInit {
     this.buisness.buisnessTags.forEach(element => {
       console.warn(element);
     });
-    /*
-    return this.http.post('api/test', this.buisness).pipe(
+    async sendData() {
 
+    console.warn('buisnessName is...' + this.buisness.buisnessName);
+    console.warn(this.buisness.buisnessTags.length);
+    this.buisness.buisnessTags.forEach(element => {
+      console.warn(element);
+    });
+    
+    let buildUrl = `api/user=` + this.buisness.username + '/'
+    return this.http.put(buildUrl, this.buisness).pipe(
       catchError(error => {
         console.error(error);
         return throwError(error);
       })
     ).subscribe(response => {
       console.log(response);
+      const obj = Object.assign(response)
+
+      //console.log(obj.buisnessName)
+      
     });
-    */
+    
   }
+};
 };
