@@ -15,7 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import { error_popup } from './Error_Popup/error_popup.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoginComponent,
     RegisterComponent,
     ProfileSetupComponent,
-    NavbarComponent
+    NavbarComponent,
+    error_popup
   ],
 
   imports: [
