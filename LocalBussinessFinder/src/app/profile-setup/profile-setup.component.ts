@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FileHandle } from '../model/file-handle';
 import {DomSanitizer} from '@angular/platform-browser';

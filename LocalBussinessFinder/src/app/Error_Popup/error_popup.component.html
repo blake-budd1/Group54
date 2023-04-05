@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Error Message:</h1>
+<div mat-dialog-content>
+    <!--Which one to display is decided at component creation-->
+    <!--Done as if/else statements to do more error checking-->
+    <div  tyFFpe = "User" *ngIf = "displayUserWrong; else box1"> 
+        An account with those credentials does not exist in our system. Please try again or register an account.
+    </div>
+    <ng-template  #box1>
+        <div type = "Pass" *ngIf = "displayPassWrong; else box2"> 
+            Invalid Password, please try again with valid credentials
+        </div>  
+    </ng-template>
+    <ng-template  #box2>
+        <div type = "Email" *ngIf = "displayEmailWrong; else box3">
+            Invalid email, please try again with a valid email address. If email adress valid, it is already in use
+        </div>
+    </ng-template >
+    <ng-template  #box3>
+        <div type = "NotMatch" *ngIf = "displayNotMatch; else box4">
+            Please make sure your passwords match before submitting 
+        </div>
+    </ng-template >
+    <ng-template  #box4>
+        <div type = "UserUsed" *ngIf = "displayUserUsed; else box5">
+            Username already in use. Please register with a different username
+        </div>
+    </ng-template >
+    <ng-template  #box5 type = "NotSpecified"></ng-template >
+</div>
+<div mat-diaglog-actions>
+    <button mat-button (onClick) = "closeDialog()" cdkFocusInitial> Ok </button>
+</div>
