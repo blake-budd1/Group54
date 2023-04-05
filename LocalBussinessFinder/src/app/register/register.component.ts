@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { RegisterList } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, ignoreElements } from 'rxjs/operators';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
+
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, public dialog: MatDialog){}
   user = new RegisterList('Enter Email', 'Enter Username', 'Enter Password', 'Confirm Password');
   submitted = false;
   onSubmit() {
