@@ -1,0 +1,31 @@
+<div class="main">
+    <div class="row">
+      <!-- left side -->
+        <div class="column">
+            <div class="title">
+                Filter Sprouts!
+            </div>
+            <div class="dropdown">
+                <ng-multiselect-dropdown
+              [placeholder]="'Filter with Tags'"
+              [settings]="dropdownSettings"
+              [data]="dropdownList"
+              (onSelect)="onTagSelect($event)"
+              (onDeSelect)="onTagDeSelect($event)"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div >
+                <!-- needs a (click) function to send the tags to backend -->
+                <button class="submit_button" (click)="sendData()" name="sumbit_data">
+                  Submit~!
+                </button>
+            </div>
+        </div>
+        <div class="column2">
+            <div class="title">
+                Local Sprouts
+            </div>
+        </div>
+    </div>
+</div>

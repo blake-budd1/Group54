@@ -1,3 +1,4 @@
+
 import { FileHandle } from "./file-handle"
 
 export interface Buisness {
@@ -6,6 +7,7 @@ export interface Buisness {
     buisnessAddress: string;
     buisnessDescription: string;
     username: string;
-    buisnessImageNames: [], 
+    buisnessImageNames: string[], 
     buisnessTags: string[];
 }
+
