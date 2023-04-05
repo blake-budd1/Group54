@@ -3,15 +3,16 @@ import { RegisterList } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, ignoreElements } from 'rxjs/operators';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import { error_popup } from '../Error_Popup/error_popup.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private http: HttpClient, public dialog: MatDialog){}
+  constructor(private http: HttpClient, public dialog: MatDialog, private router:Router){}
   user = new RegisterList('Enter Email', 'Enter Username', 'Enter Password', 'Confirm Password');
   submitted = false;
   onSubmit() {
@@ -24,7 +25,8 @@ export class RegisterComponent {
       let regObj = Object.assign(response)
       if(regObj.Reg_State == "Successful"){
         // CODE FOR SUCCESSFUL REGISTRATION
-        console.log("Registration Successful")
+        console.log("Registration Successful");
+        this.router.navigate(['Setup']);
       }
       else if(regObj.Reg_State == "Email_Registered"){
         //CODE FOR EMAIL ALREADY REGSITERED

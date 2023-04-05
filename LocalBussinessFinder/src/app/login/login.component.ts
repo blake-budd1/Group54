@@ -3,16 +3,19 @@ import { LoginList, userSignedIn } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import { error_popup } from '../Error_Popup/error_popup.component';
+import { Router } from '@angular/router';
+
 @Component({  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent {
-  constructor(private http: HttpClient, public dialog: MatDialog){}
+  constructor(private http: HttpClient, public dialog: MatDialog, private router: Router){}
   user = new LoginList('Enter Username', 'Enter Password');
+
   onSubmit() {
     return this.http.post('api/login', this.user).pipe(
       catchError(error => {
@@ -35,6 +38,7 @@ export class LoginComponent {
       }
       else if(obj.loginStatus == "Success"){
         //CODE FOR IF CORRECT PASSWORD/USER COMBO
+        //make the router that login component is in 
         this.router.navigate(['Setup'])
       }
       else if(obj.loginStatus == "Incorrect_Password"){
