@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FileHandle } from '../model/file-handle';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -126,28 +125,16 @@ export class ProfileSetupComponent implements OnInit {
     this.buisness.buisnessTags.forEach(element => {
       console.warn(element);
     });
-    async sendData() {
+    /*
+    return this.http.post('api/test', this.buisness).pipe(
 
-    console.warn('buisnessName is...' + this.buisness.buisnessName);
-    console.warn(this.buisness.buisnessTags.length);
-    this.buisness.buisnessTags.forEach(element => {
-      console.warn(element);
-    });
-    
-    let buildUrl = `api/user=` + this.buisness.username + '/'
-    return this.http.put(buildUrl, this.buisness).pipe(
       catchError(error => {
         console.error(error);
         return throwError(error);
       })
     ).subscribe(response => {
       console.log(response);
-      const obj = Object.assign(response)
-
-      //console.log(obj.buisnessName)
-      
     });
-    
+    */
   }
-};
 };
