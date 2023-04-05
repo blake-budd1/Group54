@@ -2,50 +2,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <div class="container">
-    <div [hidden]="submitted" class="main">
+    <div class="main">
         <h1 class="sign">Register</h1>
         <form (ngSubmit)="onSubmit()" class="form1">
             <div class="form-group">
-                <input type="email"
-                 placeholder="Enter Email" 
-                 class="email" id="email" 
-                 required
-                 #box1 
-                 (keyup) = "setEmail(box1.value)"
-                 >
-                    
+                <input type="email" placeholder="Enter Email" class="email" id="email" required
+                #box1
+                (keyup)="setEmail(box1.value)">
             </div>
             
             <div class="form-group">
-                <input type="text" 
-                    placeholder="Enter Username"
-                    class="un" id="username"
-                    required
-                    #box2 
-                    (keyup) = "setUsername(box2.value)"
-                >
+                <input type="text" placeholder="Enter Username" class="un" id="username" required
+                #box2
+                (keyup)="setUsername(box2.value)">
                 
             </div>
             <div class="form-group">
-                <input type="password" class="pass"
-                    id="Password"
-                    placeholder="Enter Password"
-                    required
-                    #box3
-                    (keyup) = "setPassword(box3.value)"
-                >
+                <input type="password" class="pass" id="Password" required 
+                placeholder="Enter Password"
+                #box3
+                (keyup)="setPassword(box3.value)">
+                
             </div>
             <div class="form-group">
-                <input type="password" class="pass" 
-                    id="Password" placeholder="Confirm Password"
-                    required
-                    #box4
-                    (keyup) = "setPassword(box3.value)"
-                >
+                <input type="password" class="pass" id="Password" required 
+                placeholder="Confirm Password"
+                #box4
+                (keyup)="setConfirmPassword(box4.value)">
+                
             </div>
-            <button class="submit" type = "submit">Sign in</button>
+            <button class="submit" type = "submit" routerLink="../Setup" routerLink="../Setup">Sign in</button>
             <!--Make the hrefs on these 2 links to the other pages-->
-            <p class="forgot"><a href="#">Login</a></p>
+            <p class="forgot"><a href="Login">Login</a></p>
         </form>
     </div>
 </div>

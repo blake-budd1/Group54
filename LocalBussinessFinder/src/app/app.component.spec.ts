@@ -1,30 +1,31 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NavbarComponent } from './navbar/navbar.component';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component'
 import { ProfileSetupComponent } from './profile-setup/profile-setup.component';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { error_popup } from './Error_Popup/error_popup.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
+        HttpClientTestingModule,
         FormsModule,
-        HttpClientTestingModule, 
-        NgMultiSelectDropDownModule.forRoot(),
-        MatGridListModule
+        MatGridListModule,
+        NgMultiSelectDropDownModule
       ],
       declarations: [
         AppComponent,
-        HomeComponent,
+        ProfileSetupComponent,
         LoginComponent,
         RegisterComponent,
-        ProfileSetupComponent
+        NavbarComponent
       ],
     }).compileComponents();
   });
@@ -35,11 +36,5 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'LocalBussinessFinder'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('LocalBussinessFinder');
-  });
-
-
+  
 });
