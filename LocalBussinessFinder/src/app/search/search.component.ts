@@ -1,12 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Buisness } from '../model/business.model';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  selectedTags = [{}];
+  constructor(private http: HttpClient){}
+  
+  public buisnesses: Array<Buisness> = [
+    {buisnessName: "Tea Stori",
+    buisnessAddress: "3550 SW 34th St, Gainesville, FL 32608",
+    buisnessImages: [],
+    buisnessImageNames: [],
+    buisnessDescription: "Chain cafe serving Taiwanese bubble teas & snacks such as fried popcorn chicken.",
+    username: "tiger_Fresh",
+    buisnessTags: ["Boba", "Food", "Cafe"]},
+    {
+      buisnessName: "Tea Stori2",
+      buisnessAddress: "3550 SW 34th St, Gainesville, FL 32608",
+      buisnessImages: [],
+      buisnessImageNames: [],
+      buisnessDescription: "Chain cafe serving Taiwanese bubble teas & snacks such as fried popcorn chicken.",
+      username: "tiger_Fresh",
+      buisnessTags: ["Boba", "Food", "Cafe"]
+    }
+  ]
+  // backend_Businesses: Array<Buisness>;
+  popup = false;
+  selectedTags:String[] = [];
   dropdownList = [{}];
   dropdownSettings = {};
   ngOnInit() {
@@ -17,10 +40,15 @@ export class SearchComponent implements OnInit {
       textField: "item_text",
       enableCheckAll: false
     }
+    return this.http.get<any>('/api/').subscribe(response => {
+      // how to do for each?
+      this.buisnesses.push(Object.assign(response));
+    })
   }
   //does not remove any
   onTagSelect(item: any) {
-    this.selectedTags.push(item.item_text);
+    let word = item.item_text;
+    this.selectedTags.push(word);
     console.warn(item.item_text);
     for (let index = 0; index < this.selectedTags.length; index++) {
       console.warn(this.selectedTags[index]);
@@ -61,5 +89,6 @@ export class SearchComponent implements OnInit {
   };
   async sendData() {
     // backend stuff
+    console.warn(this.selectedTags);
   }
 }
