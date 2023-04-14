@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, ignoreElements } from 'rxjs/operators';
 import { Router } from '@angular/router';
+
 import { MatDialog } from '@angular/material/dialog';
 import { error_popup } from '../Error_Popup/error_popup.component';
 
@@ -13,6 +14,7 @@ import { error_popup } from '../Error_Popup/error_popup.component';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+
   constructor(private http: HttpClient, public dialog: MatDialog, private router: Router){}
   user = new RegisterList('Enter Email', 'Enter Username', 'Enter Password', 'Confirm Password');
   submitted = false;

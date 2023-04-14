@@ -17,6 +17,7 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchComponent } from './search/search.component';
+
 import { error_popup } from './Error_Popup/error_popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -31,7 +32,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     NavbarComponent,
     SearchComponent,
     error_popup
-    
   ],
 
   imports: [

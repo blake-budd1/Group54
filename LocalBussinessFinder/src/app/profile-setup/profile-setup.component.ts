@@ -14,6 +14,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class ProfileSetupComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) {}
+  img_Files : File[] =  []; 
   buisness: Buisness = {
     buisnessName: "",
     buisnessAddress: "",
@@ -116,17 +117,25 @@ export class ProfileSetupComponent implements OnInit {
       { item_id:17, item_text: 'Vegetarian'}
     ]
   };
-  async sendData() {
+  
+
+
+    async sendData() {
 
     console.warn('buisnessName is...' + this.buisness.buisnessName);
-    var buildUrl = `api/user=` + this.buisness.username + '/'
-    
     console.warn(this.buisness.buisnessTags.length);
     this.buisness.buisnessTags.forEach(element => {
       console.warn(element);
     });
-    /*
-    return this.http.post('api/test', this.buisness).pipe(
+
+    
+    for (let index = 0; index < this.buisness.buisnessImages.length; index++){
+      this.img_Files.push(this.buisness.buisnessImages[index].file);
+    }
+    
+    
+    let buildUrl = `api/user=` + this.buisness.username + '/'
+    return this.http.put(buildUrl, this.buisness).pipe(
 
       catchError(error => {
         console.error(error);
@@ -134,7 +143,29 @@ export class ProfileSetupComponent implements OnInit {
       })
     ).subscribe(response => {
       console.log(response);
+      const obj = Object.assign(response)
+
+      
+      for(let i = 0; i < this.img_Files.length; i++){
+        const formData = new FormData()
+        formData.append('business_img', this.img_Files[i])
+        this.http.post(buildUrl + "images",  formData).pipe(
+        catchError(error => {
+          console.error(error);
+          return throwError(error)
+        })
+        ).subscribe(response => {
+          console.log(response)
+        });
+      }
+    
+      //console.log(obj.buisnessName)
+      
+      
     });
-    */
+    
+
   }
+  
 };
+

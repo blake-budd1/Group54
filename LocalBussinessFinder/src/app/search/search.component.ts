@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Buisness } from '../model/business.model';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import {throwError} from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -6,7 +10,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  selectedTags = [{}];
+  constructor(private http: HttpClient){}
+  
+  public buisnesses: Array<Buisness> = [
+    /*
+    {buisnessName: "Tea Stori",
+    buisnessAddress: "3550 SW 34th St, Gainesville, FL 32608",
+    buisnessImages: [],
+    buisnessImageNames: [],
+    buisnessDescription: "Chain cafe serving Taiwanese bubble teas & snacks such as fried popcorn chicken.",
+    username: "tiger_Fresh",
+    buisnessTags: ["Boba", "Food", "Cafe"]},
+    {
+      buisnessName: "Tea Stori2",
+      buisnessAddress: "3550 SW 34th St, Gainesville, FL 32608",
+      buisnessImages: [],
+      buisnessImageNames: [],
+      buisnessDescription: "Chain cafe serving Taiwanese bubble teas & snacks such as fried popcorn chicken.",
+      username: "tiger_Fresh",
+      buisnessTags: ["Boba", "Food", "Cafe"]
+    }
+    */ 
+  ]
+  // backend_Businesses: Array<Buisness>;
+  popup = false;
+  selectedTags:String[] = [];
+
   dropdownList = [{}];
   dropdownSettings = {};
   ngOnInit() {
@@ -17,10 +46,26 @@ export class SearchComponent implements OnInit {
       textField: "item_text",
       enableCheckAll: false
     }
+   
+
+
+    return this.http.get('/api/').subscribe(response => {
+      // how to do for each? does the backend have a number of buisnesses in the array or...
+      const businessList = Object.assign(response);
+      console.log(response)
+      console.log(businessList)
+      for (let index = 0; index < businessList.length; index++) {
+        console.warn(businessList[index]);
+      }
+
+
+    })
   }
   //does not remove any
   onTagSelect(item: any) {
-    this.selectedTags.push(item.item_text);
+    let word = item.item_text;
+    this.selectedTags.push(word);
+
     console.warn(item.item_text);
     for (let index = 0; index < this.selectedTags.length; index++) {
       console.warn(this.selectedTags[index]);
@@ -60,6 +105,5 @@ export class SearchComponent implements OnInit {
     ]
   };
   async sendData() {
-    // backend stuff
   }
 }
