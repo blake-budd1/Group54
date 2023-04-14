@@ -47,6 +47,7 @@ export class LoginComponent {
       else if(obj.loginStatus == "Success"){
         //CODE FOR IF CORRECT PASSWORD/USER COMBO
         //make the router that login component is in 
+        userSignedIn.currentUser = this.user.username;
         this.router.navigate(['Setup'])
       }
       else if(obj.loginStatus == "Incorrect_Password"){

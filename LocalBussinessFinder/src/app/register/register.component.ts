@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RegisterList } from '../lfile';
+import { RegisterList, userSignedIn } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, ignoreElements } from 'rxjs/operators';
@@ -30,6 +30,7 @@ export class RegisterComponent {
       if(regObj.Reg_State == "Successful"){
         // CODE FOR SUCCESSFUL REGISTRATION
         console.log("Registration Successful")
+        userSignedIn.currentUser = this.user.username;
         this.router.navigate(['Setup'])
       }
       else if(regObj.Reg_State == "Email_Registered"){
@@ -41,7 +42,7 @@ export class RegisterComponent {
           this.displayError();
         
       }
-      else if(regObj.Reg_State == "Unmatched Password"){
+      else if(regObj.Reg_State == "Unmatched_Password"){
         //NOTIFY USER PASSWORDS DON'T MATCH
         console.log("Passwords don't match")
         console.warn("Password Mismatch -> implement warning)")
