@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { RegisterList } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, ignoreElements } from 'rxjs/operators';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
-import { error_popup } from '../Error_Popup/error_popup.component';
-import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
+
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private http: HttpClient, public dialog: MatDialog, private router:Router){}
+  constructor(private http: HttpClient, public dialog: MatDialog){}
   user = new RegisterList('Enter Email', 'Enter Username', 'Enter Password', 'Confirm Password');
   submitted = false;
   onSubmit() {
@@ -25,29 +25,19 @@ export class RegisterComponent {
       let regObj = Object.assign(response)
       if(regObj.Reg_State == "Successful"){
         // CODE FOR SUCCESSFUL REGISTRATION
-        console.log("Registration Successful");
-        this.router.navigate(['Setup']);
+        console.log("Registration Successful")
       }
       else if(regObj.Reg_State == "Email_Registered"){
         //CODE FOR EMAIL ALREADY REGSITERED
-        console.log("Email Already Registered");
-        const dialogRef = this.dialog.open(error_popup, {
-          data: {useCase: "Email"}
-        });
+        console.log("Email Already Registered")
       }
       else if(regObj.Reg_State == "Unmatched Password"){
         //NOTIFY USER PASSWORDS DON'T MATCH
         console.log("Passwords don't match")
-        const dialogRef = this.dialog.open(error_popup, {
-          data: {useCase: "NotMatch"}
-        });
       }
       else if(regObj.Reg_State == "Username_Taken"){
         //NOTIFY USER THE USERNAME IS TAKEN
         console.log("Username Taken")
-        const dialogRef = this.dialog.open(error_popup, {
-          data: {useCase: "UserUsed"}
-        });
       }
 
 

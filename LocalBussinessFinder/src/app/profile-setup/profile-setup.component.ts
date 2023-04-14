@@ -36,8 +36,9 @@ export class ProfileSetupComponent implements OnInit {
       )
     }
     if(this.buisness.buisnessImages.length < 8) {
-      this.buisness.buisnessImages.push(fileHandle);
-      this.buisness.buisnessImageNames.push(event.target.files[0].name)
+      this.buisness.buisnessImages.push(fileHandle)
+      //should this be a string?!
+      this.buisness.buisnessImageNames.push(event.target.files[0].name);
     }
     }
 
@@ -103,7 +104,16 @@ export class ProfileSetupComponent implements OnInit {
       { item_id: 5, item_text: 'Cafe' },
       { item_id: 6, item_text: 'Boba' },
       { item_id: 7, item_text: 'Bakery' },
-      { item_id: 8, item_text: 'Free Wifi'}
+      { item_id: 8, item_text: 'Free Wifi'},
+      { item_id: 9, item_text: 'Vintage'},
+      { item_id:10, item_text: 'Jewelry'},
+      { item_id: 11, item_text: 'Men\'s Fashion'},
+      { item_id:12, item_text: 'Women\'s Fashion'},
+      { item_id:13, item_text: 'Athletics'},
+      { item_id:14, item_text: 'Shoes'},
+      { item_id:15, item_text: 'Non-GMO'},
+      { item_id:16, item_text: 'Vegan'},
+      { item_id:17, item_text: 'Vegetarian'}
     ]
   };
   async sendData() {
@@ -115,28 +125,16 @@ export class ProfileSetupComponent implements OnInit {
     this.buisness.buisnessTags.forEach(element => {
       console.warn(element);
     });
-    async sendData() {
+    /*
+    return this.http.post('api/test', this.buisness).pipe(
 
-    console.warn('buisnessName is...' + this.buisness.buisnessName);
-    console.warn(this.buisness.buisnessTags.length);
-    this.buisness.buisnessTags.forEach(element => {
-      console.warn(element);
-    });
-    
-    let buildUrl = `api/user=` + this.buisness.username + '/'
-    return this.http.put(buildUrl, this.buisness).pipe(
       catchError(error => {
         console.error(error);
         return throwError(error);
       })
     ).subscribe(response => {
       console.log(response);
-      const obj = Object.assign(response)
-
-      //console.log(obj.buisnessName)
-      
     });
-    
+    */
   }
-};
 };

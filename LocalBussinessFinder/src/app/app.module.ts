@@ -1,3 +1,4 @@
+
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -15,7 +16,10 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SearchComponent } from './search/search.component';
 import { error_popup } from './Error_Popup/error_popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +29,9 @@ import { error_popup } from './Error_Popup/error_popup.component';
     RegisterComponent,
     ProfileSetupComponent,
     NavbarComponent,
+    SearchComponent,
     error_popup
+    
   ],
 
   imports: [
@@ -39,7 +45,8 @@ import { error_popup } from './Error_Popup/error_popup.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule, 
+    MatDialogModule
 
   ],
   providers: [],

@@ -10,12 +10,11 @@ export class RegisterList{
         public password: string,
         public confirmPassword: string
     ){}}
-export interface PopupUse{
-    useCase: string;
-} 
 export const userSignedIn = {
     currentUser: "NULL",
     signedIn: "False",
     bussinessName: "NULL"
 };
-
+export interface PopupUse{
+    useCase: string;
+} 

@@ -3,7 +3,7 @@ import { LoginList, userSignedIn, PopupUse } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, } from '@angular/material/dialog';
 //For each type of error, give the following output:
 //invalid username: User
 //invalid password: Pass

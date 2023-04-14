@@ -2,5 +2,22 @@ body {
     background-color: #c6dfbb;
     font-family: 'Ubuntu', sans-serif;
     text-align: center;
-    width: 250px;
+    
+}
+.message{
+    color: rgb(107, 103, 103);
+}
+.button{
+
+    text-align: center;
+    color: #ffffffcb;
+    cursor: pointer;
+    background: linear-gradient(to right, #f75d90, #f03c78);
+    position: absolute;
+    right:    10px;
+    bottom:   10px;
+}
+button:hover{
+    background: linear-gradient(to right, #ff4081, #e02e6a);
+    color: #ffffffe0;
 }
