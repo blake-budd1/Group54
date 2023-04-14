@@ -136,6 +136,7 @@ export class ProfileSetupComponent implements OnInit {
     
     let buildUrl = `api/user=` + this.buisness.username + '/'
     return this.http.put(buildUrl, this.buisness).pipe(
+
       catchError(error => {
         console.error(error);
         return throwError(error);
@@ -163,7 +164,7 @@ export class ProfileSetupComponent implements OnInit {
       
     });
     
-    
+
   }
   
 };

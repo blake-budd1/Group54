@@ -32,7 +32,7 @@ describe('RegisterComponent', () => {
     component.user.password = "TestPassword";
     component.user.email = "TestEmail";
     component.user.confirmPassword = "TestPassword";
-    component.onSubmit(false);
+    component.onSubmit();
     //check if submitted -> not working immediately because the fn includes a backend send request
     expect((component.submitted) == (true));
   }

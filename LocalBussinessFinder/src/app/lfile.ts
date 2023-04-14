@@ -15,4 +15,6 @@ export const userSignedIn = {
     signedIn: "False",
     bussinessName: "NULL"
 };
-
+export interface PopupUse{
+    useCase: string;
+} 

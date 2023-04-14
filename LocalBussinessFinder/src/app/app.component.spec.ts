@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { error_popup } from './Error_Popup/error_popup.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({

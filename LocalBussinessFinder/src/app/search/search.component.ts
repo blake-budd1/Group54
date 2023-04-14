@@ -3,6 +3,7 @@ import { Buisness } from '../model/business.model';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import {throwError} from 'rxjs';
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -34,6 +35,7 @@ export class SearchComponent implements OnInit {
   // backend_Businesses: Array<Buisness>;
   popup = false;
   selectedTags:String[] = [];
+
   dropdownList = [{}];
   dropdownSettings = {};
   ngOnInit() {
@@ -63,6 +65,7 @@ export class SearchComponent implements OnInit {
   onTagSelect(item: any) {
     let word = item.item_text;
     this.selectedTags.push(word);
+
     console.warn(item.item_text);
     for (let index = 0; index < this.selectedTags.length; index++) {
       console.warn(this.selectedTags[index]);
@@ -102,7 +105,5 @@ export class SearchComponent implements OnInit {
     ]
   };
   async sendData() {
-
- 
   }
 }
