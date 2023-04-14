@@ -16,6 +16,7 @@ export class LoginComponent {
   constructor(private http: HttpClient, public dialog: MatDialog, private router: Router){}
   user = new LoginList('Enter Username', 'Enter Password');
   errorType: String = "";
+  forgotPassRan: boolean = false;
   //TEMP
   checkError(): void{
     console.log("CheckError ran");
@@ -45,7 +46,7 @@ export class LoginComponent {
       else if(obj.loginStatus == "Success"){
         //CODE FOR IF CORRECT PASSWORD/USER COMBO
         //make the router that login component is in 
-        this.router.navigate(['Setup'])
+        this.router.navigate(['Edit'])
       }
       else if(obj.loginStatus == "Incorrect_Password"){
         //CODE FOR INCORRECT PASSWORD 
@@ -69,5 +70,8 @@ export class LoginComponent {
       height: "180px",
       data: {useCase: this.errorType}
     });
+  }
+  forgotPassWord(){
+    
   }
 }

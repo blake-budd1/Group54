@@ -1,0 +1,132 @@
+
+:host{
+    display: flex;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url("../images/sprout_background.png");
+    background-position:center;
+}
+.main {
+    background-color: #A4BA9a;
+    /* display: flex; */
+    text-align: center;
+    width: 1500px;
+    height: 700px;
+    margin: 4em auto;
+    border-radius: 1.5em;
+    box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+.row {
+    display: flex;
+}
+  
+.column {
+    flex: 50%;
+    background-color: #C6DFBB;
+    border-radius: 1.5em;
+    margin: 1em;
+    text-align: left;
+    vertical-align: center;
+    height: 666px;
+}
+input[type=text1] {
+    padding: 7px 7px 7px;
+    border-radius: 10px;
+    font-size: xx-large;
+    opacity: 0.75;
+    background-color: #ddecd6;
+    border-color: #ddecd6;
+}
+input[type=text2] {
+    padding: 7px 7px 7px;
+    border-radius: 10px;
+    font-size: large;
+    opacity: 75%;
+    background-color: #ddecd6;
+    border-color: #ddecd6;
+}
+.profile-setup-banner {
+    opacity: 75%;
+}
+.textarea-inline-control {
+  padding: 7px 7px 7px;
+  border-color: #bbb;
+  background-color: #ddecd6;
+  border-radius: 10px;
+  resize: none;
+  font-size: large;
+  opacity: 0.75;
+}
+.fill{
+    margin: 2ex;
+}
+.dropdown{
+    width: 75%;
+}
+.text-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+.text-center {
+    text-align: center;
+}
+/* .Address {
+    font-size: large;
+} */
+
+
+mat-grid-tile {
+    border: 1px solid #c6dfbb;
+}
+.rightSide {
+    float:right;
+}
+.imagezone {
+    text-align: center;
+}
+.dropzone {
+    height: 150px;
+    width: 300px;
+    min-width: 100px;
+    display: table;
+    border: dashed 1px #aaa;
+    border-radius: 30px 30px 30px 30px;
+    background-color: #ddecd6;
+}
+.text-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+.text-center {
+    text-align: center;
+    opacity: 0.75;
+}
+.browse-button {
+    cursor: pointer;
+    color: #ff4081;
+}
+.remove-button-image {
+    position: absolute;
+    cursor: pointer;
+    top: -5%;
+    background-color:#ff4081;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: auto;
+    text-align: center;
+}
+.submit_button_area {
+   position: relative;
+}
+.submit_button {
+    right: 2em;
+    bottom: 2em;
+    position: absolute;
+    background-color: #ff4081;
+    color: white;
+    border-color: #ff4081;
+    border-radius: 1em;
+    font-size: large;
+    cursor: pointer;
+    
+}

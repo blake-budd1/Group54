@@ -6,13 +6,15 @@ import { ProfileSetupComponent } from './profile-setup/profile-setup.component';
 import { RegisterComponent } from './register/register.component';
 import { SearchComponent } from './search/search.component';
 import { error_popup } from './Error_Popup/error_popup.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 const routes: Routes = [
   {path: '', redirectTo: 'Home', pathMatch: 'full'},
   {path: 'Home', component: HomeComponent},
   {path:'Login',component:LoginComponent},
   {path:'Register',component:RegisterComponent},
   {path:'Setup',component:ProfileSetupComponent},
-  {path:'Search', component:SearchComponent}
+  {path:'Search', component:SearchComponent},
+  {path:'Edit', component:ProfileEditComponent}
 ];
 
 @NgModule({

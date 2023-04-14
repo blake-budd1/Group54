@@ -19,6 +19,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SearchComponent } from './search/search.component';
 import { error_popup } from './Error_Popup/error_popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProfileSetupComponent,
     NavbarComponent,
     SearchComponent,
-    error_popup
+    error_popup,
+    ProfileEditComponent
     
   ],
 

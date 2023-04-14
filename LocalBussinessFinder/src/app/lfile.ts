@@ -17,4 +17,5 @@ export const userSignedIn = {
 };
 export interface PopupUse{
     useCase: string;
-} 
+    email: string;
+}
