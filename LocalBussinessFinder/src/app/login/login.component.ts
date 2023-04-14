@@ -3,6 +3,7 @@ import { LoginList, userSignedIn } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({  selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,7 +11,7 @@ import { catchError } from 'rxjs/operators';
 })
 
 export class LoginComponent {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private router: Router){}
   user = new LoginList('Enter Username', 'Enter Password');
   onSubmit() {
     return this.http.post('api/login', this.user).pipe(

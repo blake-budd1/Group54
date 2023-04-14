@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Buisness } from '../model/business.model';
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import {throwError} from 'rxjs';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -10,6 +12,7 @@ export class SearchComponent implements OnInit {
   constructor(private http: HttpClient){}
   
   public buisnesses: Array<Buisness> = [
+    /*
     {buisnessName: "Tea Stori",
     buisnessAddress: "3550 SW 34th St, Gainesville, FL 32608",
     buisnessImages: [],
@@ -26,6 +29,7 @@ export class SearchComponent implements OnInit {
       username: "tiger_Fresh",
       buisnessTags: ["Boba", "Food", "Cafe"]
     }
+    */ 
   ]
   // backend_Businesses: Array<Buisness>;
   popup = false;
@@ -40,9 +44,19 @@ export class SearchComponent implements OnInit {
       textField: "item_text",
       enableCheckAll: false
     }
-    return this.http.get<any>('/api/').subscribe(response => {
-      // how to do for each?
-      this.buisnesses.push(Object.assign(response));
+   
+
+
+    return this.http.get('/api/').subscribe(response => {
+      // how to do for each? does the backend have a number of buisnesses in the array or...
+      const businessList = Object.assign(response);
+      console.log(response)
+      console.log(businessList)
+      for (let index = 0; index < businessList.length; index++) {
+        console.warn(businessList[index]);
+      }
+
+
     })
   }
   //does not remove any
@@ -88,7 +102,7 @@ export class SearchComponent implements OnInit {
     ]
   };
   async sendData() {
-    // backend stuff
-    console.warn(this.selectedTags);
+
+ 
   }
 }
