@@ -80,6 +80,37 @@ export class ProfileSetupComponent implements OnInit {
       limitSelection: 5
     }
 
+    //USER SIGNED IN WORKED! 
+    console.log(userSignedIn.currentUser)
+
+    let buildUrl = `api/user=` + userSignedIn.currentUser
+  
+
+    this.http.get(buildUrl).pipe(
+      catchError(error => {
+        console.error(error);
+        return throwError(error);
+      })
+    ).subscribe(response => {
+      console.log(response);
+      const obj = Object.assign(response)
+      console.warn(response)
+      this.buisness.buisnessName = obj.buisnessName;
+      this.buisness.buisnessTags = obj.buisnessTags;
+      this.buisness.buisnessAddress = obj.buisnessAddress; 
+      this.buisness.buisnessDescription = obj.buisnessDescription; 
+      this.buisness.buisnessTags= obj.buisnessTags.split(";")
+
+      console.log(this.buisness.buisnessName )
+      console.log(this.buisness.buisnessTags )
+      console.log(this.buisness.buisnessAddress )
+      console.log(this.buisness.buisnessDescription )
+      console.log(this.buisness.buisnessTags )
+
+     }); 
+
+
+
   }
   //does not remove any
   onTagSelect(item: any) {
@@ -139,7 +170,7 @@ export class ProfileSetupComponent implements OnInit {
     }
     
     
-    let buildUrl = `api/user=` + this.buisness.username + '/'
+    let buildUrl = `api/user=` + userSignedIn.currentUser + '/'
     return this.http.put(buildUrl, this.buisness).pipe(
 
       catchError(error => {
