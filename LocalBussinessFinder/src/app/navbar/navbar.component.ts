@@ -27,13 +27,10 @@ export class NavbarComponent {
   }
   logout(){
     userSignedIn.currentUser = 'NULL';
+    userSignedIn.bussinessName = "My Business";
     console.log("logout Ran");
     this.router.navigate(['Home'])
     this.checkLog.emit(true);
   }
-  fakeLog(){
-    userSignedIn.currentUser = "NormalUsername";
-    console.log("FakeLog Ran");
-    this.checkLog.emit(true);
-  }
+  
 }

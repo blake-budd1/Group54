@@ -6,6 +6,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown/multiselect.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { userSignedIn } from '../lfile';
 
 @Component({
   selector: 'app-profile-setup',
@@ -13,7 +14,10 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./profile-setup.component.css']
 })
 export class ProfileSetupComponent implements OnInit {
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {}
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {
+    //get business info from backend
+
+  }
   img_Files : File[] =  []; 
   buisness: Buisness = {
     buisnessName: "",
@@ -49,6 +53,7 @@ export class ProfileSetupComponent implements OnInit {
   }
   setBuisName(val: string) {
     this.buisness.buisnessName = val;
+    userSignedIn.bussinessName = val;
     console.warn(val);
   }
   setBuisAddy(val2: string) {
@@ -63,7 +68,6 @@ export class ProfileSetupComponent implements OnInit {
     this.buisness.username = val4;
     console.warn(val4);
   }
-
   dropdownList = [{}];
   dropdownSettings = {};
   ngOnInit() {
@@ -75,6 +79,7 @@ export class ProfileSetupComponent implements OnInit {
       enableCheckAll: false,
       limitSelection: 5
     }
+
   }
   //does not remove any
   onTagSelect(item: any) {
