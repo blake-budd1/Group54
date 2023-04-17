@@ -99,7 +99,7 @@ export class ProfileSetupComponent implements OnInit {
       this.buisness.buisnessTags = obj.BusinessText.buisnessTags;
       this.buisness.buisnessAddress = obj.BusinessText.buisnessAddress; 
       this.buisness.buisnessDescription = obj.BusinessText.buisnessDescription; 
-      this.buisness.buisnessTags= obj.Business.Text.buisnessTags.split(";")
+      this.buisness.buisnessTags= obj.BusinessText.buisnessTags.split(";")
 
       console.log(this.buisness.buisnessName )
       console.log(this.buisness.buisnessTags )
