@@ -3,7 +3,7 @@
     <div class="spacer"></div>
     <div *ngIf="checkIfLogged(); else loggedout">
         <a mat-button routerLink="Home">Home</a>
-        <a mat-button routerLink="Setup">Setup My Bussiness</a>
+        <a mat-button routerLink="Setup">Setup {{businessName}}</a>
         <a mat-button>About us</a>
         <a mat-raised-button (click) = "logout()" color = "accent"> Logout </a>
     </div>
@@ -12,6 +12,5 @@
         <a mat-button>About us</a>
         <a mat-button routerLink="Login">Login</a>
         <a mat-raised-button color="accent" routerLink="Register">Sign Up!</a>
-        <a mat-button (click) = "fakeLog()"> FakeLog</a>
     </ng-template>
 </mat-toolbar>
