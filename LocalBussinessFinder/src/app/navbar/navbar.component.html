@@ -3,7 +3,7 @@
     <div class="spacer"></div>
     <div *ngIf="checkIfLogged(); else loggedout">
         <a mat-button routerLink="Home">Home</a>
-        <a mat-button routerLink="Setup">Setup My Bussiness</a>
+        <a mat-button routerLink="Setup">Setup {{businessName}}</a>
         <a mat-button>About us</a>
         <a mat-raised-button (click) = "logout()" color = "accent"> Logout </a>
     </div>
