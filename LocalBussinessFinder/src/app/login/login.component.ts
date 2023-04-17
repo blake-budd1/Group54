@@ -3,14 +3,14 @@ import { LoginList, userSignedIn } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, map } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import { Router } from '@angular/router';
 @Component({  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private Router: Router){}
   user = new LoginList('Enter Username', 'Enter Password');
   onSubmit() {
     return this.http.post('api/login', this.user).pipe(
@@ -34,6 +34,7 @@ export class LoginComponent {
         //CODE FOR IF CORRECT PASSWORD/USER COMBO
         console.log("route to next page")
         userSignedIn.currentUser = this.user.username;
+        this.Router.navigate(["Setup"]);
       }
       else if(obj.loginStatus == "Incorrect_Password"){
         //CODE FOR INCORRECT PASSWORD 
