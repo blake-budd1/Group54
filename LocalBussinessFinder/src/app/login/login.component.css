@@ -75,12 +75,13 @@ form.form1 {
     margin-bottom: 27px;
     font-family: 'Ubuntu', sans-serif;
 }
-
-
 .un:focus,
 .pass:focus {
-    border: 2px solid rgba(0, 0, 0, 0.18) !important;
-
+    border: 2px solid rgba(65, 182, 83, 0.5) !important;
+}
+.un:focus:invalid,
+.pass:focus:invalid{
+    border: 2px solid rgba(190, 0, 0, 0.5) !important;
 }
 
 .submit {
