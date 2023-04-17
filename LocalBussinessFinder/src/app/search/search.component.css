@@ -93,7 +93,24 @@
  .buisTags .word {
     vertical-align: center;
     margin-top: 10px;
+    /* awesome */
  }
+ .div_mid {
+    display: table-cell;
+    min-width: 200px;
+ }
+ .buisTags2 {
+  background-color: #ff4081;
+
+  display: inline-block;
+  white-space: nowrap;
+  border-radius: 1em;
+  height: 95%;
+  text-align: center;
+  /* margin: 10%; */
+  margin-right: 1em;
+  font-size: large;
+}
 
 
 

@@ -50,6 +50,15 @@
                               <header>
                                 <h1 class="header-1">{{selected_Buis.buisnessName}}</h1>
                               </header>
+                              <br>
+                              <div class="div_mid">
+                                <div class="buisTags2" *ngFor="let tag of selected_Buis.buisnessTags">
+                                  <div class="word">
+                                    {{tag}}
+                                  </div>
+                                </div>
+                              </div>
+                              <br>
                               <div class="address">
                                 {{selected_Buis.buisnessAddress}}
                               </div>
