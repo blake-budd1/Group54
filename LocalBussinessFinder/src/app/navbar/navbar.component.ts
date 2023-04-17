@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   constructor(private router : Router){}
+  businessName: string = "My Business";
   @Input()  loggedIn: boolean = false;
   @Output() checkLog = new EventEmitter<boolean>();
   swapLogged(){
@@ -19,6 +20,7 @@ export class NavbarComponent {
     }
   }
   checkIfLogged(){
+    this.businessName = userSignedIn.bussinessName;
     if(userSignedIn.currentUser=="NULL"){
       return false;
     }else{
@@ -27,13 +29,10 @@ export class NavbarComponent {
   }
   logout(){
     userSignedIn.currentUser = 'NULL';
+    userSignedIn.bussinessName = "My Business";
     console.log("logout Ran");
     this.router.navigate(['Home'])
     this.checkLog.emit(true);
   }
-  fakeLog(){
-    userSignedIn.currentUser = "NormalUsername";
-    console.log("FakeLog Ran");
-    this.checkLog.emit(true);
-  }
+  
 }
