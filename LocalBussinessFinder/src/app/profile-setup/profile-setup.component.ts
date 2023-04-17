@@ -18,6 +18,7 @@ export class ProfileSetupComponent implements OnInit {
     //get business info from backend
 
   }
+  username: string = "NULL";
   img_Files : File[] =  []; 
   buisness: Buisness = {
     buisnessName: "",
@@ -79,7 +80,7 @@ export class ProfileSetupComponent implements OnInit {
       enableCheckAll: false,
       limitSelection: 5
     }
-
+    this.username = userSignedIn.currentUser;
     //USER SIGNED IN WORKED! 
     console.log(userSignedIn.currentUser)
 
