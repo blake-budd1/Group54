@@ -95,11 +95,11 @@ export class ProfileSetupComponent implements OnInit {
       console.log(response);
       const obj = Object.assign(response)
       console.warn(response)
-      this.buisness.buisnessName = obj.buisnessName;
-      this.buisness.buisnessTags = obj.buisnessTags;
-      this.buisness.buisnessAddress = obj.buisnessAddress; 
-      this.buisness.buisnessDescription = obj.buisnessDescription; 
-      this.buisness.buisnessTags= obj.buisnessTags.split(";")
+      this.buisness.buisnessName = obj.BusinessText.buisnessName;
+      this.buisness.buisnessTags = obj.BusinessText.buisnessTags;
+      this.buisness.buisnessAddress = obj.BusinessText.buisnessAddress; 
+      this.buisness.buisnessDescription = obj.BusinessText.buisnessDescription; 
+      this.buisness.buisnessTags= obj.Business.Text.buisnessTags.split(";")
 
       console.log(this.buisness.buisnessName )
       console.log(this.buisness.buisnessTags )
