@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"hash/fnv"
-	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -44,6 +43,19 @@ type Buisness struct {
 	Address     string `json:"buisnessAddress"`
 	Description string `json:"buisnessDescription"`
 	Email       string `json:"buisnessEmail"`
+}
+
+type imageGetStatus struct {
+	UploadStatus string `json:"uploadStatus"`
+}
+
+type imageHolder struct {
+	ImgName string `json:"name"`
+	B64Code string `json:"encodedImg"`
+}
+
+type imageReturnObj struct {
+	ImageMapList []imageHolder `json:"imageHolder"`
 }
 
 func fill_defaults(bsn *Buisness) {
@@ -241,23 +253,31 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 }
 
 // Shows the buisness page when entering a certain buisness //REPLACE WITH ANGULAR STUFF
-func showBuisnessPage(w http.ResponseWriter, r *http.Request) {
+func getBusinessUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	if login == true {
-		tmpl := template.Must(template.ParseFiles("secretPage.html"))
 
-		param := mux.Vars(r)
-		//Filter by ID
-		var targetBuis Buisness
-		req, _ := param["uname"]
-		db.Where("User = ?", req).First(&targetBuis)
-		w.Header().Set("content-type", "text/html")
-		tmpl.Execute(w, targetBuis)
-		//login = false //return to false so they cannot access other pages
+	param := mux.Vars(r)
+	//Filter by ID
+	var targetBuis Buisness
+	var imageStatus imageGetStatus
+	var imageInfo imageReturnObj
+
+	type BusinessFullInfo struct {
+		BusinessTextInfo  Buisness       `json:"BuisnessText"`
+		BuisnessImageInfo imageReturnObj `json:"ImageInfo"`
 	}
-	if login != true {
-		print("not logged in")
-	}
+
+	var FullJson BusinessFullInfo
+
+	req, _ := param["uname"]
+	db.Where("User = ?", req).First(&targetBuis)
+	FullJson.BusinessTextInfo = targetBuis
+
+	getImages(req, &imageStatus, &imageInfo)
+	FullJson.BuisnessImageInfo = imageInfo
+
+	//Send data to frontend
+	json.NewEncoder(w).Encode(FullJson)
 }
 
 /*
@@ -486,27 +506,10 @@ func postImages(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getImages(w http.ResponseWriter, r *http.Request) {
+func getImages(user string, imageStatus *imageGetStatus, imageReturn *imageReturnObj) error {
 	// Extract user name from data:
-	param := mux.Vars(r)
-	user, _ := param["user"]
 
 	//Initialize the Status Struct
-	type imageGetStatus struct {
-		UploadStatus string `json:"uploadStatus"`
-	}
-
-	type imageHolder struct {
-		ImgName string `json:"name"`
-		B64Code string `json:"encodedImg"`
-	}
-
-	type imageReturnObj struct {
-		ImageMapList []imageHolder `json:"imageHolder"`
-	}
-
-	var imageStatus imageGetStatus
-	var imageReturn imageReturnObj
 
 	// Get the string for the image storage directory
 	var imgDir string = "imageStorage/" + user
@@ -516,18 +519,18 @@ func getImages(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("reading the image directory failed")
 		imageStatus.UploadStatus = "Failed to read target Directory!"
 		fmt.Println(err)
-		json.NewEncoder(w).Encode(imageStatus)
-		return
+		return nil
 
 	}
 
 	for _, file := range files {
-		readFile, err := ioutil.ReadFile(file.Name())
+		readFile, err := ioutil.ReadFile(imgDir + "/" + file.Name())
+		print(file.Name())
 		if err != nil {
+			log.Fatal(err)
 			fmt.Println(("Error Reading file from memory"))
 			imageStatus.UploadStatus = "Could not get image: " + file.Name()
-			json.NewEncoder(w).Encode(imageStatus)
-			return
+			return nil
 
 		}
 		//Convert image to base64
@@ -545,7 +548,7 @@ func getImages(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	json.NewEncoder(w).Encode(imageReturn)
+	return nil
 
 }
 
@@ -561,15 +564,14 @@ func main() {
 	r.HandleFunc("/api/login", parseLogin).Methods("POST")
 	r.HandleFunc("/api/register", parseRegistry).Methods("POST")
 	r.HandleFunc("/api/", getAllBuisnesses).Methods("GET")
-	r.HandleFunc("/api/user/{uname}", showBuisnessPage).Methods("GET")
-	r.HandleFunc("/api/Name={name}", QueryByName).Methods("GET")
+	r.HandleFunc("/api/user={uname}", getBusinessUser).Methods("GET")
+	r.HandleFunc("/api/name={name}", QueryByName).Methods("GET")
 	r.HandleFunc("/{id}", getBuisness).Methods("GET")
 	r.HandleFunc("/api/test", createBuisness).Methods("POST")
 	r.HandleFunc("/api/user={user}/", updateBuisness).Methods("PUT")
 	r.HandleFunc("/api/{id}", removeBuisness).Methods("DELETE")
 	r.HandleFunc("/api/tag={tags}/inclusive={incl}", queryByTags).Methods("GET")
 	r.HandleFunc("/api/user={user}/images", postImages).Methods("POST")
-	r.HandleFunc("/api/user={user}/images", getImages).Methods("GET")
 
 	//r.PathPrefix("/").Handler(AngularHandler).Methods("GET")
 	log.Fatal(http.ListenAndServe(":5000", handlers.CORS()(r)))
