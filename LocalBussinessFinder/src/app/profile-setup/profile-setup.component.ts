@@ -70,6 +70,7 @@ export class ProfileSetupComponent implements OnInit {
     console.warn(val4);
   }
   dropdownList = [{}];
+  tagMap = [{}]
   dropdownSettings = {};
   ngOnInit() {
     this.dropdownList = this.getData();
@@ -112,10 +113,50 @@ export class ProfileSetupComponent implements OnInit {
 
 
 
+
+    console.log(userSignedIn.currentUser)
+     
+    //USER SIGNED IN WORKED! 
+
+    buildUrl = `api/user=` + userSignedIn.currentUser
+  
+
+    this.http.get(buildUrl).pipe(
+      catchError(error => {
+        console.error(error);
+        return throwError(error);
+      })
+    ).subscribe(response => {
+      console.log(response);
+      const obj = Object.assign(response)
+      console.warn(response)
+      this.buisness.buisnessName = obj.BuisnessText.buisnessName;
+      this.buisness.buisnessAddress = obj.BuisnessText.buisnessAddress; 
+      this.buisness.buisnessDescription = obj.BuisnessText.buisnessDescription; 
+
+      let BimageInfo = obj.ImageInfo.imageHolder; 
+      console.log(BimageInfo)
+
+
+      let tagList = obj.BuisnessText.buisnessTags.split(";")
+
+      for(let i = 0 ; i < tagList.length; i++){
+        let subList = tagList[i].split("_")
+        let numMap = subList[0]
+        let stringVal = subList[1]
+        this.tagMap.push({item_id : numMap, item_text :  stringVal})
+      }
+      this.tagMap.shift()
+
+
+      console.log(this.buisness)
+      console.log(this.tagMap)
+     }); 
   }
   //does not remove any
   onTagSelect(item: any) {
-    this.buisness.buisnessTags.push(item.item_text);
+    let word = item.item_text;
+    this.buisness.buisnessTags.push(word);
     console.warn(item.item_text);
     for (let index = 0; index < this.buisness.buisnessTags.length; index++) {
       console.warn(this.buisness.buisnessTags[index]);
@@ -164,7 +205,9 @@ export class ProfileSetupComponent implements OnInit {
     this.buisness.buisnessTags.forEach(element => {
       console.warn(element);
     });
-
+    for (let index = 0; index < this.buisness.buisnessImages.length; index++){
+      this.img_Files.push(this.buisness.buisnessImages[index].file);
+    }
     
     for (let index = 0; index < this.buisness.buisnessImages.length; index++){
       this.img_Files.push(this.buisness.buisnessImages[index].file);
@@ -182,7 +225,6 @@ export class ProfileSetupComponent implements OnInit {
       console.log(response);
       const obj = Object.assign(response)
 
-      
       for(let i = 0; i < this.img_Files.length; i++){
         const formData = new FormData()
         formData.append('business_img', this.img_Files[i])
@@ -200,9 +242,6 @@ export class ProfileSetupComponent implements OnInit {
       
       
     });
-    
-
   }
   
 };
-

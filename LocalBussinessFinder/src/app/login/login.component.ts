@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent {
-  constructor(private http: HttpClient, public dialog: MatDialog, private router: Router){}
+  constructor(private http: HttpClient, public dialog: MatDialog, private router: Router, private Router: Router){}
   user = new LoginList('Enter Username', 'Enter Password');
   errorType: String = "";
   //TEMP
@@ -46,9 +46,11 @@ export class LoginComponent {
       }
       else if(obj.loginStatus == "Success"){
         //CODE FOR IF CORRECT PASSWORD/USER COMBO
+        console.log("route to next page")
+        userSignedIn.currentUser = this.user.username;
         //make the router that login component is in 
         userSignedIn.currentUser = this.user.username;
-        this.router.navigate(['Setup'])
+        this.Router.navigate(["Setup"]);
       }
       else if(obj.loginStatus == "Incorrect_Password"){
         //CODE FOR INCORRECT PASSWORD 
