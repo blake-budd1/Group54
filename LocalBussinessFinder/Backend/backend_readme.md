@@ -114,10 +114,20 @@ Each test case handles each handler method similarly:
   ### For Testing: 
  - "bytes"
  - "encoding/json"
+ - "fmt" (For debugging) 
  - "net/http"
+ - "log"
+ - "hash/fnv"
  - "net/http/httptest"
  - "strings"
  - "testing"
+  
+  -"github.com/gorilla/handlers"
+	-"github.com/gorilla/mux"
+	-"gorm.io/driver/sqlite"
+	-"gorm.io/gorm"
+
+
  - To ensure Go has these modules, run:
  - go get -u (module name)
  - ie. go get -u encoding/json
@@ -143,5 +153,23 @@ Each test case handles each handler method similarly:
  ## Further Testing:
  In the future sprints, testing will have to be done on what the front-end requires from back end and to see if that is being sent properly. Additionally, any new features that may be implemented within the last sprint (sprint 4) will also require test cases to ensure that each action that could happen with that functionality will perform in the expected manner. 
  
+##Updated API: 
+Most changes were made in Back-end and Front end integration. There are some new queries that are available via the API. 
 
+Queries: 
+  - "/api/name={Name}" :
+    * Gets Businesses JSON File with provided name in database. Returns an empty string if no database is found. 
+
+  Example: "localhost:4200/api/name=Walmart" 
+
+  - "/api/tag={Tags}/inclusive={AND or OR} 
+    * Gets a list of all busineses with the tags in the "tags" bracket. The tags are delimited by commas. The inclusive tag determines if the businesses
+    * should contain all the tags or at least on the tags provided. The inclusive tag can only contain "AND" or "OR" as these results are 
+    * directly used in the SQL query.
+    
+  Example: "localhost:4200/api/tag=pet-friendly,food,boba/inclusive=OR" 
+  
+  Updates: 
+    
+  The Passwords are now stored as integer hashes on the database to secure data incase of a database leak. 
 

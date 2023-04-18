@@ -176,8 +176,6 @@ export class ProfileSetupComponent implements OnInit {
     this.buisness.buisnessTags.forEach(element => {
       console.warn(element);
     });
-
-    
     for (let index = 0; index < this.buisness.buisnessImages.length; index++){
       this.img_Files.push(this.buisness.buisnessImages[index].file);
     }
@@ -185,7 +183,14 @@ export class ProfileSetupComponent implements OnInit {
     
     let buildUrl = `api/user=` + userSignedIn.currentUser + '/'
     return this.http.put(buildUrl, this.buisness).pipe(
-
+    console.warn('buisnessName is...' + this.buisness.buisnessName);
+    console.warn(this.buisness.buisnessTags.length);
+    this.buisness.buisnessTags.forEach(element => {
+      console.warn(element);
+    });
+    
+    let buildUrl = `api/user=` + this.buisness.username + '/'
+    return this.http.put(buildUrl, this.buisness).pipe(
       catchError(error => {
         console.error(error);
         return throwError(error);
@@ -194,7 +199,6 @@ export class ProfileSetupComponent implements OnInit {
       console.log(response);
       const obj = Object.assign(response)
 
-      
       for(let i = 0; i < this.img_Files.length; i++){
         const formData = new FormData()
         formData.append('business_img', this.img_Files[i])
@@ -212,9 +216,6 @@ export class ProfileSetupComponent implements OnInit {
       
       
     });
-    
-
   }
   
 };
-
