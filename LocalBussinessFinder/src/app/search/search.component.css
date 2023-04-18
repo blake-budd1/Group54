@@ -51,6 +51,7 @@
     height: 666px;
     overflow-y: auto;
 }
+
 .dropdown{
     width: 93%;
 }
@@ -80,28 +81,37 @@
     font-size: xx-large;
  }
  .buisTags {
-    background-color: #C6DFBB;
-    display: inline-block;
-    white-space: nowrap;
-    border-radius: 1em;
-    height: 95%;    
-    float: right;
-    /* margin: 10%; */
-    margin-right: 1em;
-    font-size: large;
- }
- .buisTags .word {
-    vertical-align: center;
-    margin-top: 10px;
-    /* awesome */
- }
- .div_mid {
-    display: table-cell;
-    min-width: 200px;
- }
+  white-space: nowrap;
+  border-radius: 1em;
+  height: 95%;
+  float: right;
+  margin-right: 1em;
+  font-size: large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buisTags .nextImg {
+  padding: 10px 20px;
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.div_mid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+}
  .buisTags2 {
   background-color: #ff4081;
-
   display: inline-block;
   white-space: nowrap;
   border-radius: 1em;
@@ -111,7 +121,39 @@
   margin-right: 1em;
   font-size: large;
 }
+.img2_parent {
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  width: 70%;
+  height: 70%;
+}
 
+.img2 {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.nextImg_2 {
+  padding: 10px 20px; 
+  background-color: #ff4081; 
+  color: white; border: none; 
+  border-radius: 4px; 
+  font-size: 16px; 
+  cursor: pointer;
+}
+.nextImg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  padding: 10px 20px; 
+  background-color: #ff4081; 
+  color: white; border: none; 
+  border-radius: 4px; 
+  font-size: 16px; 
+  cursor: pointer;
+}
 
 
 
@@ -210,14 +252,27 @@ header h1 {
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;   
+  text-align: center;
 }
 header .header-1{
   background-image: repeating-radial-gradient(farthest-side at 5px 5px,#435042, #A4BA9a, #435042);
 }
-.address {
+/* .address {
   width: 100%;
-  /* height: 40vh; */
   display: inline-block;
   flex-direction: column;
   align-items: center;
+} */
+.address {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: auto;
+  padding: 20px;
+}
+.buisnessDescription {
+  font-size: 16px;
+  text-align: center;
+  margin: auto;
+  padding: 20px;
 }

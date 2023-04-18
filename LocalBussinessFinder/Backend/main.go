@@ -2,12 +2,14 @@ package main
 
 //Import statements
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"hash/fnv"
-	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -41,6 +43,19 @@ type Buisness struct {
 	Address     string `json:"buisnessAddress"`
 	Description string `json:"buisnessDescription"`
 	Email       string `json:"buisnessEmail"`
+}
+
+type imageGetStatus struct {
+	UploadStatus string `json:"uploadStatus"`
+}
+
+type imageHolder struct {
+	ImgName string `json:"name"`
+	B64Code string `json:"encodedImg"`
+}
+
+type imageReturnObj struct {
+	ImageMapList []imageHolder `json:"imageHolder"`
 }
 
 func fill_defaults(bsn *Buisness) {
@@ -209,15 +224,16 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 		var tagString string = ""
 
 		print(len(arryCarry.ImageArray))
-
-		for i := 0; i < len(arryCarry.ImageArray); i++ {
-			if i < (len(arryCarry.ImageArray) - 1) {
-				print(arryCarry.TagArray[i])
-				imageString += arryCarry.ImageArray[i] + ";"
-			} else {
-				imageString += arryCarry.ImageArray[i]
+		/*
+			for i := 0; i < len(arryCarry.ImageArray); i++ {
+				if i < (len(arryCarry.ImageArray) - 1) {
+					print(arryCarry.TagArray[i])
+					imageString += arryCarry.ImageArray[i] + ";"
+				} else {
+					imageString += arryCarry.ImageArray[i]
+				}
 			}
-		}
+		*/
 
 		for i := 0; i < len(arryCarry.TagArray); i++ {
 			if i < (len(arryCarry.TagArray) - 1) {
@@ -237,23 +253,31 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 }
 
 // Shows the buisness page when entering a certain buisness //REPLACE WITH ANGULAR STUFF
-func showBuisnessPage(w http.ResponseWriter, r *http.Request) {
+func getBusinessUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	if login == true {
-		tmpl := template.Must(template.ParseFiles("secretPage.html"))
 
-		param := mux.Vars(r)
-		//Filter by ID
-		var targetBuis Buisness
-		req, _ := param["uname"]
-		db.Where("User = ?", req).First(&targetBuis)
-		w.Header().Set("content-type", "text/html")
-		tmpl.Execute(w, targetBuis)
-		//login = false //return to false so they cannot access other pages
+	param := mux.Vars(r)
+	//Filter by ID
+	var targetBuis Buisness
+	var imageStatus imageGetStatus
+	var imageInfo imageReturnObj
+
+	type BusinessFullInfo struct {
+		BusinessTextInfo  Buisness       `json:"BuisnessText"`
+		BuisnessImageInfo imageReturnObj `json:"ImageInfo"`
 	}
-	if login != true {
-		print("not logged in")
-	}
+
+	var FullJson BusinessFullInfo
+
+	req, _ := param["uname"]
+	db.Where("User = ?", req).First(&targetBuis)
+	FullJson.BusinessTextInfo = targetBuis
+
+	getImages(req, &imageStatus, &imageInfo)
+	FullJson.BuisnessImageInfo = imageInfo
+
+	//Send data to frontend
+	json.NewEncoder(w).Encode(FullJson)
 }
 
 /*
@@ -371,6 +395,12 @@ func parseRegistry(w http.ResponseWriter, r *http.Request) {
 		new_Buisness.Pass = hash(in_password)
 		new_Buisness.Email = in_email
 		db.Create(&new_Buisness)
+		err := os.Mkdir("imageStorage/"+in_username, os.ModePerm)
+		if err != nil {
+			println("Could not make userDirectory")
+			log.Fatal(err)
+		}
+
 		json.NewEncoder(w).Encode(reg_status)
 	}
 
@@ -414,6 +444,114 @@ func buildDB() {
 	//Establish the router for the mux router
 }
 
+// Check if there are two files with identical names:
+
+func postImages(w http.ResponseWriter, r *http.Request) {
+	//Extract Username from the mux parameter
+	param := mux.Vars(r)
+	user, _ := param["user"]
+
+	type imgUploadStatus struct {
+		Status string `json:"ImgUploadStatus"`
+	}
+
+	var UploadStatus imgUploadStatus
+
+	//Parse Input/dorm-data. (specifies limit of file upload size)
+	r.ParseMultipartForm(10 << 20)
+
+	//Extract the file from the form data
+	i_file, handler, err := r.FormFile("business_img")
+	if err != nil {
+		fmt.Println("Error retreiving file from form-data")
+		UploadStatus.Status = "Error retreiving file from form-data"
+		fmt.Print(err)
+		return
+	}
+	defer i_file.Close()
+
+	var fileName string = handler.Filename
+
+	fmt.Print("The FileName is: ", fileName)
+
+	// Perform check for identically named images
+
+	// Write temporary on our server
+	var usrImgDir string = "imageStorage/" + user + "/" + fileName
+	imgFile, err := os.Create(usrImgDir)
+	if err != nil {
+		fmt.Print("Error assigning directory to User")
+		UploadStatus.Status = "Error assigning directory to User"
+		return
+	}
+	defer imgFile.Close()
+
+	//Read the file into bytes using ioutil
+	fileBytes, err := ioutil.ReadAll(i_file)
+	if err != nil {
+		fmt.Printf("Error Reading file Data")
+		UploadStatus.Status = "Error Reading file Data"
+		fmt.Println(err)
+		json.NewEncoder(w).Encode(UploadStatus)
+		return
+	}
+
+	imgFile.Write(fileBytes)
+
+	// return if successful (in json)
+	// Assuming everything else went well:
+
+	UploadStatus.Status = "Successful Upload"
+	json.NewEncoder(w).Encode(UploadStatus)
+
+}
+
+func getImages(user string, imageStatus *imageGetStatus, imageReturn *imageReturnObj) error {
+	// Extract user name from data:
+
+	//Initialize the Status Struct
+
+	// Get the string for the image storage directory
+	var imgDir string = "imageStorage/" + user
+
+	files, err := ioutil.ReadDir(imgDir)
+	if err != nil {
+		fmt.Println("reading the image directory failed")
+		imageStatus.UploadStatus = "Failed to read target Directory!"
+		fmt.Println(err)
+		return nil
+
+	}
+
+	for _, file := range files {
+		readFile, err := ioutil.ReadFile(imgDir + "/" + file.Name())
+		print(file.Name())
+		if err != nil {
+			log.Fatal(err)
+			fmt.Println(("Error Reading file from memory"))
+			imageStatus.UploadStatus = "Could not get image: " + file.Name()
+			return nil
+
+		}
+		//Convert image to base64
+		var encodedMap string = base64.StdEncoding.EncodeToString(readFile)
+
+		// Store the image name and b64 encoding in struct
+		var imgKeyValPair imageHolder
+
+		//Store the image name and b64 encoding into a single file
+		imgKeyValPair.ImgName = file.Name()
+		imgKeyValPair.B64Code = encodedMap
+
+		//
+		imageReturn.ImageMapList = append(imageReturn.ImageMapList, imgKeyValPair)
+
+	}
+
+	return nil
+
+}
+
 func main() {
 	r := mux.NewRouter()
 	//Establish the buisness database with gorm:
@@ -426,13 +564,14 @@ func main() {
 	r.HandleFunc("/api/login", parseLogin).Methods("POST")
 	r.HandleFunc("/api/register", parseRegistry).Methods("POST")
 	r.HandleFunc("/api/", getAllBuisnesses).Methods("GET")
-	r.HandleFunc("/api/user/{uname}", showBuisnessPage).Methods("GET")
-	r.HandleFunc("/api/Name={name}", QueryByName).Methods("GET")
+	r.HandleFunc("/api/user={uname}", getBusinessUser).Methods("GET")
+	r.HandleFunc("/api/name={name}", QueryByName).Methods("GET")
 	r.HandleFunc("/{id}", getBuisness).Methods("GET")
 	r.HandleFunc("/api/test", createBuisness).Methods("POST")
 	r.HandleFunc("/api/user={user}/", updateBuisness).Methods("PUT")
 	r.HandleFunc("/api/{id}", removeBuisness).Methods("DELETE")
 	r.HandleFunc("/api/tag={tags}/inclusive={incl}", queryByTags).Methods("GET")
+	r.HandleFunc("/api/user={user}/images", postImages).Methods("POST")
 
 	//r.PathPrefix("/").Handler(AngularHandler).Methods("GET")
 	log.Fatal(http.ListenAndServe(":5000", handlers.CORS()(r)))

@@ -6,6 +6,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown/multiselect.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { userSignedIn } from '../lfile';
 
 @Component({
   selector: 'app-profile-setup',
@@ -13,8 +14,11 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./profile-setup.component.css']
 })
 export class ProfileSetupComponent implements OnInit {
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {}
-  img_Files: File[] = [];
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {
+    //get business info from backend
+
+  }
+  img_Files : File[] =  []; 
   buisness: Buisness = {
     buisnessName: "",
     buisnessAddress: "",
@@ -49,6 +53,7 @@ export class ProfileSetupComponent implements OnInit {
   }
   setBuisName(val: string) {
     this.buisness.buisnessName = val;
+    userSignedIn.bussinessName = val;
     console.warn(val);
   }
   setBuisAddy(val2: string) {
@@ -63,8 +68,8 @@ export class ProfileSetupComponent implements OnInit {
     this.buisness.username = val4;
     console.warn(val4);
   }
-
   dropdownList = [{}];
+  tagMap = [{}]
   dropdownSettings = {};
   ngOnInit() {
     this.dropdownList = this.getData();
@@ -75,10 +80,54 @@ export class ProfileSetupComponent implements OnInit {
       enableCheckAll: false,
       limitSelection: 5
     }
+
+    console.log(userSignedIn.currentUser)
+  
+    //USER SIGNED IN WORKED! 
+
+    let buildUrl = `api/user=` + userSignedIn.currentUser
+  
+
+    this.http.get(buildUrl).pipe(
+      catchError(error => {
+        console.error(error);
+        return throwError(error);
+      })
+    ).subscribe(response => {
+      console.log(response);
+      const obj = Object.assign(response)
+      console.warn(response)
+      this.buisness.buisnessName = obj.BuisnessText.buisnessName;
+      this.buisness.buisnessAddress = obj.BuisnessText.buisnessAddress; 
+      this.buisness.buisnessDescription = obj.BuisnessText.buisnessDescription; 
+
+      let BimageInfo = obj.ImageInfo.imageHolder; 
+      console.log(BimageInfo)
+
+
+      let tagList = obj.BuisnessText.buisnessTags.split(";")
+
+      for(let i = 0 ; i < tagList.length; i++){
+        let subList = tagList[i].split("_")
+        let numMap = subList[0]
+        let stringVal = subList[1]
+        this.tagMap.push({item_id : numMap, item_text :  stringVal})
+      }
+      this.tagMap.shift()
+
+
+      console.log(this.buisness)
+      console.log(this.tagMap)
+     }); 
+     
+
+
+
   }
   //does not remove any
   onTagSelect(item: any) {
-    this.buisness.buisnessTags.push(item.item_text);
+    let word = item.item_text;
+    this.buisness.buisnessTags.push(word);
     console.warn(item.item_text);
     for (let index = 0; index < this.buisness.buisnessTags.length; index++) {
       console.warn(this.buisness.buisnessTags[index]);
@@ -117,18 +166,26 @@ export class ProfileSetupComponent implements OnInit {
       { item_id:17, item_text: 'Vegetarian'}
     ]
   };
-  async sendData() {
+  
+
+
+    async sendData() {
+
     console.warn('buisnessName is...' + this.buisness.buisnessName);
     console.warn(this.buisness.buisnessTags.length);
     this.buisness.buisnessTags.forEach(element => {
       console.warn(element);
     });
+
+    
     for (let index = 0; index < this.buisness.buisnessImages.length; index++){
       this.img_Files.push(this.buisness.buisnessImages[index].file);
     }
     
-    let buildUrl = `api/user=` + this.buisness.username + '/'
+    
+    let buildUrl = `api/user=` + userSignedIn.currentUser + '/'
     return this.http.put(buildUrl, this.buisness).pipe(
+
       catchError(error => {
         console.error(error);
         return throwError(error);
@@ -137,17 +194,27 @@ export class ProfileSetupComponent implements OnInit {
       console.log(response);
       const obj = Object.assign(response)
 
-      // for(let i = 0; i < this.img_Files.length; i++){
-      //   const formData = new FormData()
-      //   formData.append('business_img', this.img_Files[i])
-      //   this.http.post(buildUrl + "images",  formData).pipe(
-      //   catchError(error => {
-      //     console.error(error);
-      //     return throwError(error)
-      //   })
-      //   ).subscribe(response => {
-      //     console.log(response)
-      //   });
-      });
-  }  
+      
+      for(let i = 0; i < this.img_Files.length; i++){
+        const formData = new FormData()
+        formData.append('business_img', this.img_Files[i])
+        this.http.post(buildUrl + "images",  formData).pipe(
+        catchError(error => {
+          console.error(error);
+          return throwError(error)
+        })
+        ).subscribe(response => {
+          console.log(response)
+        });
+      }
+    
+      //console.log(obj.buisnessName)
+      
+      
+    });
+    
+
+  }
+  
 };
+
