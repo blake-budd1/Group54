@@ -180,15 +180,6 @@ export class ProfileSetupComponent implements OnInit {
       this.img_Files.push(this.buisness.buisnessImages[index].file);
     }
     
-    
-    let buildUrl = `api/user=` + userSignedIn.currentUser + '/'
-    return this.http.put(buildUrl, this.buisness).pipe(
-    console.warn('buisnessName is...' + this.buisness.buisnessName);
-    console.warn(this.buisness.buisnessTags.length);
-    this.buisness.buisnessTags.forEach(element => {
-      console.warn(element);
-    });
-    
     let buildUrl = `api/user=` + this.buisness.username + '/'
     return this.http.put(buildUrl, this.buisness).pipe(
       catchError(error => {
