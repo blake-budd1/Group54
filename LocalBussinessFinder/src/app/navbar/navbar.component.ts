@@ -1,11 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { userSignedIn } from '../lfile';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
+
 })
 export class NavbarComponent {
+  constructor(private router : Router){}
+  businessName: string = "My Business";
   @Input()  loggedIn: boolean = false;
   @Output() checkLog = new EventEmitter<boolean>();
   swapLogged(){
@@ -15,14 +19,20 @@ export class NavbarComponent {
       this.loggedIn = true;
     }
   }
+  checkIfLogged(){
+    this.businessName = userSignedIn.bussinessName;
+    if(userSignedIn.currentUser=="NULL"){
+      return false;
+    }else{
+      return true;
+    }
+  }
   logout(){
     userSignedIn.currentUser = 'NULL';
+    userSignedIn.bussinessName = "My Business";
     console.log("logout Ran");
+    this.router.navigate(['Home'])
     this.checkLog.emit(true);
   }
-  fakeLog(){
-    userSignedIn.currentUser = "NormalUsername";
-    console.log("FakeLog Ran");
-    this.checkLog.emit(true);
-  }
+  
 }

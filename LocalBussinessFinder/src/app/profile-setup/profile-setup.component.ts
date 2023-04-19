@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { userSignedIn } from '../lfile';
+import { MatDialog } from '@angular/material/dialog';
+import { error_popup } from '../Error_Popup/error_popup.component';
 
 @Component({
   selector: 'app-profile-setup',
@@ -14,10 +16,11 @@ import { userSignedIn } from '../lfile';
   styleUrls: ['./profile-setup.component.css']
 })
 export class ProfileSetupComponent implements OnInit {
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient, public dialog: MatDialog,) {
     //get business info from backend
 
   }
+  errorType: string = "";
   popup = false;
   username: string = "NULL";
   img_Files : File[] =  []; 
@@ -149,12 +152,44 @@ export class ProfileSetupComponent implements OnInit {
       enableCheckAll: false,
       limitSelection: 5
     }
-
-    console.log(userSignedIn.currentUser)
-  
+    this.username = userSignedIn.currentUser;
     //USER SIGNED IN WORKED! 
+    console.log(userSignedIn.currentUser)
 
     let buildUrl = `api/user=` + userSignedIn.currentUser
+  
+
+    // this.http.get(buildUrl).pipe(
+    //   catchError(error => {
+    //     console.error(error);
+    //     return throwError(error);
+    //   })
+    // ).subscribe(response => {
+    //   console.log(response);
+    //   const obj = Object.assign(response)
+    //   console.warn(response)
+    //   this.buisness.buisnessName = obj.BusinessText.buisnessName;
+    //   this.buisness.buisnessTags = obj.BusinessText.buisnessTags;
+    //   this.buisness.buisnessAddress = obj.BusinessText.buisnessAddress; 
+    //   this.buisness.buisnessDescription = obj.BusinessText.buisnessDescription; 
+    //   this.buisness.buisnessTags= obj.BusinessText.buisnessTags.split(";")
+
+    //   console.log(this.buisness.buisnessName )
+    //   console.log(this.buisness.buisnessTags )
+    //   console.log(this.buisness.buisnessAddress )
+    //   console.log(this.buisness.buisnessDescription )
+    //   console.log(this.buisness.buisnessTags )
+
+    //  }); 
+
+
+
+
+    // console.log(userSignedIn.currentUser)
+     
+    // //USER SIGNED IN WORKED! 
+
+    // buildUrl = `api/user=` + userSignedIn.currentUser
   
 
     this.http.get(buildUrl).pipe(
@@ -221,10 +256,6 @@ export class ProfileSetupComponent implements OnInit {
       console.log(this.buisness)
       console.log(this.tagMap)
      }); 
-     
-
-
-
   }
   //does not remove any
   onTagSelect(item: any) {
@@ -272,7 +303,7 @@ export class ProfileSetupComponent implements OnInit {
 
 
     async sendData() {
-
+    
     console.warn('buisnessName is...' + this.buisness.buisnessName);
     console.warn(this.buisness.buisnessTags.length);
     this.buisness.buisnessTags.forEach(element => {
@@ -282,8 +313,16 @@ export class ProfileSetupComponent implements OnInit {
       this.img_Files.push(this.buisness.buisnessImages[index].file);
     }
     
-    let buildUrl = `api/user=` + this.buisness.username + '/'
+    for (let index = 0; index < this.buisness.buisnessImages.length; index++){
+      this.img_Files.push(this.buisness.buisnessImages[index].file);
+    }
+    
+    
+    let buildUrl = `api/user=` + userSignedIn.currentUser + '/'
+    this.errorType = "DataSubmitted";
+    this.displayError();
     return this.http.put(buildUrl, this.buisness).pipe(
+
       catchError(error => {
         console.error(error);
         return throwError(error);
@@ -308,6 +347,14 @@ export class ProfileSetupComponent implements OnInit {
       //console.log(obj.buisnessName)
       
       
+    });
+    
+  }
+  displayError(){
+    const dialogRef = this.dialog.open(error_popup, {
+      width: "600px",
+      height: "180px",
+      data: {useCase: this.errorType}
     });
   }
   
