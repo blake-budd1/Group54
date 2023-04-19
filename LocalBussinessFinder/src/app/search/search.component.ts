@@ -136,9 +136,8 @@ export class SearchComponent implements OnInit {
         word += this.selectedTags[index] + ",";        
       }
       word += this.selectedTags[index];
-      console.warn(word);
-      let encodedWord = encodeURIComponent(word);
-      let buildUrl = '/api/tag=' + encodedWord +'/inclusive={AND}';
+      console.warn(word)
+      let buildUrl = '/api/tag=' + word +'/inclusive=AND';
       console.warn(buildUrl);
       //^output is something along the lines of /api/tag=Boba,Cafe/inclusive={AND}
       this.http.get<any>(buildUrl).subscribe(response => {
