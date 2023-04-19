@@ -56,7 +56,8 @@ describe('Register a Buisness', () => {
     cy.get('.submit').click();
     cy.get('.name').type('Cypress1');
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('body').click();
+
   })
 })
 describe('Register a Buisness and fill out form', () => {
@@ -75,7 +76,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(1) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -95,7 +96,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(2) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -115,7 +116,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(4) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -135,7 +136,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(5) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -155,7 +156,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(6) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -175,7 +176,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(7) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -195,7 +196,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(8) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -215,7 +216,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(9) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -235,7 +236,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(10) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -255,7 +256,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(11) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -275,7 +276,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(12) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -295,7 +296,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(13) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -315,7 +316,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(14) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -335,7 +336,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(15) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -355,7 +356,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(16) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -375,7 +376,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.dropdown-btn').click();
     cy.get('.item2 > :nth-child(17) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -396,7 +397,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.item2 > :nth-child(2) > div').click();
     cy.get('.item2 > :nth-child(3) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -417,7 +418,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.item2 > :nth-child(2) > div').click();
     cy.get('.item2 > :nth-child(4) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
@@ -438,7 +439,7 @@ describe('Register a Buisness and fill out form', () => {
     cy.get('.item2 > :nth-child(2) > div').click();
     cy.get('.item2 > :nth-child(5) > div').click();
     cy.get('.submit_button_area > .nextImg_3').click();
-    cy.get('.submit_button_area > .nextImg_3').click();
+    cy.get('.button > .mdc-button__label').click();
     cy.get('.preview_button_area > .nextImg_3').click();
   })
 })
