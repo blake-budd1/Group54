@@ -106,137 +106,55 @@
           </div>
         </div>
       </div>
+      <div class="preview_button_area"> 
+        <button class="nextImg_3" (click)="getBuis()" (click)="popup = true" name="getData">
+          Preview
+        </button>
+      </div>
       <div class="submit_button_area" >
-        <button class="submit_button" (click)="sendData()" name="sumbit_data">
+        <button class="nextImg_3" (click)="sendData()" name="sumbit_data">
           Submit~!
         </button>
       </div>
     </div>
   </div>
-
-
-
-
-<!-- 
-
-
-  <div class="default">
-    <div class="row">
-      <div class="col-6">
-        <h1 class="profile-setup-banner">Create your profile~!</h1>
-        
-        <div>
-          <input
-            type="text1"
-            name="buis_Name"
-            #box1
-            (keyup)="setBuisName(box1.value)"
-            maxlength="20"
-            minlength="1"
-            placeholder="Company Name"
-          />
-        </div>
-        <p>Company name is: {{ buisness.buisnessName }}</p>
-
-        <div class="Address">
-          <input
-            type="text2"
-            name="buis_Address"
-            #boxtemp
-            (keyup)="setUSERNAMETEMP(boxtemp.value)"
-            placeholder="Username"
-          />
-        </div>
-        <div>Username is: {{buisness.username}} (TEMPORARY)</div>
-        <br>
-        <div class="Address">
-          <input
-            type="text2"
-            name="buis_Address"
-            #box2
-            (keyup)="setBuisAddy(box2.value)"
-            placeholder="Address"
-          />
-        </div>
-
-        <div>Company address is: {{ buisness.buisnessAddress }}</div>
-
-        <br />
-        <div>
-          <textarea
-            class="textarea-inline-control"
-            placeholder="Breif Company Description"
-            name="buis_Description"
-            #box3
-            (keyup)="setBuisDesc(box3.value)"
-            rows="7"
-            cols="41"
-            maxlength="300"
-          ></textarea>
-        </div>
-
-        <div>Company Description is: {{ buisness.buisnessDescription }}</div>
-
-        <br />
-
-        <ng-multiselect-dropdown
-          [placeholder]="'Select up to 5 tags!'"
-          [settings]="dropdownSettings"
-          [data]="dropdownList"
-          (onSelect)="onTagSelect($event)"
-          (onDeSelect)="onTagDeSelect($event)"
-        >
-        </ng-multiselect-dropdown>
-        <br />
-      </div>
-
-      <div class="col-6">
-        <div>
-          <div class="dropzone">
-            <div class="text-wrapper">
-              <div class="text-center">
-                <a (click)="selectFile.click()" class="browse-button">Browse</a>
-                and select up to 8 images!
-              </div>
-            </div>
-          </div>
-          <div>
-            <input
-              type="file"
-              multiple
-              style="display: none"
-              value="select"
-              accept="image/pdf, image/png, image/jpeg"
-              #selectFile
-              (change)="onFileSelected($event)"
-            />
-          </div>
-
-          <div class="mt-5">
-            <div class="row">
-              <mat-grid-list cols="4" rowHeight="1:1">
-                <mat-grid-tile
-                  *ngFor="let file of buisness.buisnessImages; let i = index"
-                >
-                  <div style="position: relative">
-                    <span class="remove-button-image" (click)="removeImage(i)"
-                      >x</span
-                    >
-                    <img [src]="file.url" width="95%" height="95%" />
+  <div class="overlay" *ngIf="popup">
+    <div class="popup">
+        <div class="row1">
+          <!-- left side -->
+          <div class="column1">
+            <div class="fill">
+              <br>
+              <header>
+                <h1 class="header-1">{{selected_Buis.buisnessName}}</h1>
+              </header>
+              <br>
+              <div class="div_mid">
+                <div class="buisTags2" *ngFor="let tag of selected_Buis.buisnessTags">
+                  <div class="nextImg_2">
+                    {{tag}}
                   </div>
-                </mat-grid-tile>
-              </mat-grid-list>
+                </div>
+              </div>
+              <br>
+              <div class="address">
+                {{selected_Buis.buisnessAddress}}
+              </div>
+              <br>
+              <div class="buisnessDescription">
+                {{selected_Buis.buisnessDescription}}
+              </div>
+              <br>
             </div>
           </div>
+          <!-- right side -->
+          <div class="column1" style="display: grid; place-items: center;">
+            <div class="img2_parent">
+              <img class="img2" [src]="selected_Buis.buisnessImageNames[currentImageIndex]" alt="base64 image" (error)="replaceImage($event)" >
+            </div>
+            <button class="nextImg" (click)="nextImage()">Next</button>
+          </div>
         </div>
-      </div>
+      <a class="close" (click)="popup = false">&times;</a>
     </div>
-    <br />
-    <button class="submit_button" (click)="sendData()" name="sumbit_data">
-      Submit~!
-    </button>
-  </div> -->
-<!-- TODO:
-    -multiselect drop down for buisness type/ product tags
-    -have the users input data saved to send to the backend
- -->
+  </div>
