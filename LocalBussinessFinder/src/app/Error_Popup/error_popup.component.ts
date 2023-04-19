@@ -23,6 +23,7 @@ export class error_popup{
             this.chooseDisplay();
         }
     popupChoice: string = "";
+    isError: boolean = true;
     displayUserWrong: boolean = false;
     displayPassWrong: boolean = false;
     displayEmailWrong: boolean = false;
@@ -42,6 +43,7 @@ export class error_popup{
             this.displayUserUsed = true;
         }else if(this.popupChoice == "DataSubmitted"){
             this.displayDataSub = true;
+            this.isError = false;
         }
     }
     closeDialog() {

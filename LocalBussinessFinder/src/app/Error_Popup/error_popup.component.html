@@ -1,4 +1,7 @@
-<h1 mat-dialog-title>Error Message:</h1>
+<h1 mat-dialog-title *ngIf = "isError; else positiveMsg">Error Message:</h1>
+<ng-template #positiveMsg>
+    <h1 mat-dialog-title>Submission Confirmation: </h1>
+</ng-template>
 <div mat-dialog-content >
     <!--Which one to display is decided at component creation-->
     <!--Done as if/else statements to do more error checking-->
