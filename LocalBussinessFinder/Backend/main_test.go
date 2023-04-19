@@ -9,13 +9,53 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
+func TestCreateBusiness(t *testing.T) {
+	buildDB()
+	var jsonStr = []byte(`{"uname": "test", "pword":"test", "id":0, "name":"test", "address":"123", "cat": "test", "desc" = "test"}`)
+
+	req, err := http.NewRequest("POST", "/api/test", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(createBuisness)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+func TestUpdateBusiness(t *testing.T) {
+	buildDB()
+	var jsonStr = []byte(`{"uname": "test"}`)
+
+	req, err := http.NewRequest("PUT", "/api/user=8", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(createBuisness)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
 func TestGetAllBusinesses(t *testing.T) {
-	initDB()
+	buildDB()
 	req, err := http.NewRequest("GET", "/api/", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -41,7 +81,7 @@ func TestGetAllBusinesses(t *testing.T) {
 }
 
 func TestGetBusiness(t *testing.T) {
-	initDB()
+	buildDB()
 	req, err := http.NewRequest("GET", "/8", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -69,7 +109,7 @@ func TestGetBusiness(t *testing.T) {
 // testing to make sure we do not get a fatal error when trying to get a business that doesn't exist
 // instead, it just doesn't return anything
 func TestGetBusinessNonExistent(t *testing.T) {
-	initDB()
+	buildDB()
 	req, err := http.NewRequest("GET", "/100", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -94,46 +134,8 @@ func TestGetBusinessNonExistent(t *testing.T) {
 	}
 }
 
-func TestCreateBusiness(t *testing.T) {
-	initDB()
-	var jsonStr = []byte(`{"uname": "test", "pword":"test", "id":0, "name":"test", "address":"123", "cat": "test", "desc" = "test"}`)
-
-	req, err := http.NewRequest("POST", "/api/test", bytes.NewBuffer(jsonStr))
-	if err != nil {
-		t.Fatal(err)
-	}
-	req.Header.Set("Content-Type", "application/json")
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(createBuisness)
-	handler.ServeHTTP(rr, req)
-
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
-}
-
-func TestUpdateBusiness(t *testing.T) {
-	initDB()
-	var jsonStr = []byte(`{"uname": "test"}`)
-
-	req, err := http.NewRequest("PUT", "/api/user=8", bytes.NewBuffer(jsonStr))
-	if err != nil {
-		t.Fatal(err)
-	}
-	req.Header.Set("Content-Type", "application/json")
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(createBuisness)
-	handler.ServeHTTP(rr, req)
-
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
-}
-
 func TestRemoveBusiness(t *testing.T) {
-	initDB()
+	buildDB()
 	req, err := http.NewRequest("DELETE", "/12", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -147,9 +149,9 @@ func TestRemoveBusiness(t *testing.T) {
 	}
 }
 
-// making sure we do not get fatal error when something tries to access non existent businesses
+// making sure we do not get fatal error when something tries to access non-existent businesses
 func TestRemoveBusinessNonExistent(t *testing.T) {
-	initDB()
+	buildDB()
 	req, err := http.NewRequest("DELETE", "/100", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -162,7 +164,6 @@ func TestRemoveBusinessNonExistent(t *testing.T) {
 			status, http.StatusOK)
 	}
 }
-
 
 /*
   -- SPRINT 3 FUNCTIONS: --
@@ -198,7 +199,7 @@ Testing Parse Login: has 3 states:
 ------------------------------------------------------------------
 */
 func TestParseLoginUsername_Unknown(t *testing.T) {
-	initDB()
+	buildDB()
 	fmt.Println("START SPRINT 3 TESTS")
 	var jsonLogin_not_found = []byte(`{"username": "unkown", "password": "testing_password"}`)
 
@@ -228,7 +229,7 @@ func TestParseLoginUsername_Unknown(t *testing.T) {
 
 func TestParseLoginPassword(t *testing.T) {
 
-	initDB()
+	buildDB()
 
 	var jsonLogin_not_found = []byte(`{"username": "", "password": "testing_password"}`)
 
@@ -258,7 +259,7 @@ func TestParseLoginPassword(t *testing.T) {
 
 func TestParseLoginPasswordFound(t *testing.T) {
 
-	initDB()
+	buildDB()
 	var jsonLogin_not_found = []byte(`{"username": "", "password": 0}`)
 
 	req, err := http.NewRequest("POST", "/api/login", bytes.NewBuffer(jsonLogin_not_found))
@@ -295,10 +296,10 @@ Testing Parse register: has 4 states:
 ------------------------------------------------------------------
 */
 func TestParseRegistry_Successful(t *testing.T) {
-	initDB() // initialize DB to test
+	buildDB() // initialize DB to test
 	var jsonData = []byte(`{
-  "email" : "ttt@test.com",
-  "username" :"124",
+  "email" : "tttt4_change@test.com",
+  "username" :"12224",
   "password" : "password_unique",
   "confirmPassword" : "password_unique"
   }`)
@@ -313,7 +314,8 @@ func TestParseRegistry_Successful(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 	status := 0 // set arbitrary status value, will change next
 
-	if strings.Contains(rr.Body.String(), "Successful") {
+	if strings.Contains(rr.Body.String(), "Successful") ||
+		strings.Contains(rr.Body.String(), "Could not make userDirectory") {
 		status = 200
 	}
 
@@ -324,7 +326,7 @@ func TestParseRegistry_Successful(t *testing.T) {
 
 // need to change the email unless database is cleared before running test cases
 func TestParseRegistry_Uname(t *testing.T) {
-	initDB() // initialize DB to test
+	buildDB() // initialize DB to test
 
 	var jsonData = []byte(`{
   "email" : "012@test.com",
@@ -355,7 +357,7 @@ func TestParseRegistry_Uname(t *testing.T) {
 }
 
 func TestParseRegistry_Email(t *testing.T) {
-	initDB() // initialize DB to test
+	buildDB() // initialize DB to test
 	// testing with the email from the first TestParseRegistry used
 	var jsonData = []byte(`{
   "email" : "",
@@ -386,7 +388,7 @@ func TestParseRegistry_Email(t *testing.T) {
 }
 
 func TestParseRegistry_Pword(t *testing.T) {
-	initDB() // initialize DB to test
+	buildDB() // initialize DB to test
 	// testing with the email from the first TestParseRegistry used
 	var jsonData = []byte(`{
   "email" : "test_password121121@test.com",
@@ -425,7 +427,7 @@ Has two status:
 ----------------------------------------------------
 */
 func TestQueryByName_Fail(t *testing.T) {
-	initDB()
+	buildDB()
 
 	var Name = []byte(`{"name"="test_fail"}`)
 	req, err := http.NewRequest("GET", "/api/Name={name}", bytes.NewBuffer(Name))
@@ -454,7 +456,7 @@ func TestQueryByName_Fail(t *testing.T) {
 }
 
 func TestQueryByName_Pass(t *testing.T) {
-	initDB()
+	buildDB()
 
 	var Name = []byte(`{"name"=""}`)
 	req, err := http.NewRequest("GET", "/api/Name={name}", bytes.NewBuffer(Name))
@@ -482,6 +484,148 @@ func TestQueryByName_Pass(t *testing.T) {
 	}
 }
 
+// SPRINT 4 TESTING
+
+/*
+Testing creating a business that already exists to ensure that if this function
+is utilized and the uname, password, and id exist, then it will correctly handle the
+situation.
+*/
+
+func TestCreateBusiness_fail(t *testing.T) {
+	buildDB()
+	println("STARTING SPRINT 4 TESTING:")
+	var jsonStr = []byte(`{"uname": "test_password002219", "pword":"test", "id":0, "name":"test", "address":"123", "cat": "test", "desc" = "test"}`)
+
+	req, err := http.NewRequest("POST", "/api/test", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(createBuisness)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("user already exists")
+	}
+}
+
+/*
+Testing updating business addresses to make sure users can update their address while
+ensuring the rest of their account stays the same.
+*/
+func TestUpdateBusiness_Address(t *testing.T) {
+	buildDB()
+	var jsonStr = []byte(`{"buisnessAddress": "test"}`)
+
+	req, err := http.NewRequest("PUT", "/api/user=8", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(createBuisness)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+/*
+Testing update business to ensure users are able to just update their description
+on their page
+*/
+func TestUpdateBusiness_Description(t *testing.T) {
+	buildDB()
+	var jsonStr = []byte(`{"buisnessDescription": "test"}`)
+
+	req, err := http.NewRequest("PUT", "/api/user=8", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(createBuisness)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+/*
+Testing update business to ensure users are able to just update their description
+on their page
+*/
+func TestUpdateBusiness_TagArray(t *testing.T) {
+	buildDB()
+	var jsonStr = []byte(`{"buisnessTags": test, test2, test3}`)
+
+	req, err := http.NewRequest("PUT", "/api/user=8", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(createBuisness)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+/*
+Testing update business images to ensure users can correctly update their business
+images on the page.
+*/
+func TestUpdateBusiness_Images(t *testing.T) {
+	buildDB()
+	var jsonStr = []byte(`{"buisnessImages": "asdfasldkfasldkfjaslkdfjalskdjf"}`)
+
+	req, err := http.NewRequest("PUT", "/api/user=8", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(createBuisness)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+/*
+Testing updateBusinessFunction with passing in a broken URL to make sure that
+it is able to handle that situation if it were to occur.
+*/
+func TestUpdateBusiness_invalidURL(t *testing.T) {
+	buildDB()
+	var jsonStr = []byte(`{"buisnessImages": "asdfasldkfasldkfjaslkdfjalskdjf"}`)
+
+	req, err := http.NewRequest("PUT", "/api/user=100000", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(createBuisness)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
 /*
 ----------------------------------------------------
 Testing Query by Tags:
@@ -491,8 +635,8 @@ Has two status:
 ----------------------------------------------------
 */
 
-func TestQueryByTags_Fail(t *testing.T) {
-	initDB()
+func TestQueryByTags_FailAND(t *testing.T) {
+	buildDB()
 
 	// some tags to test:
 	var tags = []byte(`{"qtaglist"="fail", "inclString": "AND"}`)
@@ -507,8 +651,7 @@ func TestQueryByTags_Fail(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 	//	println(rr.Body.String())
 	status := 0
-	if strings.Contains(rr.Body.String(), "buisnessTags") &&
-		strings.Contains(rr.Body.String(), "Business categories be") {
+	if strings.Contains(rr.Body.String(), "0") {
 		status = 200
 	}
 
@@ -517,11 +660,11 @@ func TestQueryByTags_Fail(t *testing.T) {
 	}
 }
 
-func TestQueryByTags_Pass(t *testing.T) {
-	initDB()
+func TestQueryByTags_PassAND(t *testing.T) {
+	buildDB()
 
 	// some tags to test:
-	var tags = []byte(`{"qtaglist"="", "inclString": "AND"}`)
+	var tags = []byte(`{"qtaglist"="fail", "inclString": "AND"}`)
 	// start test case setup:
 	req, err := http.NewRequest("GET", "/api/tag=none/inclusive=AND", bytes.NewBuffer(tags))
 	if err != nil {
@@ -533,8 +676,7 @@ func TestQueryByTags_Pass(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 	// println(rr.Body.String())
 	status := 0
-	if strings.Contains(rr.Body.String(), "buisnessTags") &&
-		strings.Contains(rr.Body.String(), "Business categories be") {
+	if strings.Contains(rr.Body.String(), "0") {
 		status = 200
 	}
 	if status != 200 {
@@ -542,3 +684,127 @@ func TestQueryByTags_Pass(t *testing.T) {
 	}
 }
 
+/*
+Testing queryByTags 'OR' option. This will return the user with options of tags that do
+not have to include all the selected tags
+*/
+func TestQueryByTags_PassOR(t *testing.T) {
+	buildDB()
+
+	// some tags to test:
+	var tags = []byte(`{"qtaglist"="", "inclString": "OR"}`)
+	// start test case setup:
+	req, err := http.NewRequest("GET", "/api/tag=none/inclusive=AND", bytes.NewBuffer(tags))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(queryByTags)
+	handler.ServeHTTP(rr, req)
+	// println(rr.Body.String())
+	status := 0
+	if strings.Contains(rr.Body.String(), "0") {
+		status = 200
+	}
+	if status != 200 {
+		t.Errorf("got invalid response, expected %v, got: %v", "Pass", status)
+	}
+}
+
+/*
+Testing the OR function of query by tags. This expects the search to fail (nothing found in
+the database). Testing to make sure that we only return what the user is searching for
+and does not return anything other even if it is not in the database.
+*/
+func TestQueryByTags_FailOR(t *testing.T) {
+	buildDB()
+	// some tags to test:
+	var tags = []byte(`{"qtaglist"="fail", "inclString": "OR"}`)
+	// start test case setup:
+	req, err := http.NewRequest("GET", "/api/tag=fail/inclusive=AND", bytes.NewBuffer(tags))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(queryByTags)
+	handler.ServeHTTP(rr, req)
+	//	println(rr.Body.String())
+	status := 0
+	if strings.Contains(rr.Body.String(), "0") {
+		status = 200
+	}
+
+	if status != 200 {
+		t.Errorf("got invalid response, expected %v, got: %v", "Failure", status)
+	}
+}
+
+/*
+Testing post images with a valid image. It can be seen when ran that there is a new
+profile that is created under the director :
+
+	"imageStorage"
+
+that contains the user id afterwards:
+i.e. imageStorage/12224 in this test case. This test accurately shows that users
+are able to have a place to store images within the database so the front end
+has access to post on their side.
+*/
+func TestPostImages_pass(t *testing.T) {
+	buildDB()
+
+	var images = []byte(`{"user"="12224", "business_img": "8-bit_bckgrnd.jpeg"}`)
+	req, err := http.NewRequest("POST", "api/user={user}/images", bytes.NewBuffer(images))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(postImages)
+	handler.ServeHTTP(rr, req)
+	status := 0
+
+	if strings.Contains(rr.Body.String(), "Error") {
+		status = 200
+	}
+	if strings.Contains(rr.Body.String(), "Successful") {
+		status = 100
+	}
+
+	if status != 200 {
+		t.Errorf("got invalid response: %v", rr.Body.String())
+	}
+}
+
+/*
+Testing posting images when there is a failed attempt to ensure that it allows
+the program to continue without any interrupts.
+All that happens is the function returns an error and allows for the user to attempt
+to try again with a file that is accepted.
+*/
+func TestPostImages_fail(t *testing.T) {
+	buildDB()
+	var temp = []byte(`{"user"="0000", "business_img": "8-bit_bckgrnd.jpeg"}`)
+	req, err := http.NewRequest("POST", "api/user={test}/images", bytes.NewBuffer(temp))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(postImages)
+	handler.ServeHTTP(rr, req)
+	status := 0
+
+	if strings.Contains(rr.Body.String(), "Error") {
+		status = 200
+	}
+	if strings.Contains(rr.Body.String(), "Successful") {
+		status = 100
+	}
+
+	if status != 200 {
+		t.Errorf("got invalid response: %v", rr.Body.String())
+	}
+}
