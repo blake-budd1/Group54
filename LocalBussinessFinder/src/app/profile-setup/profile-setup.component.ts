@@ -88,37 +88,37 @@ export class ProfileSetupComponent implements OnInit {
     let buildUrl = `api/user=` + userSignedIn.currentUser
   
 
-    this.http.get(buildUrl).pipe(
-      catchError(error => {
-        console.error(error);
-        return throwError(error);
-      })
-    ).subscribe(response => {
-      console.log(response);
-      const obj = Object.assign(response)
-      console.warn(response)
-      this.buisness.buisnessName = obj.BusinessText.buisnessName;
-      this.buisness.buisnessTags = obj.BusinessText.buisnessTags;
-      this.buisness.buisnessAddress = obj.BusinessText.buisnessAddress; 
-      this.buisness.buisnessDescription = obj.BusinessText.buisnessDescription; 
-      this.buisness.buisnessTags= obj.BusinessText.buisnessTags.split(";")
+    // this.http.get(buildUrl).pipe(
+    //   catchError(error => {
+    //     console.error(error);
+    //     return throwError(error);
+    //   })
+    // ).subscribe(response => {
+    //   console.log(response);
+    //   const obj = Object.assign(response)
+    //   console.warn(response)
+    //   this.buisness.buisnessName = obj.BusinessText.buisnessName;
+    //   this.buisness.buisnessTags = obj.BusinessText.buisnessTags;
+    //   this.buisness.buisnessAddress = obj.BusinessText.buisnessAddress; 
+    //   this.buisness.buisnessDescription = obj.BusinessText.buisnessDescription; 
+    //   this.buisness.buisnessTags= obj.BusinessText.buisnessTags.split(";")
 
-      console.log(this.buisness.buisnessName )
-      console.log(this.buisness.buisnessTags )
-      console.log(this.buisness.buisnessAddress )
-      console.log(this.buisness.buisnessDescription )
-      console.log(this.buisness.buisnessTags )
+    //   console.log(this.buisness.buisnessName )
+    //   console.log(this.buisness.buisnessTags )
+    //   console.log(this.buisness.buisnessAddress )
+    //   console.log(this.buisness.buisnessDescription )
+    //   console.log(this.buisness.buisnessTags )
 
-     }); 
-
-
+    //  }); 
 
 
-    console.log(userSignedIn.currentUser)
+
+
+    // console.log(userSignedIn.currentUser)
      
-    //USER SIGNED IN WORKED! 
+    // //USER SIGNED IN WORKED! 
 
-    buildUrl = `api/user=` + userSignedIn.currentUser
+    // buildUrl = `api/user=` + userSignedIn.currentUser
   
 
     this.http.get(buildUrl).pipe(
