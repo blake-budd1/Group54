@@ -25,7 +25,12 @@
             Username already in use. Please register with a different username
         </div>
     </ng-template >
-    <ng-template  #box5 class = "message" type = "NotSpecified"> Some type of error happened IDK dog</ng-template >
+    <ng-template  #box5>
+        <div class = "message" type = "DataSub" *ngIf = "displayDataSub; else box6">
+            Profile data saved!
+        </div>
+    </ng-template >
+    <ng-template  #box6 class = "message" type = "NotSpecified"> Some type of error happened IDK dog</ng-template >
 </div>
 <div mat-diaglog-actions>
     <button class = "button" mat-button (click) = "closeDialog()" cdkFocusInitial> Ok </button>

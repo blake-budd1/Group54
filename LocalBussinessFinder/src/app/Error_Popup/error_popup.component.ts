@@ -28,6 +28,7 @@ export class error_popup{
     displayEmailWrong: boolean = false;
     displayNotMatch: boolean = false;
     displayUserUsed: boolean = false;
+    displayDataSub: boolean = false;
     chooseDisplay(){
         if(this.popupChoice == "User"){
             this.displayUserWrong = true;
@@ -39,6 +40,8 @@ export class error_popup{
             this.displayNotMatch = true;
         }else if(this.popupChoice == "UserUsed"){
             this.displayUserUsed = true;
+        }else if(this.popupChoice == "DataSubmitted"){
+            this.displayDataSub = true;
         }
     }
     closeDialog() {

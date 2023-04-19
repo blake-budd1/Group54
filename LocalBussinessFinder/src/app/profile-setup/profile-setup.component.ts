@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { userSignedIn } from '../lfile';
+import { MatDialog } from '@angular/material/dialog';
+import { error_popup } from '../Error_Popup/error_popup.component';
 
 @Component({
   selector: 'app-profile-setup',
@@ -14,10 +16,11 @@ import { userSignedIn } from '../lfile';
   styleUrls: ['./profile-setup.component.css']
 })
 export class ProfileSetupComponent implements OnInit {
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient, public dialog: MatDialog,) {
     //get business info from backend
 
   }
+  errorType: string = "";
   username: string = "NULL";
   img_Files : File[] =  []; 
   buisness: Buisness = {
@@ -199,7 +202,7 @@ export class ProfileSetupComponent implements OnInit {
 
 
     async sendData() {
-
+    
     console.warn('buisnessName is...' + this.buisness.buisnessName);
     console.warn(this.buisness.buisnessTags.length);
     this.buisness.buisnessTags.forEach(element => {
@@ -215,6 +218,8 @@ export class ProfileSetupComponent implements OnInit {
     
     
     let buildUrl = `api/user=` + userSignedIn.currentUser + '/'
+    this.errorType = "DataSubmitted";
+    this.displayError();
     return this.http.put(buildUrl, this.buisness).pipe(
 
       catchError(error => {
@@ -241,6 +246,14 @@ export class ProfileSetupComponent implements OnInit {
       //console.log(obj.buisnessName)
       
       
+    });
+    
+  }
+  displayError(){
+    const dialogRef = this.dialog.open(error_popup, {
+      width: "600px",
+      height: "180px",
+      data: {useCase: this.errorType}
     });
   }
   
