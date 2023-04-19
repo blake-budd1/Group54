@@ -49,6 +49,7 @@
     vertical-align: center;
     height: 666px;
     overflow-y: auto;
+}
 
 .dropdown{
     width: 93%;
@@ -111,9 +112,6 @@
   
   
   .popup {
-<<<<<<< Updated upstream
-    margin: 70px auto;
-=======
     background-color: #A4BA9a;
     text-align: center;
     width: 1300px;
@@ -124,7 +122,6 @@
 
 
     /* margin: 70px auto; */
->>>>>>> Stashed changes
     padding: 20px;
     background: #fff;
     border-radius: 5px;

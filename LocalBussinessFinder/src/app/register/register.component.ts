@@ -30,13 +30,8 @@ export class RegisterComponent {
       if(regObj.Reg_State == "Successful"){
         // CODE FOR SUCCESSFUL REGISTRATION
         console.log("Registration Successful")
-<<<<<<< Updated upstream
-        this.router.navigate(['Setup'])
-=======
         userSignedIn.currentUser = this.user.username;
-        this.Router.navigate(["Setup"]);
-        
->>>>>>> Stashed changes
+        this.router.navigate(["Setup"]);
       }
       else if(regObj.Reg_State == "Email_Registered"){
         //CODE FOR EMAIL ALREADY REGSITERED

@@ -6,6 +6,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown/multiselect.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import {userSignedIn} from '../lfile'
 
 @Component({
   selector: 'app-profile-setup',
@@ -13,9 +14,7 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./profile-setup.component.css']
 })
 export class ProfileSetupComponent implements OnInit {
-<<<<<<< Updated upstream
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {}
-=======
+
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) {
     //get business info from backend
 
@@ -23,7 +22,6 @@ export class ProfileSetupComponent implements OnInit {
 
   popup = false;
   username: string = "NULL";
->>>>>>> Stashed changes
   img_Files : File[] =  []; 
   buisness: Buisness = {
     buisnessName: "",
@@ -76,6 +74,7 @@ export class ProfileSetupComponent implements OnInit {
 
   dropdownList = [{}];
   dropdownSettings = {};
+  tagMap = [{}]
   ngOnInit() {
     this.dropdownList = this.getData();
     this.dropdownSettings = {
@@ -85,8 +84,6 @@ export class ProfileSetupComponent implements OnInit {
       enableCheckAll: false,
       limitSelection: 5
     }
-<<<<<<< Updated upstream
-=======
 
     console.log(userSignedIn.currentUser)
   
@@ -164,7 +161,6 @@ export class ProfileSetupComponent implements OnInit {
 
 
 
->>>>>>> Stashed changes
   }
   //does not remove any
   onTagSelect(item: any) {
@@ -223,12 +219,8 @@ export class ProfileSetupComponent implements OnInit {
       this.img_Files.push(this.buisness.buisnessImages[index].file);
     }
     
-<<<<<<< Updated upstream
-    
-    let buildUrl = `api/user=` + this.buisness.username + '/'
-=======
+
     let buildUrl = `api/user=` + userSignedIn.currentUser + '/'
->>>>>>> Stashed changes
     return this.http.put(buildUrl, this.buisness).pipe(
 
       catchError(error => {
