@@ -16,7 +16,11 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchComponent } from './search/search.component';
+<<<<<<< Updated upstream
 
+=======
+import { MatDialogModule } from '@angular/material/dialog';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -36,11 +40,15 @@ import { SearchComponent } from './search/search.component';
     FormsModule,
     HttpClientModule,
     NgMultiSelectDropDownModule.forRoot(),
-
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+<<<<<<< Updated upstream
     MatIconModule
+=======
+    MatIconModule,
+    MatDialogModule
+>>>>>>> Stashed changes
 
   ],
   providers: [],
@@ -50,3 +58,5 @@ export class AppModule { }
 // ng add @cypress/schematic
 // ng test (karma/ jasmine tests)
 // npx cypress open
+// npx cypress run to save the videos in the video folder!
+// npm start
