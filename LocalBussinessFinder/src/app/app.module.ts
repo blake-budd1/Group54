@@ -16,11 +16,7 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchComponent } from './search/search.component';
-<<<<<<< Updated upstream
-
-=======
 import { MatDialogModule } from '@angular/material/dialog';
->>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -43,12 +39,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-<<<<<<< Updated upstream
-    MatIconModule
-=======
     MatIconModule,
     MatDialogModule
->>>>>>> Stashed changes
 
   ],
   providers: [],

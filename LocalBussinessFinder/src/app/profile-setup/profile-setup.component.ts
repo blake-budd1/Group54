@@ -18,11 +18,8 @@ export class ProfileSetupComponent implements OnInit {
     //get business info from backend
 
   }
-<<<<<<< Updated upstream
-=======
   popup = false;
   username: string = "NULL";
->>>>>>> Stashed changes
   img_Files : File[] =  []; 
   buisness: Buisness = {
     buisnessName: "",
@@ -169,8 +166,6 @@ export class ProfileSetupComponent implements OnInit {
       console.log(response);
       const obj = Object.assign(response)
       console.warn(response)
-<<<<<<< Updated upstream
-=======
       this.buisness.buisnessName = obj.BusinessText.buisnessName;
       this.buisness.buisnessTags = obj.BusinessText.buisnessTags;
       this.buisness.buisnessAddress = obj.BusinessText.buisnessAddress; 
@@ -204,7 +199,6 @@ export class ProfileSetupComponent implements OnInit {
       console.log(response);
       const obj = Object.assign(response)
       console.warn(response)
->>>>>>> Stashed changes
       this.buisness.buisnessName = obj.BuisnessText.buisnessName;
       this.buisness.buisnessAddress = obj.BuisnessText.buisnessAddress; 
       this.buisness.buisnessDescription = obj.BuisnessText.buisnessDescription; 
