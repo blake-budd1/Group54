@@ -13,7 +13,17 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./profile-setup.component.css']
 })
 export class ProfileSetupComponent implements OnInit {
+<<<<<<< Updated upstream
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) {}
+=======
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient) {
+    //get business info from backend
+
+  }
+
+  popup = false;
+  username: string = "NULL";
+>>>>>>> Stashed changes
   img_Files : File[] =  []; 
   buisness: Buisness = {
     buisnessName: "",
@@ -75,6 +85,86 @@ export class ProfileSetupComponent implements OnInit {
       enableCheckAll: false,
       limitSelection: 5
     }
+<<<<<<< Updated upstream
+=======
+
+    console.log(userSignedIn.currentUser)
+  
+    //USER SIGNED IN WORKED! 
+
+    let buildUrl = `api/user=` + userSignedIn.currentUser
+  
+
+    this.http.get(buildUrl).pipe(
+      catchError(error => {
+        console.error(error);
+        return throwError(error);
+      })
+    ).subscribe(response => {
+      console.log(response);
+      const obj = Object.assign(response)
+      console.warn(obj)
+
+      this.buisness.buisnessName = obj.BusinessText.buisnessName;
+      this.buisness.buisnessTags = obj.BusinessText.buisnessTags;
+      this.buisness.buisnessAddress = obj.BusinessText.buisnessAddress; 
+      this.buisness.buisnessDescription = obj.BusinessText.buisnessDescription; 
+      this.buisness.buisnessTags= obj.BusinessText.buisnessTags.split(";")
+      this.buisness.username = obj.BuisnessText.user;
+      console.log(this.buisness.buisnessName )
+      console.log(this.buisness.buisnessTags )
+      console.log(this.buisness.buisnessAddress )
+      console.log(this.buisness.buisnessDescription )
+      console.log(this.buisness.buisnessTags )
+
+     }); 
+
+
+
+
+    console.log(userSignedIn.currentUser)
+     
+    //USER SIGNED IN WORKED! 
+
+    buildUrl = `api/user=` + userSignedIn.currentUser
+  
+
+    this.http.get(buildUrl).pipe(
+      catchError(error => {
+        console.error(error);
+        return throwError(error);
+      })
+    ).subscribe(response => {
+      console.log(response);
+      const obj = Object.assign(response)
+      console.warn(response)
+      this.buisness.buisnessName = obj.BuisnessText.buisnessName;
+      this.buisness.buisnessAddress = obj.BuisnessText.buisnessAddress; 
+      this.buisness.buisnessDescription = obj.BuisnessText.buisnessDescription; 
+
+      let BimageInfo = obj.ImageInfo.imageHolder; 
+      console.log(BimageInfo)
+
+
+      let tagList = obj.BuisnessText.buisnessTags.split(";")
+
+      for(let i = 0 ; i < tagList.length; i++){
+        let subList = tagList[i].split("_")
+        let numMap = subList[0]
+        let stringVal = subList[1]
+        this.tagMap.push({item_id : numMap, item_text :  stringVal})
+      }
+      this.tagMap.shift()
+
+
+      console.log(this.buisness)
+      console.log(this.tagMap)
+     }); 
+     
+
+
+
+>>>>>>> Stashed changes
   }
   //does not remove any
   onTagSelect(item: any) {
@@ -133,8 +223,12 @@ export class ProfileSetupComponent implements OnInit {
       this.img_Files.push(this.buisness.buisnessImages[index].file);
     }
     
+<<<<<<< Updated upstream
     
     let buildUrl = `api/user=` + this.buisness.username + '/'
+=======
+    let buildUrl = `api/user=` + userSignedIn.currentUser + '/'
+>>>>>>> Stashed changes
     return this.http.put(buildUrl, this.buisness).pipe(
 
       catchError(error => {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RegisterList } from '../lfile';
+import { RegisterList, userSignedIn } from '../lfile';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, ignoreElements } from 'rxjs/operators';
@@ -30,7 +30,13 @@ export class RegisterComponent {
       if(regObj.Reg_State == "Successful"){
         // CODE FOR SUCCESSFUL REGISTRATION
         console.log("Registration Successful")
+<<<<<<< Updated upstream
         this.router.navigate(['Setup'])
+=======
+        userSignedIn.currentUser = this.user.username;
+        this.Router.navigate(["Setup"]);
+        
+>>>>>>> Stashed changes
       }
       else if(regObj.Reg_State == "Email_Registered"){
         //CODE FOR EMAIL ALREADY REGSITERED

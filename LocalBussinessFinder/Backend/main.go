@@ -50,22 +50,22 @@ func fill_defaults(bsn *Buisness) {
 
 	// setting default values
 	if bsn.User == "" {
-		bsn.User = "Please provide a username (Something is wrong)"
+		bsn.User = "NULL"
 	}
 	if bsn.Email == "" {
-		bsn.Email = "Please provide an email (Something is wrong)"
+		bsn.Email = "Default Email"
 	}
 	if bsn.Name == "" {
-		bsn.Name = "A business name can be added in the registry page!"
+		bsn.Name = "Default Name"
 	}
 	if bsn.Address == "" {
-		bsn.Address = "A business address can be added in the registry page!"
+		bsn.Address = "Default Address"
 	}
 	if bsn.Description == "" {
-		bsn.Description = "A business description can be added in the registry page!"
+		bsn.Description = "Default Description"
 	}
 	if bsn.Tags == "" {
-		bsn.Tags = "Business categories be added to in the registry page!"
+		bsn.Tags = ""
 	}
 }
 
@@ -230,6 +230,18 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 			} else {
 				tagString += arryCarry.TagArray[i]
 			}
+		}
+
+		//Empty Directory
+		rmDirErr := os.RemoveAll("imageStorage/" + req)
+		if rmDirErr != nil {
+			println("Could not remove user ImageDirectory")
+			log.Fatal(rmDirErr)
+		}
+		mkDirErr := os.Mkdir("imageStorage/"+req, os.ModePerm)
+		if mkDirErr != nil {
+			println("Could not make userDirectory")
+			log.Fatal(err)
 		}
 
 		targetBuis.Image = imageString

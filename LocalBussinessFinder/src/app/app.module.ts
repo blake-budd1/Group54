@@ -17,10 +17,14 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchComponent } from './search/search.component';
+<<<<<<< Updated upstream
 
 import { error_popup } from './Error_Popup/error_popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
+=======
+import { MatDialogModule } from '@angular/material/dialog';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -45,7 +49,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+<<<<<<< Updated upstream
     MatIconModule, 
+=======
+    MatIconModule,
+>>>>>>> Stashed changes
     MatDialogModule
 
   ],
