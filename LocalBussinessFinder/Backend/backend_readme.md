@@ -222,14 +222,14 @@ Queries:
          }
          
        -ImageInfo : {
-        -ImageHolder : (
+          - ImageHolder : (
+              { 
+                 -  name : Img1.png,
+                 -  encodedImg : (BASE64)
+              }
             { 
-             -  name : Img1.png,
-             -  encodedImg : (BASE64)
-            }
-            { 
-             -  name : Img2.png,
-             -  encodedImg : (BASE64)
+                -  name : Img2.png,
+                -  encodedImg : (BASE64)
             }
             
            )
