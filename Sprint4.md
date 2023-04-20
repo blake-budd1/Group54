@@ -51,5 +51,7 @@ Work completed this sprint:
 ### Blake:
 Work completed this sprint: 
  This sprint I worked on test cases to ensure that the back-end was working properly given a multitude of different scenarios. Within these tests, I made sure that things such as updating specific data of a business profile worked properly by expanding on previous test cases of 'updateBusiness' and including test cases that update business addresses, business tags, business images, and business descriptions. Furthermore, I ensured that the back-end was able to properly handle storing images into the database, as that was how we decided we were going to go about storing images to send to the front end for this implementation of the project. I also ensured that when searching by tags the user was able to switch between using 'AND' and 'OR' to change the results of the search. These test cases also included a simulation of what would occur if there were no businesses with the tags that were being searched for. This was to show that the back-end was able to send the correct businesses to the front-end if the user were to search for businesses that were not valid. 
+ 
  To see a description of each test case added to this sprint, please refer to the 'backend_readme.md' which can be found in the localbusinessFinder/backend folder of this repository. 
+ 
  Overall, this sprint was polishing functions that we already had for testing while implementing some new functions that were created for handle imaging and allowing the front-end to retrieve those images from the back-end. 
