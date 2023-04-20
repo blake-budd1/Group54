@@ -43,7 +43,7 @@ Work completed this sprint:
 
 ** All these tests can be seen under the Cypress folder in the code**
 
--Wrote the **frontend_readme.md** (in the app folder in the code) which contains detailed information on how the program works (all the major functionailites and how to use each one) as well as how to run the code with the backend (specfically why commands to use and why!)
+-Wrote the **frontend_readme.md** (in the app folder in the code) which contains detailed information on how the program works (all the major functionailites and how to use each one) as well as how to run the code with the backend (specfically why commands to use and why!) Accessible at: LocalBussinessFinder/src/app/frontend_readme.md
  
  All in all this was an extremely eventful sprint- it was quite difficult to work though all the unexpected problems. Nevertheless, all things considered, I am really proud of how we were able to work as a team to develop a substantial and working program that we can be proud of. The most important take away was not how to write functional code per say, but understanding how the software development process is completed as a team. Communicating needs, errors and any guidance to others when it is most needed. Without this team- I dont believe I would be able to craete something like this. I am very grateful for them!
 
