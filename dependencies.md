@@ -25,8 +25,14 @@ Angular modules required:
 	os
 	strconv
 	strings
-
+	testing
+	net/http/httptest
 	github.com/gorilla/handlers
 	github.com/gorilla/mux
 	gorm.io/driver/sqlite
 	gorm.io/gorm
+	
+
+
+
+
