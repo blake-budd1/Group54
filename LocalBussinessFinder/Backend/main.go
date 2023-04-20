@@ -62,22 +62,22 @@ func fill_defaults(bsn *Buisness) {
 
 	// setting default values
 	if bsn.User == "" {
-		bsn.User = "Please provide a username (Something is wrong)"
+		bsn.User = "NULL"
 	}
 	if bsn.Email == "" {
-		bsn.Email = "Please provide an email (Something is wrong)"
+		bsn.Email = "Default Email"
 	}
 	if bsn.Name == "" {
-		bsn.Name = "A business name can be added in the registry page!"
+		bsn.Name = "Default Business Name"
 	}
 	if bsn.Address == "" {
-		bsn.Address = "A business address can be added in the registry page!"
+		bsn.Address = "Default Address"
 	}
 	if bsn.Description == "" {
-		bsn.Description = "A business description can be added in the registry page!"
+		bsn.Description = "Defauly Description"
 	}
 	if bsn.Tags == "" {
-		bsn.Tags = "Business categories be added to in the registry page!"
+		bsn.Tags = ""
 	}
 }
 
@@ -242,6 +242,18 @@ func updateBuisness(w http.ResponseWriter, r *http.Request) {
 			} else {
 				tagString += arryCarry.TagArray[i]
 			}
+		}
+
+		//Empty Directory
+		rmDirErr := os.RemoveAll("imageStorage/" + req)
+		if rmDirErr != nil {
+			println("Could not remove directiory")
+		}
+
+		mkDirErr := os.Mkdir("imageStorage/"+req, os.ModePerm)
+
+		if mkDirErr != nil {
+			println("Could not make userDirectory")
 		}
 
 		targetBuis.Image = imageString
@@ -474,7 +486,7 @@ func postImages(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Print("The FileName is: ", fileName)
 
-	// Perform check for identically named images
+	// Delete and Re-Add directory:
 
 	// Write temporary on our server
 	var usrImgDir string = "imageStorage/" + user + "/" + fileName
