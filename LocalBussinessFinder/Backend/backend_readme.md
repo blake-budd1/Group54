@@ -220,8 +220,9 @@ Queries:
          - Password : 1888381 // Password hash
          - Tags : food;pet-friendly
          }
-       ImageInfo : {
-        ImageHolder : [
+         
+       -ImageInfo : {
+        -ImageHolder : [
             { 
              -  name : Img1.png,
              -  encodedImg : (BASE64)
