@@ -248,3 +248,30 @@ Endpoint : '/api/user={uname}' Method(POST)
  
   
 
+# Sprint 4
+ ## Necessary Go Modules:
+  ### For Testing: 
+  Same as included in 'Sprint 3' section.
+  
+ ## Testing Coverage:
+ The main_test.go file was updated to include 11 new test cases (each with a desription below):
+ - TestCreateBusiness_fail : Ensure that creating an account with an invalid account works properly
+ - Testing updating specific parts of a business account:
+     - TestUpdateBusiness_Address
+     - TestUpdateBusiness_Description
+     - TestUpdateBusiness_TagArray
+     - TestUpdateBusiness_Images
+ - TestUpdateBusiness_invalidURL : Ensure that trying to update an account with an invalid URL won't work and will give the correct error
+ - Testing query by tages (updated since part 3):
+     -  TestQueryByTags_FailAND
+     -  TestQueryByTags_PassAND
+     -  TestQueryByTags_PassOR
+     -  TestQueryByTags_FailOR
+ -  Testing posting images using 'postImage' function:
+     -  TestPostImages_pass
+     -  TestPostImages_fail  
+ ## Testing implementation:
+ These tests were chosen to ensure that the back-end will work properly no matter what situation is provided by the user in the front-end.
+ With these tests, we ensure that even when invalid inputs for different account setup and description properties are inputted, the program
+ is able to continue running properly. 
+  

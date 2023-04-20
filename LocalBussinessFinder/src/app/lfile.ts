@@ -13,6 +13,8 @@ export class RegisterList{
 export const userSignedIn = {
     currentUser: "NULL",
     signedIn: "False",
-    bussinessName: "NULL"
+    bussinessName: "My Business"
 };
-
+export interface PopupUse{
+    useCase: string;
+} 
