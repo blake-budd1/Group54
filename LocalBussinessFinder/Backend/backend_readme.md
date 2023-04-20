@@ -178,6 +178,9 @@ Queries:
  ## Necessary Go Modules:
   ### For Testing: 
   Same as included in 'Sprint 3' section.
+  ### For Running the Server: 
+  "/encoding/base64" (Included in Go) 
+  "os" (Included in Go) 
   
  ## Testing Coverage:
  The main_test.go file was updated to include 11 new test cases (each with a desription below):
@@ -200,5 +203,48 @@ Queries:
  These tests were chosen to ensure that the back-end will work properly no matter what situation is provided by the user in the front-end.
  With these tests, we ensure that even when invalid inputs for different account setup and description properties are inputted, the program
  is able to continue running properly. 
+ 
+ ## Updates to Data Integration: 
+ Image upload (PNG/JPG) are now supported by Sprout. They are stored on a local filesystem of the server that is running main.go. The images are meant for public use, so they are assumed to be non-senstive data, so they are not encrypted. The images are stored not stored in any order and are sent back to the front end via Base64 encoding. 
+ 
+ ## Api Updates: 
+ Endpoint: '/api/user={uname}'
+ - The GetBusiness method now splits the data into text data (name, tagList, address, etc) and the images, held in and imageHolder object. 
+ - Example: 
+ -
+ - Buisness : {
+ -    BusinessText : {
+         - Name: "New Business", 
+         - Address : "222888 Willow Lane",
+         - Username : "User" 
+         - Password : 1888381 // Password hash
+         - Tags : food;pet-friendly
+         }
+       ImageInfo : {
+        ImageHolder : [
+            { 
+             -  name : Img1.png,
+             -  encodedImg : (BASE64)
+            }
+            { 
+             -  name : Img2.png,
+             -  encodedImg : (BASE64)
+            }
+            
+            
+        ]
+       
+       }
+      
+ 
+ Endpoint: '/api/user={user}/images' Method (POST) 
+ - Post image/file data as Form Data to endpoint. It will 
+
+Endpoint : '/api/register' Method (POST) 
+ -  Adds a new directory in the imageStorage directory for the user. 
+ 
+Endpoint : '/api/user={uname}' Method(POST)
+- Clears image directory and adds a new directory in the imageStorage folder. 
+ 
   
 
