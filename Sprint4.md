@@ -74,3 +74,11 @@ Work completed this sprint:
  To see a description of each test case added to this sprint, please refer to the 'backend_readme.md' which can be found in the localbusinessFinder/backend folder of this repository. 
  
  Overall, this sprint was polishing functions that we already had for testing while implementing some new functions that were created for handle imaging and allowing the front-end to retrieve those images from the back-end. 
+ 
+ ### Rohan: 
+ Work completed for sprint 4: 
+ This sprint I worked primarily on futher BE and FE integration (like parsing backend data) and image storage and presentation. For the images, I initially considered storing them in a Base64 string directly into the database, but this would be a bad idea as each entry in the database would contain multiple large strings and would greatly decrease search time. To circumvent this, I decided to store the images in a a directory that is created when the user registers. When the user makes a post in the profile setup component, it sends the text data and image data to seperate endpoints (a callback function loops through all the inputted images and adds them to the user's image repository.) When the getImage function handler is called, then a JSON struct with the text data and image data (as seen in documentation) is sent to the frontend and can be parsed accordingly. 
+ 
+ In terms of integration, most of the work was done by the frontend on the additions I made in the last sprint. Wavid's error popups used the status' that were creaeted in the last sprint to determine when to pop up. Additionally, I helped implement the parsing for the for the GetAll businesses endpoint and the tag filter endpoint in the front end, which allowed for each business to have thier own page. Additionally, as mentioned in Wavid's section, I helped with setting up the username global variable so we did not need to use the "username" that was present in previous iterations of the project. 
+ 
+ Once feature that we attempted to make was the ability for the profile-setup page to show the current values for all the business varibles. I was able to successfully get the front end to parse the information, but we decided that we would drop that feature as we developed the feature a little late and we had to abide by the time constraints. 
