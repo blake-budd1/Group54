@@ -43,10 +43,29 @@ Work completed this sprint:
 
 ** All these tests can be seen under the Cypress folder in the code**
 
--Wrote the **frontend_readme.md** (in the app folder in the code) which contains detailed information on how the program works (all the major functionailites and how to use each one) as well as how to run the code with the backend (specfically why commands to use and why!) Accessible at: LocalBussinessFinder/src/app/frontend_readme.md
+-Wrote the **frontend_readme.md** (in the app folder in the code) which contains detailed information on how the program works (all the major functionailites and how to use each one) as well as how to run the code with the backend (specfically why commands to use and why!)
  
  All in all this was an extremely eventful sprint- it was quite difficult to work though all the unexpected problems. Nevertheless, all things considered, I am really proud of how we were able to work as a team to develop a substantial and working program that we can be proud of. The most important take away was not how to write functional code per say, but understanding how the software development process is completed as a team. Communicating needs, errors and any guidance to others when it is most needed. Without this team- I dont believe I would be able to craete something like this. I am very grateful for them!
+### Wavid: 
+Work completed this sprint: 
+ - Developed pop-ups for use in all modules throughout the application and ensured their correct display. This includes different error messages for:
+  - Login: credentials not found and incorrect password
+  - Register: Password mismatch, email not valid/in use, username taken
+  - Profile Setup: Submission recieved box
+  
+ - Developed New UI for Login and Register to make it easier for users to tell whether their form submission would be accepted or not. When a user has a textbox   "focused" they will see a red highlight if that form field would not be accepted to be checked for credentials in our system or a green highlight if it would properly submit. This was applied to both login and register. 
+ 
+- Established uniform use of the global "userSignedIn" for ease of management of what user's profile is going to be edited at any given time. This required coordination with the Back-end, specifically working with Rohan to ensure the information sent from the backend was correctly unpackaged and stored in the global variable
 
+- Ensured correct NavBar display based on what user is signed in. Fixed a bug where the user would still be able to edit a business page after logging out
+
+- Compiled list of application dependencies for the project to be correctly displayed on another computer, specifically for the frontend. The backend team added to this list as well. See **dependencies.md**
+
+- Removed extraneous "testing" buttons from the register, login, and Navbar components. Ensured correct functionaility of these components. This required a non-zero amount of bugfixing and many horus of googleing documentation about interactions of different Angular imports
+
+-I dealt with merge-conflict resolution many times throughout this sprint, as it was the culmination of our individual code bases combining and interacting completely. The lines of what was "Ivan's part" or "Wavid's part" became much less clear as time passed, as I implimented features in things Ivan was working on and vice versa. I had the least issues of the 4 of us when resolving merge conflicts, so it became one of my roles
+
+Overall, this project was a lot of fun, if not very frustrating at times. I am glad to have experienced coding a webapp for the first time, and it is not as scary as it first seemed. I am very happy with our final outcome overall, especially considering none of us came in with any SWE experience. The course was supposed to be an introduction to the field, and I feel like it did just that. My biggest takeaway from this project is not how to do the weird one-off things in angular like injectables or dialogs, but how to meaningfully code in a team with components that affect what one another is working on. 
 ## Back-end:
 ### Blake:
 Work completed this sprint: 
